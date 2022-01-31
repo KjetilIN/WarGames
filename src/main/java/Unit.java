@@ -49,7 +49,7 @@ public class Unit {
      */
     @Override
     public String toString(){
-        return name + "--HP: "+health +"--Attack: "+attack;
+        return "Name: "+name + "::HP: "+health +"::Attack: "+attack;
     }
 
     // TODO: 31.01.2022: Add the final methods
