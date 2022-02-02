@@ -52,5 +52,19 @@ public class Unit {
         return "Name: "+name + "::HP: "+health +"::Attack: "+attack;
     }
 
-    // TODO: 31.01.2022: Add the final methods
+    // TODO: 02.02.2022 add attack class and abstract methods
+    public boolean attack(Unit unit){
+        if(this.attack != 0){
+            try{
+                //unit.setHealth(unit.getHealth()-(this.attack));
+                return true;
+            }catch (ArithmeticException e){
+                return false;
+            }
+
+        }
+        return false;
+
+
+    }
 }
