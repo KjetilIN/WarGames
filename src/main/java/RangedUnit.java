@@ -1,16 +1,48 @@
+/**
+ * The ranged unit class. A sub-class of unit.
+ *
+ * @author Kjetil Indrehus
+ * @version 1.0-SNAPSHOT 07.02.22
+ */
 public class RangedUnit extends Unit{
 
+    /**
+     * Constructor of the ranged unit.
+     *
+     * @param name name of the ranged unit.
+     * @param health health of the ranged unit
+     */
     protected RangedUnit(String name, int health){
         super(name,health,15,8 );
     }
 
+
+    // TODO: 07.02.2022 Ask Ivar if we need two constructors for this method. Check wargames-file. 
+    
+    /**
+     * The attack bonus for the ranged unit.
+     *
+     * @return returns an attack bonus for the ranged unit.
+     */
     @Override
     public int getAttackBonus() {
-        return 0;
+        return 3;
     }
+
+    /**
+     * The resistance bonus for the ranged unit.
+     * The ranged unit get a large resist bonus the first time, because they are far away.
+     * The second time the ranged unit is attacked, it is closer to the enemy and therefor takes more damage.
+     * For the third attack the enemy is close, so therefor the resistance bonus is a constant value.
+     *
+     * @return return the resistance bonus for the ranged unit based on the amount of attack received .
+     */
 
     @Override
     public int getResistBonus() {
-        return 0;
+        if(getAttackCount() == 0){ // Returns a high value for the first attack
+            return 6;
+        }
+        return getAttackCount() == 1 ? 4 : 2; // else check if it is the second attack and then return 4, else returns 2.
     }
 }

@@ -8,6 +8,7 @@ public abstract class Unit {
     private int health;
     private int attack;
     private int armor;
+    private int attackCount;
 
     /**
      * This is a constructor for the Unit class.
@@ -22,6 +23,7 @@ public abstract class Unit {
         this.health = health;
         this.attack = attack;
         this.armor = armor;
+        this.attackCount = 0;
     }
 
     public String getName(){
@@ -44,17 +46,31 @@ public abstract class Unit {
         this.health = health;
     }
 
-    /*
-    An abstract method for getting the attack bonus.
-    For each type of unit, you get different attack bonus.
+    /**
+     * An abstract method for getting the attack bonus.
+     * For each type of unit, you get different attack bonus.
+     *
+     * @return returns the given attack bonus for the unit
      */
     public abstract int getAttackBonus();
 
-    /*
-    An abstract method for getting the resist bonus.
-    Fpr each unit, there is different resist bonus.
+    /**
+     * An abstract method for getting the resist bonus.
+     * For each unit, there is different resist bonus.
+     *
+     * @return returns the given resist bonus for the unit
      */
     public abstract int getResistBonus();
+
+    /**
+     * A method that returns the attack count.
+     *
+     * @return returns the amount of attacks the unit has experienced.
+     */
+    public int getAttackCount(){
+        return this.attackCount;
+    }
+
 
 
     /**
@@ -66,11 +82,14 @@ public abstract class Unit {
         return "Name: "+name + "::HP: "+health +"::Attack: "+attack;
     }
 
-    // TODO: 02.02.2022 add attack class and abstract methods
+
+    // TODO: 07.02.2022 Check this attack method
+
     public boolean attack(Unit unit){
         if(this.attack != 0){
             try{
                 unit.setHealth(unit.getHealth()-(this.attack+getAttackBonus()+(this.armor+getResistBonus())));
+                unit.attackCount ++; // the attacked unit has been attacked once, so we increment by 1.
                 return true;
             }catch (ArithmeticException e){
                 return false;

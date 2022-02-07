@@ -14,6 +14,8 @@ public class InfantryUnit extends Unit {
         super(name,health,15,10);
     }
 
+    // TODO: 07.02.2022 Ask Ivar if we need two constructors for this method. Check wargames-file.
+
     /**
      * The attack bonus for the infantry.
      * It is high, because infantry has good attack up close.
