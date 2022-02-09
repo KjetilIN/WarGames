@@ -8,17 +8,34 @@
 
 public class CavalryUnit extends Unit {
 
-    // TODO: 07.02.2022 Ask Ivar if the attack and armor should be static final(?).
+    /**
+     * The static final fields. These are constant to the class.
+     */
+    private static final int ATTACK = 20;
+    private static final int ARMOR = 12;
+
+    /**
+     * Cavalry Unit with all fields available for change.
+     *
+     * @param name name of the cavalry unit.
+     * @param health health of the cavalry unit.
+     * @param attack attack of the cavalry unit.
+     * @param armor armor of the cavalry unit.
+     */
+    protected CavalryUnit(String name, int health, int attack, int armor){
+        super(name, health, attack, armor);
+    }
 
     /**
      * Constructor for the cavalry unit.
+     * The attack and armor with this constructor, are constant.
      *
      * @param name name of the calvary unit.
      * @param health health of the calvary unit.
      */
 
     protected CavalryUnit(String name, int health){
-        super(name,health,20,12);
+        super(name,health,ATTACK,ARMOR);
     }
 
     /**

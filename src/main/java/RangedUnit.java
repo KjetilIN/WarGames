@@ -7,17 +7,33 @@
 public class RangedUnit extends Unit{
 
     /**
+     * The static final fields. These are constant to the class.
+     */
+    private static final int ATTACK = 15;
+    private static final int ARMOR = 8;
+
+    /**
+     * The ranged unit constructor with all of UNit fields as arguments.
+     *
+     * @param name name of the ranged unit.
+     * @param health health of the ranged unit.
+     * @param attack attack of the ranged unit.
+     * @param armor armor of the ranged unit.
+     */
+    protected RangedUnit(String name, int health, int attack, int armor){
+        super(name, health, attack, armor);
+    }
+
+    /**
      * Constructor of the ranged unit.
      *
      * @param name name of the ranged unit.
      * @param health health of the ranged unit
      */
     protected RangedUnit(String name, int health){
-        super(name,health,15,8 );
+        super(name,health,ATTACK,ARMOR );
     }
 
-
-    // TODO: 07.02.2022 Ask Ivar if we need two constructors for this method. Check wargames-file. 
     
     /**
      * The attack bonus for the ranged unit.

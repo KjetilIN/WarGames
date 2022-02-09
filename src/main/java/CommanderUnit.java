@@ -7,6 +7,19 @@
 public class CommanderUnit extends CavalryUnit {
 
     /**
+     * This is the commander unit constructor with all the fields.
+     *
+     * @param name name of the commander unit.
+     * @param health health of the commander unit.
+     * @param attack attack of the commander unit.
+     * @param armor armor of the commander unit.
+     */
+
+    protected CommanderUnit(String name, int health, int attack, int armor){
+        super(name, health, attack, armor);
+    }
+
+    /**
      * Constructor for the commander unit.
      *
      * @param name name of the commander.
@@ -14,7 +27,6 @@ public class CommanderUnit extends CavalryUnit {
      */
     protected CommanderUnit(String name, int health){
         super(name, health);
-        // TODO: 07.02.2022  How to have getters and setter (set the attack)  
     }
 
     

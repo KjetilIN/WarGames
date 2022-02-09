@@ -5,16 +5,33 @@
  */
 public class InfantryUnit extends Unit {
     /**
+     * The static final fields. These are constant to the class.
+     */
+    private static final int ATTACK = 12;
+    private static final int ARMOR = 10;
+
+    /**
+     * This is the infantry unit constructor all fields.
+     *
+     * @param name name of the infantry unit.
+     * @param health health of the infantry unit.
+     * @param attack attack of the infantry unit.
+     * @param armor armor of the infantry unit.
+     */
+    protected InfantryUnit(String name,int health, int attack, int armor){
+        super(name, health, attack, armor);
+    }
+
+
+    /**
      * Constructor for the infantry unit. Uses "super" to inference methods.
      *
      * @param name name of the infantry
      * @param health health of the infantry
      */
-    public InfantryUnit(String name,int health){
-        super(name,health,15,10);
+    protected InfantryUnit(String name,int health){
+        super(name,health,ATTACK,ARMOR);
     }
-
-    // TODO: 07.02.2022 Ask Ivar if we need two constructors for this method. Check wargames-file.
 
     /**
      * The attack bonus for the infantry.
