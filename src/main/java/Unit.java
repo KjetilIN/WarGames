@@ -4,10 +4,10 @@
  * @version 1.0-SNAPSHOT 07.02.22
  */
 public abstract class Unit {
-    private  String name;
+    private final String name;
     private int health;
-    private int attack;
-    private int armor;
+    private final int attack;
+    private final int armor;
     private int attackCount;
 
     /**
@@ -82,12 +82,17 @@ public abstract class Unit {
         return "Name: "+name + "::HP: "+health +"::Attack: "+attack;
     }
 
+    /**
+     * Method that does an attack on a unit.
+     * Changes the unit health based on bonus's and the given attack.
+     * @param unit the unit that are attacked.
+     */
 
     public void attack(Unit unit){
-        if((this.attack + getAttackBonus())-(this.armor+getResistBonus()) < 0){ // attack shold
+        if((this.attack + getAttackBonus()) > (this.armor+getResistBonus())){ // attack only if the damage is higher than the armor.
             try{
                 unit.setHealth(unit.getHealth()-(this.attack + getAttackBonus())+(this.armor+getResistBonus()));
-            }catch (Exception ignore){} // Note: This should be edited
+            }catch (Exception ignore){}; // Note: This should be edited
         }
     }
 }
