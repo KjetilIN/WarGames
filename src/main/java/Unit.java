@@ -83,21 +83,11 @@ public abstract class Unit {
     }
 
 
-    // TODO: 07.02.2022 Check this attack method
-
-    public boolean attack(Unit unit){
-        if(this.attack != 0){
+    public void attack(Unit unit){
+        if((this.attack + getAttackBonus())-(this.armor+getResistBonus()) < 0){ // attack shold
             try{
-                unit.setHealth(unit.getHealth()-(this.attack+getAttackBonus()+(this.armor+getResistBonus())));
-                unit.attackCount ++; // the attacked unit has been attacked once, so we increment by 1.
-                return true;
-            }catch (ArithmeticException e){
-                return false;
-            }
-
+                unit.setHealth(unit.getHealth()-(this.attack + getAttackBonus())+(this.armor+getResistBonus()));
+            }catch (Exception ignore){} // Note: This should be edited
         }
-        return false;
-
-
     }
 }

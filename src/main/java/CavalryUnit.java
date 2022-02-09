@@ -41,7 +41,7 @@ public class CavalryUnit extends Unit {
     /**
      * The attack bonus for the cavalry unit.
      * For the first attack, will the cavalry return a high attack value.
-     * After the first attack the cavalry will be weaker, and therefor return a lower value.
+     * After the first attack the cavalry will be weaker, and therefore return a lower value.
      *
      * @return returns the attack bonus for the cavalry unit.
      */
@@ -53,7 +53,7 @@ public class CavalryUnit extends Unit {
 
     /**
      * The resist bonus for the cavalry.
-     * The cavalry has an advantage in numbers, and will therefor have a high calvary bonus.
+     * The cavalry has an advantage in numbers, and will therefore have a high calvary bonus.
      *
      * @return returns the resist bonus for the cavalry.
      */
