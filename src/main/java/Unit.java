@@ -89,10 +89,9 @@ public abstract class Unit {
      */
 
     public void attack(Unit unit){
-        if((this.attack + getAttackBonus()) > (this.armor+getResistBonus())){ // attack only if the damage is higher than the armor.
-            try{
-                unit.setHealth(unit.getHealth()-(this.attack + getAttackBonus())+(this.armor+getResistBonus()));
-            }catch (Exception ignore){}; // Note: This should be edited
+        if((this.attack + this.getAttackBonus()) > (unit.armor+unit.getResistBonus())){ // attack only if the damage is higher than the armor.
+            unit.setHealth(unit.getHealth()-(this.attack + this.getAttackBonus())+(unit.getArmor()+unit.getResistBonus()));
+            unit.attackCount += 1;
         }
     }
 }
