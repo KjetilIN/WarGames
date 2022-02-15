@@ -1,6 +1,8 @@
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 /**
@@ -8,28 +10,42 @@ import static org.junit.jupiter.api.Assertions.*;
  * Test all the methods in this class.
  *
  * @author Kjetil Indrehus
- * @version 1.0-SNAPSHOT 09.02.2022
+ * @version 1.0-SNAPSHOT 15.02.2022
  */
 
 class ArmyTest {
+
+    /**
+     * Fields for the army unit.
+     * defaultArmy: used single param constructor.
+     * emptyArmy: used two param constructor.
+     */
+
+    private Army defaultArmy;
+    private Army emptyArmy;
+    private Unit unitToAdd;
+
+    @BeforeEach
+    void setupArmyForTest(){
+        defaultArmy = new Army("name");
+        emptyArmy= new Army("name",new ArrayList<>());
+        unitToAdd = new RangedUnit("ranged",19);
+    }
 
     /**
      * Testing of the Army object was created and getName works for each constructor.
      */
 
     @Test
-    void getName() {
-        //Arrange - two objects with both of the constructor.
-        Army army = new Army("name");
-        Army army1 = new Army("name", new ArrayList<>());
+    void testGetName() {
 
-        //Assert positive
-        assertEquals("name",army.getName());
-        assertEquals("name",army1.getName());
+        //Assert positive for both constructors
+        assertEquals("name",defaultArmy.getName());
+        assertEquals("name",emptyArmy.getName());
 
         //Assert negative
-        assertNotEquals("ok",army.getName());
-        assertNotEquals("ok",army1.getName());
+        assertNotEquals("ok",defaultArmy.getName());
+        assertNotEquals("ok",emptyArmy.getName());
     }
 
     /**
@@ -37,42 +53,82 @@ class ArmyTest {
      */
 
     @Test
-    void add() {
-        //Arrange
-        Army army = new Army("army");
-        Army army1 = new Army("army2",new ArrayList<>());
-        Unit unitToAdd = new RangedUnit("ranged",19);
-
+    void testAddUnit() {
         //Act
-        army.add(unitToAdd);
-        army1.add(unitToAdd);
-        army1.add(unitToAdd);
+        defaultArmy.add(unitToAdd);
+        emptyArmy.add(unitToAdd);
+        emptyArmy.add(unitToAdd);
 
         //Assert positive
-        assertEquals(1,army.getAllUnits().size());
-        assertEquals(2,army1.getAllUnits().size());
+        assertEquals(1,defaultArmy.getAllUnits().size());
+        assertEquals(2,emptyArmy.getAllUnits().size());
 
         //Assert Negative
-        assertNotEquals(0,army.getAllUnits().size());
-        assertNotEquals(1,army1.getAllUnits().size());
+        assertNotEquals(0,defaultArmy.getAllUnits().size());
+        assertNotEquals(1,emptyArmy.getAllUnits().size());
 
+
+
+    }
+
+    /**
+     * Method to test if a list of units is added to the army.
+     * Testing if both contractors add the list of units.
+     */
+
+    @Test
+    void testAddListOfUnits() {
+        //Arrange
+        List<Unit> unitsToAdd = new ArrayList<>();
+
+        //Act - we add to units to the list and then add the list to the army.
+        unitsToAdd.add(unitToAdd);
+        unitsToAdd.add(unitToAdd);
+
+        defaultArmy.addAll(unitsToAdd);
+        emptyArmy.addAll(unitsToAdd);
+
+        //Assert positive
+        assertEquals(2,defaultArmy.getAllUnits().size());
+        assertEquals(2,emptyArmy.getAllUnits().size());
+
+        //Assert negative
+        assertNotEquals(0,defaultArmy.getAllUnits().size());
+        assertNotEquals(0,emptyArmy.getAllUnits().size());
+    }
+
+    @Test
+    void testRemoveUnit() {
+        //Arrange
+        defaultArmy.add(unitToAdd);
+        defaultArmy.add(unitToAdd);
+
+
+        //Act
+        defaultArmy.remove(unitToAdd);
+
+        //Assert positive
+        assertEquals(1,defaultArmy.getAllUnits().size());
+
+        //Assert negative
+        assertNotEquals(2,defaultArmy.getAllUnits().size());
 
 
     }
 
     @Test
-    void addAll() {
-        // TODO: 09.02.2022  Finish the last test class 
+    void testHasUnitsInArmy() {
+        //Arrange
+        defaultArmy.add(unitToAdd);
+
+        //Assert
+        assertFalse(emptyArmy.hasUnits());
+        assertTrue(defaultArmy.hasUnits());
+
     }
 
-    @Test
-    void remove() {
-    }
-
-    @Test
-    void hasUnits() {
-    }
-
+    // TODO: 15.02.2022 Ask if you need to test this  
+    /*
     @Test
     void getAllUnits() {
     }
@@ -92,4 +148,5 @@ class ArmyTest {
     @Test
     void testHashCode() {
     }
+   */
 }

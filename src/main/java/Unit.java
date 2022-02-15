@@ -1,7 +1,7 @@
 /**
  * This class represents a unit.
  * @author Kjetil Indrehus
- * @version 1.0-SNAPSHOT 07.02.22
+ * @version 1.0-SNAPSHOT 15.02.22
  */
 public abstract class Unit {
     private final String name;
@@ -9,9 +9,11 @@ public abstract class Unit {
     private final int attack;
     private final int armor;
     private int attackCount;
+    private boolean isAlive;
 
     /**
      * This is a constructor for the Unit class.
+     * Trows an illegal argument exception if on of the values is lower than zero.
      *
      * @param name The name of the unit
      * @param health the health of the unit
@@ -19,11 +21,17 @@ public abstract class Unit {
      * @param armor the armor of a unit
      */
     protected Unit(String name, int health, int attack, int armor) {
-        this.name = name;
-        this.health = health;
-        this.attack = attack;
-        this.armor = armor;
-        this.attackCount = 0;
+        if(name.length()>0 && health>0 && attack > 0 && armor >0){
+            this.name = name;
+            setHealth(health);
+            this.attack = attack;
+            this.armor = armor;
+            this.attackCount = 0;
+            this.isAlive = true;
+        }else{
+            throw new IllegalArgumentException("Unit constructor was given invalid value(s)");
+        }
+
     }
 
     public String getName(){
@@ -42,8 +50,36 @@ public abstract class Unit {
         return armor;
     }
 
+    /**
+     * Boolean value that check if the hero is alive.
+     *
+     * @return return true if the person is alive.
+     */
+    public boolean isAlive(){
+        return isAlive;
+    }
+
+    /**
+     * Method that sets the health of the unit given.
+     * Throws exception if the given input is bellow zero
+     *
+     * @param health the new health of the unit.
+     */
     public void setHealth(int health) {
-        this.health = health;
+        if(health <=0){
+            //In case of death
+            this.health = 0;
+            this.isAlive = false;
+
+        }else{
+            try {
+                this.health = health;
+            }catch (Exception e){
+                System.err.println("FAILURE(setHealth): "+e.getMessage());
+            }
+        }
+
+
     }
 
     /**
