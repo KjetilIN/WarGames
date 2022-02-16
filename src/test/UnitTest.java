@@ -1,5 +1,5 @@
-import units.CavalryUnit;
-import units.Unit;
+import backend.units.CavalryUnit;
+import backend.units.Unit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

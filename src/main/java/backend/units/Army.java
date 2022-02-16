@@ -1,8 +1,9 @@
-package units;
+package backend.units;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 /**
  * The Army class that holds all the units for a single class.
@@ -15,6 +16,7 @@ import java.util.Objects;
 public class Army {
     private final String name;
     private List<Unit> units;
+    private Random random;
 
     /**
      * Constructor for the army.
@@ -104,13 +106,8 @@ public class Army {
      * @return returns a random unit from the army.
      */
     public Unit getRandomUnit(){
-
-        /*
-        Get a random index using Math methods.
-        Math docs from oracle: https://docs.oracle.com/javase/8/docs/api/java/lang/Math.html
-         */
-        int index = (int)Math.round(Math.random() * units.size());
-        return units.get(index);
+        random = new Random();
+        return units.get(random.nextInt(getAllUnits().size()));
     }
 
     /**

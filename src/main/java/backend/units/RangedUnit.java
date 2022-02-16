@@ -1,4 +1,4 @@
-package units;
+package backend.units;
 
 /**
  * The ranged unit class. A sub-class of unit.
@@ -22,7 +22,7 @@ public class RangedUnit extends Unit{
      * @param attack attack of the ranged unit.
      * @param armor armor of the ranged unit.
      */
-    protected RangedUnit(String name, int health, int attack, int armor){
+    public RangedUnit(String name, int health, int attack, int armor){
         super(name, health, attack, armor);
     }
 
@@ -32,7 +32,7 @@ public class RangedUnit extends Unit{
      * @param name name of the ranged unit.
      * @param health health of the ranged unit
      */
-    protected RangedUnit(String name, int health){
+    public RangedUnit(String name, int health){
         super(name,health,ATTACK,ARMOR );
     }
 

@@ -1,5 +1,5 @@
-import units.CommanderUnit;
-import units.Unit;
+import backend.units.CommanderUnit;
+import backend.units.Unit;
 import org.junit.jupiter.api.Test;
 
 class CommanderUnitTest {

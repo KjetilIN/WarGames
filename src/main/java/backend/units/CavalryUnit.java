@@ -1,4 +1,4 @@
-package units;
+package backend.units;
 
 /**
  * The cavalry unit class.
@@ -24,7 +24,7 @@ public class CavalryUnit extends Unit {
      * @param attack attack of the cavalry unit.
      * @param armor armor of the cavalry unit.
      */
-    protected CavalryUnit(String name, int health, int attack, int armor){
+    public CavalryUnit(String name, int health, int attack, int armor){
         super(name, health, attack, armor);
     }
 
@@ -36,7 +36,7 @@ public class CavalryUnit extends Unit {
      * @param health health of the calvary unit.
      */
 
-    protected CavalryUnit(String name, int health){
+    public CavalryUnit(String name, int health){
         super(name,health,ATTACK,ARMOR);
     }
 

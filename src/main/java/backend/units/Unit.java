@@ -1,4 +1,4 @@
-package units;
+package backend.units;
 
 /**
  * This class represents a unit.

@@ -1,4 +1,4 @@
-package units;
+package backend.units;
 
 /**
  * Class to represent the infantry unit. Inference from the unit class.
@@ -31,7 +31,7 @@ public class InfantryUnit extends Unit {
      * @param name name of the infantry
      * @param health health of the infantry
      */
-    protected InfantryUnit(String name,int health){
+    public InfantryUnit(String name, int health){
         super(name,health,ATTACK,ARMOR);
     }
 

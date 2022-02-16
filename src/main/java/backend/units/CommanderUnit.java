@@ -1,4 +1,4 @@
-package units;
+package backend.units;
 
 /**
  * The commander unit that extends the CavalryUnit.
@@ -27,7 +27,7 @@ public class CommanderUnit extends CavalryUnit {
      * @param name name of the commander.
      * @param health health of the commander.
      */
-    protected CommanderUnit(String name, int health){
+    public CommanderUnit(String name, int health){
         super(name, health);
     }
 
