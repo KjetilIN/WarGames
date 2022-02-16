@@ -1,3 +1,5 @@
+package units;
+
 /**
  * This class represents a unit.
  * @author Kjetil Indrehus
@@ -57,6 +59,15 @@ public abstract class Unit {
      */
     public boolean isAlive(){
         return isAlive;
+    }
+
+    /**
+     * Set the status of the unit.
+     *
+     * @param alive a boolean value. True if the unit is alive.
+     */
+    public void setAlive(boolean alive) {
+        this.isAlive = alive;
     }
 
     /**
@@ -127,7 +138,7 @@ public abstract class Unit {
     public void attack(Unit unit){
         if((this.attack + this.getAttackBonus()) > (unit.armor+unit.getResistBonus())){ // attack only if the damage is higher than the armor.
             unit.setHealth(unit.getHealth()-(this.attack + this.getAttackBonus())+(unit.getArmor()+unit.getResistBonus()));
-            unit.attackCount += 1;
+            unit.attackCount += 1; //Attacking count is upped by one.
         }
     }
 }

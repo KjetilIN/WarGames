@@ -1,3 +1,5 @@
+package units;
+
 /**
  * Class to represent the infantry unit. Inference from the unit class.
  * @author Kjetil Indrehus

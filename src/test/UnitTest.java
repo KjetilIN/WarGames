@@ -1,3 +1,6 @@
+import units.CavalryUnit;
+import units.Unit;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,13 +13,19 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 
 class UnitTest{
+
+    private Unit unit;
+
+    @BeforeEach
+    void setupUnitTest(){
+        //Assert
+        unit = new CavalryUnit("name",40,30,10);
+    }
     /**
      * Testing if the getName method works.
      */
     @Test
     void testGetName() {
-        //Arrange
-        Unit unit = new CavalryUnit("name",40,30,10);
         //Assert positive
         assertEquals("name", unit.getName());
         //Assert negative
@@ -29,8 +38,6 @@ class UnitTest{
 
     @Test
     void testGetHealth() {
-        //Arrange
-        Unit unit = new CavalryUnit("name",40,30,10);
         //Assert positive
         assertEquals(40, unit.getHealth());
         //Assert negative
@@ -43,8 +50,6 @@ class UnitTest{
 
     @Test
     void testGetAttack() {
-        //Arrange
-        Unit unit = new CavalryUnit("name",40,30,10);
         //Assert positive
         assertEquals(30, unit.getAttack());
         //Assert negative
@@ -57,8 +62,6 @@ class UnitTest{
 
     @Test
     void testGetArmor() {
-        //Arrange
-        Unit unit = new CavalryUnit("name",40,30,10);
         //Assert positive
         assertEquals(10, unit.getArmor());
         //Assert negative
@@ -71,8 +74,6 @@ class UnitTest{
 
     @Test
     void testSetHealth() {
-        //Arrange
-        Unit unit = new CavalryUnit("name",40,30,10);
         //Act
         unit.setHealth(50);
         //Assert positive
@@ -88,8 +89,6 @@ class UnitTest{
 
     @Test
     void testGetAttackCount() {
-        //Arrange
-        Unit unit = new CavalryUnit("name",40,30,10);
         //Assert positive
         assertEquals(30, unit.getAttack());
         //Assert negative
@@ -102,8 +101,6 @@ class UnitTest{
 
     @Test
     void testToString() {
-        //Arrange
-        Unit unit = new CavalryUnit("name",40,30,10);
         //Assert positive
         assertEquals("Name: name::HP: 40::Attack: 30", unit.toString());
         //Assert negative

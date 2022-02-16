@@ -1,3 +1,5 @@
+package units;
+
 /**
  * The commander unit that extends the CavalryUnit.
  *

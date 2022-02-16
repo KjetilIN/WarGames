@@ -1,3 +1,5 @@
+package units;
+
 /**
  * The cavalry unit class.
  * Extends the unit class.

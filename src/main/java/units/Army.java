@@ -1,3 +1,5 @@
+package units;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -72,6 +74,7 @@ public class Army {
      * @param unit the unit to be removed from the army.
      */
     public void remove(Unit unit){
+        if(unit == null){throw new IllegalArgumentException("No unit is given.");}
         units.remove(unit);
     }
 
