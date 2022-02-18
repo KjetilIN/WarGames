@@ -14,7 +14,7 @@ import java.util.Random;
  */
 
 public class Army {
-    private final String name;
+    private String name;
     private List<Unit> units;
     private Random random;
 
@@ -22,10 +22,16 @@ public class Army {
      * Constructor for the army.
      * This constructor takes only a name of the army.
      * Initialise the list as ArrayList.
+     * Throws exception if name is empty or null.
      *
      * @param name name of the army.
      */
-    public Army(String name){
+    public Army(String name) throws IllegalArgumentException, NullPointerException{
+        if(name.isEmpty()){
+            throw new IllegalArgumentException("No name given");
+        }else if(name == null){
+            throw new NullPointerException("Value given was null");
+        }
         this.name = name;
         units = new ArrayList<>();
     }
@@ -36,7 +42,13 @@ public class Army {
      * @param name name of the unit
      * @param units a list of units that is the total amount of units.
      */
-    public Army(String name, List<Unit> units){
+    public Army(String name, List<Unit> units) throws IllegalArgumentException{
+        if(name.isEmpty() || (name == null && units != null)){
+            throw new IllegalArgumentException("No name given");
+        }else if(units == null){
+            throw new IllegalArgumentException("Units was empty object");
+        }
+
         this.name = name;
         this.units = units;
     }
@@ -106,6 +118,7 @@ public class Army {
      * @return returns a random unit from the army.
      */
     public Unit getRandomUnit(){
+        // TODO: 18.02.2022 Ask if needed to make new random (random class?)
         random = new Random();
         return units.get(random.nextInt(getAllUnits().size()));
     }

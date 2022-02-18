@@ -11,6 +11,13 @@ import frontend.terminalInterface.utility.ScannerUtility;
  */
 
 public class TerminalGui {
+
+    private ScannerUtility utility;
+
+    private TerminalGui(){
+        utility = new ScannerUtility();
+    }
+
     /**
      * Method to tell the user what armies are ready for battle, and their unit count.
      * Ask if the user is ready for simulation.
@@ -20,7 +27,7 @@ public class TerminalGui {
      * @param utility utility class to handle input.
      * @return returns true if the user is ready.
      */
-    public static boolean intro(Army army1, Army army2, ScannerUtility utility){
+    public boolean intro(Army army1, Army army2, ScannerUtility utility){
         System.out.println("====== Battle simulation ======");
         System.out.println(army1.getName() + " VS. " + army2.getName());
         System.out.println("===== STATS ======");
@@ -41,7 +48,7 @@ public class TerminalGui {
      * @param testArmy1 first army to prepare for battle.
      * @param testArmy2 the second army to prepare for battle.
      */
-    public static void addTestUnitsToArmy(Army testArmy1,Army testArmy2){
+    public void addTestUnitsToArmy(Army testArmy1,Army testArmy2){
         //Removes all of the units
         testArmy1.getAllUnits().clear();
         testArmy2.getAllUnits().clear();
@@ -66,23 +73,14 @@ public class TerminalGui {
     }
 
     /**
-     * Main method that executes the simulation.
+     * Takes two army's and simulate multiple battles.
+     * GUI method that takes input from terminal. NB! Method to be terminated or changed.
      *
-     * @param args argument given (In this case, no additional args).
+     * @param testArmy1 the first army given to be battled.
+     * @param testArmy2 the second army to join the battle.
      */
-    public static void main(String[] args) {
-        Army testArmy1 = new Army("NTNU");
-        Army testArmy2 = new Army("UIO");
-        ScannerUtility utility = new ScannerUtility();
 
-        //Add the army
-        addTestUnitsToArmy(testArmy1,testArmy2);
-        //Intro to the battle
-        boolean ready = intro(testArmy1,testArmy2, utility);
-        if(!ready){
-            System.exit(1); // Ends the program
-        }
-
+    public void simulateMultipleBattleOption(Army testArmy1, Army testArmy2){
         int amountOfBattles = utility.validateInt(1,2000000000," enter amount of simulations:");
         int scoreArmy1 = 0;
         int scoreArmy2 = 0;
@@ -90,7 +88,7 @@ public class TerminalGui {
             amountOfBattles--;
             addTestUnitsToArmy(testArmy1,testArmy2); //update the army
             Battle battle = new Battle(testArmy1,testArmy2);
-            Army winner = battle.simulate();
+            Army winner = battle.simulateBattle();
             if(winner.equals(testArmy1)){
                 scoreArmy1++;
             }else{
@@ -103,6 +101,64 @@ public class TerminalGui {
         System.out.println("Final score:");
         System.out.println(testArmy1.getName() +": " + scoreArmy1 + " wins.");
         System.out.println(testArmy2.getName() +": " + scoreArmy2 + " wins.");
+
+    }
+
+    /**
+     * Takes two army's and simulates a single battle.
+     * Shows each step in the terminal.
+     * GUI method that takes input from terminal. NB! Method to be terminated or changed.
+     *
+     * @param testArmy1 the first army given to be battled.
+     * @param testArmy2 the second army to join the battle.
+     */
+
+    public void simulateSingleBattleOption(Army testArmy1, Army testArmy2){
+        Battle battle = new Battle(testArmy1,testArmy2);
+        while (testArmy1.hasUnits() && testArmy2.hasUnits()){
+            System.out.println(battle.simulateStep());
+        }
+        if(testArmy1.hasUnits()){
+            System.out.println(testArmy1.getName() + " won with " + testArmy1.getAllUnits().size() +" left!");
+        }else{
+            System.out.println(testArmy2.getName() + " won with " + testArmy2.getAllUnits().size() +" left!");
+
+        }
+
+    }
+
+    /**
+     * Main method that executes the simulation.
+     *
+     * @param args argument given (In this case, no additional args).
+     */
+    public static void main(String[] args) {
+        TerminalGui gui = new TerminalGui();
+        Army testArmy1 = new Army("NTNU");
+        Army testArmy2 = new Army("UIO");
+
+
+        //Add the army
+        gui.addTestUnitsToArmy(testArmy1,testArmy2);
+        //Intro to the battle
+        boolean ready = gui.intro(testArmy1,testArmy2, gui.utility);
+        if(!ready){
+            System.exit(1); // Ends the program
+        }
+
+        int battleOption = gui.utility.validateInt(0,1, "enter 1 for for battle, or 0 for multiple battle simulatios: ");
+        switch (battleOption){
+            case 0:
+                gui.simulateMultipleBattleOption(testArmy1,testArmy2);
+                break;
+
+            case 1:
+                gui.simulateSingleBattleOption(testArmy1,testArmy2);
+                break;
+
+            default:
+                System.err.println("ERROR!");
+        }
 
 
 

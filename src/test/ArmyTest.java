@@ -38,6 +38,38 @@ class ArmyTest {
      */
 
     @Test
+    void testNegativeConstructors(){
+        //Act contractor for army with null name
+        try{
+            Army army = new Army("");
+            fail();
+        }catch (IllegalArgumentException e){
+            if(e.getMessage().equalsIgnoreCase("No name given")){
+                assertTrue(true);
+            }else{
+                fail();
+            }
+        }
+
+        try{
+            List<Unit> units = new ArrayList<>();
+            units.add(unitToAdd);
+            Army army = new Army("",units);
+            fail();
+        }catch (IllegalArgumentException e){
+            if(e.getMessage().equalsIgnoreCase("No name given")){
+                assertTrue(true);
+            }else{
+                fail();
+            }
+        }
+
+
+
+
+    }
+
+    @Test
     void testGetName() {
 
         //Assert positive for both constructors
