@@ -23,7 +23,7 @@ public abstract class Unit {
      * @param armor the armor of a unit
      */
     protected Unit(String name, int health, int attack, int armor) {
-        if(name.length()>0 && health>0 && attack > 0 && armor >0){
+        if(name.length()>0 && health>0 && attack > 0 && armor >=0){
             this.name = name;
             setHealth(health);
             this.attack = attack;

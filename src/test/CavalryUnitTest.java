@@ -1,5 +1,6 @@
 import backend.units.CavalryUnit;
 import backend.units.Unit;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -8,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * The test class for the cavalryUnit.
  *
  * @author Kjetil Indrehus
- * @version 1.0-SNAPSHOT 09.02.22
+ * @version 1.0-SNAPSHOT 23.02.22
  */
 
 class CavalryUnitTest {
@@ -18,7 +19,9 @@ class CavalryUnitTest {
      * Attack and armor should be assigned static values.
      */
 
+
     @Test
+    @DisplayName("Test that the default Cavalry attack value is correct.")
     void testDefaultAttackArmor(){
         /*
         ATTACK = 20
@@ -41,6 +44,7 @@ class CavalryUnitTest {
      */
 
     @Test
+    @DisplayName("Test cavalry attack bonus changes for each attack.")
     void testGetAttackBonus() {
         //Arrange
         Unit unit = new CavalryUnit("name",10);
@@ -68,6 +72,7 @@ class CavalryUnitTest {
      */
 
     @Test
+    @DisplayName("Test get resist bonus for cavalry change after attack.")
     void testGetResistBonus() {
         //Arrange
         Unit unit = new CavalryUnit("name",10);

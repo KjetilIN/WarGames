@@ -157,15 +157,7 @@ public class TerminalGui {
                 break;
 
             default:
-                System.err.println("ERROR!");
+                System.err.println("Input zero or one.");
         }
-
-
-
-
-
-
-
-
     }
 }

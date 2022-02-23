@@ -20,7 +20,7 @@ public class InfantryUnit extends Unit {
      * @param attack attack of the infantry unit.
      * @param armor armor of the infantry unit.
      */
-    protected InfantryUnit(String name,int health, int attack, int armor){
+    public InfantryUnit(String name, int health, int attack, int armor){
         super(name, health, attack, armor);
     }
 

@@ -50,8 +50,8 @@ public class RangedUnit extends Unit{
     /**
      * The resistance bonus for the ranged unit.
      * The ranged unit get a large resist bonus the first time, because they are far away.
-     * The second time the ranged unit is attacked, it is closer to the enemy and therefor takes more damage.
-     * For the third attack the enemy is close, so therefor the resistance bonus is a constant value.
+     * The second time the ranged unit is attacked, it is closer to the enemy and therefore takes more damage.
+     * For the third attack the enemy is close, so the resistance bonus is a constant value.
      *
      * @return return the resistance bonus for the ranged unit based on the amount of attack received .
      */

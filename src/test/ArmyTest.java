@@ -1,5 +1,6 @@
 import backend.units.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Test all the methods in this class.
  *
  * @author Kjetil Indrehus
- * @version 1.0-SNAPSHOT 15.02.2022
+ * @version 1.0-SNAPSHOT 23.02.2022
  */
 
 class ArmyTest {
@@ -38,6 +39,7 @@ class ArmyTest {
      */
 
     @Test
+    @DisplayName("Test that constructor throws exception.")
     void testNegativeConstructors(){
         //Act contractor for army with null name
         try{
@@ -70,6 +72,7 @@ class ArmyTest {
     }
 
     @Test
+    @DisplayName("Test getName() for ArmyClass.")
     void testGetName() {
 
         //Assert positive for both constructors
@@ -86,6 +89,7 @@ class ArmyTest {
      */
 
     @Test
+    @DisplayName("Test addUnit() to the Army class.")
     void testAddUnit() {
         //Act
         defaultArmy.add(unitToAdd);
@@ -110,6 +114,7 @@ class ArmyTest {
      */
 
     @Test
+    @DisplayName("Test add list of units to army.")
     void testAddListOfUnits() {
         //Arrange
         List<Unit> unitsToAdd = new ArrayList<>();
@@ -130,7 +135,12 @@ class ArmyTest {
         assertNotEquals(0,emptyArmy.getAllUnits().size());
     }
 
+    /**
+     * Method that checks if the units is removed from the army.
+     */
+
     @Test
+    @DisplayName("Test removeUnit() method.")
     void testRemoveUnit() {
         //Arrange
         defaultArmy.add(unitToAdd);
@@ -149,7 +159,36 @@ class ArmyTest {
 
     }
 
+    /**
+     * Test if the method remove() throws the right exceptions.
+     */
+
     @Test
+    @DisplayName("Test remove() throws exception.")
+    void testRemoveNegative(){
+        try{
+            emptyArmy.remove(null);
+            fail();
+        }catch (IllegalArgumentException e){
+            assertEquals("No unit is given.", e.getMessage());
+        }
+
+        try{
+            emptyArmy.remove(unitToAdd);
+            fail();
+        }catch (IllegalArgumentException e){
+            assertEquals("Empty army have no unit to remove", e.getMessage());
+        }
+
+    }
+
+    /**
+     * Method that test hasUnit() works.
+     * Should return true when
+     */
+
+    @Test
+    @DisplayName("Test boolean method that checks if there are units in the army.")
     void testHasUnitsInArmy() {
         //Arrange
         defaultArmy.add(unitToAdd);
@@ -160,26 +199,51 @@ class ArmyTest {
 
     }
 
-    // TODO: 15.02.2022 Ask if you need to test this  
-    /*
+    /**
+     * Methods that test if the getAllUnits method, returns the list of units from the army.
+     */
     @Test
+    @DisplayName("Test that getAllUnits returns list.")
     void getAllUnits() {
+        //Act
+        defaultArmy.add(unitToAdd);
+        defaultArmy.add(unitToAdd);
+
+        //Assert
+        assertEquals(unitToAdd, defaultArmy.getAllUnits().get(0));
+        assertEquals(new ArrayList<>(),emptyArmy.getAllUnits());
     }
 
-    @Test
-    void getRandomUnit() {
-    }
+    /**
+     * Test if the method returns the correct information string for the army.
+     */
 
     @Test
+    @DisplayName("Test toString() method (Information sting for the army)")
     void testToString() {
+        //Act
+        emptyArmy.add(unitToAdd);
+        //Assert
+        assertEquals("Army{name='name', units size =0}",defaultArmy.toString());
+        assertEquals("Army{name='name', units size =1}",emptyArmy.toString());
     }
 
+    /**
+     * Test of the equals-method is overwritten in army class, and works.
+     */
+
     @Test
+    @DisplayName("Test if equals() method is overwritten and works.")
     void testEquals() {
+        //Act
+        emptyArmy.add(unitToAdd);
+        defaultArmy.add(unitToAdd);
+        Army randomArmy = new Army("NotName");
+        randomArmy.add(new RangedUnit("BowMan",83));
+        //Assert
+        assertTrue(defaultArmy.equals(emptyArmy));
+        assertNotEquals(defaultArmy, randomArmy);
     }
 
-    @Test
-    void testHashCode() {
-    }
-   */
+
 }

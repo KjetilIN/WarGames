@@ -17,7 +17,7 @@ public class CommanderUnit extends CavalryUnit {
      * @param armor armor of the commander unit.
      */
 
-    protected CommanderUnit(String name, int health, int attack, int armor){
+    public CommanderUnit(String name, int health, int attack, int armor){
         super(name, health, attack, armor);
     }
 

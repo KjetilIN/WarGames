@@ -31,8 +31,10 @@ public class Army {
             throw new IllegalArgumentException("No name given");
         }else if(name == null){
             throw new NullPointerException("Value given was null");
+        }else{
+            this.name = name;
         }
-        this.name = name;
+
         units = new ArrayList<>();
     }
 
@@ -47,9 +49,11 @@ public class Army {
             throw new IllegalArgumentException("No name given");
         }else if(units == null){
             throw new IllegalArgumentException("Units was empty object");
+        }else{
+            this.name = name;
         }
 
-        this.name = name;
+
         this.units = units;
     }
 
@@ -89,6 +93,7 @@ public class Army {
      */
     public void remove(Unit unit){
         if(unit == null){throw new IllegalArgumentException("No unit is given.");}
+        if(this.units.isEmpty()){ throw new IllegalArgumentException("Empty army have no unit to remove");}
         units.remove(unit);
     }
 

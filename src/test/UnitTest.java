@@ -1,7 +1,9 @@
-import backend.units.CavalryUnit;
-import backend.units.Unit;
+import backend.units.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import javax.swing.text.AbstractDocument;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,11 +11,10 @@ import static org.junit.jupiter.api.Assertions.*;
  * Test of the abstract unit class with its method.
  *
  * @author Kjetil Indrehus
- * @version 1.0-SNAPSHOT 09.02.22
+ * @version 1.0-SNAPSHOT 23.02.22
  */
 
 class UnitTest{
-
     private Unit unit;
 
     @BeforeEach
@@ -21,10 +22,83 @@ class UnitTest{
         //Assert
         unit = new CavalryUnit("name",40,30,10);
     }
+
+    /**
+     * Test that the unit constructor is correct.
+     * Shold not throw exceptions.
+     */
+
+    @Test
+    @DisplayName("Test constructor for all unit types.")
+    void testUnitContructor(){
+        try{
+            Unit cavalryUnit = new CavalryUnit("name",10,10,10);
+            Unit rangedUnit = new RangedUnit("name",10,10,10);
+            Unit commanderUnit = new CommanderUnit("name",10,10,10);
+            Unit infantryUnit = new InfantryUnit("name",10,10,10);
+
+            assertTrue(true);
+        }catch (Exception e){
+            fail();
+        }
+    }
+
+    /**
+     * Test that the negative constructor works.
+     * Should throw exception when given Illegal argument.
+     */
+    @Test
+    @DisplayName("Test Unit constructor throws exception, when given Illegal-argument")
+    void testNegativeConstructor(){
+        //Empty name
+        try{
+            Unit unit = new CavalryUnit("",40,30,10);
+            fail();
+        }catch (IllegalArgumentException e){
+            assertEquals("Unit constructor was given invalid value(s)",e.getMessage());
+        }
+
+        //Health lower than 1.
+        try{
+            Unit unit = new CavalryUnit("name",0,10,10);
+            fail();
+        }catch (IllegalArgumentException e){
+            assertEquals("Unit constructor was given invalid value(s)",e.getMessage());
+        }
+
+        //Attack is positive
+        try {
+            Unit unit = new CavalryUnit("name",10,-2,10);
+            fail();
+        }catch (IllegalArgumentException e){
+            assertEquals("Unit constructor was given invalid value(s)",e.getMessage());
+        }
+
+        //Asset positive armor
+
+        try {
+            Unit unit = new CavalryUnit("name",10,10,-1);
+            fail();
+        }catch (IllegalArgumentException e){
+            assertEquals("Unit constructor was given invalid value(s)",e.getMessage());
+        }
+
+        //Assert Armor is bigger than 0
+        try{
+            Unit unit = new CavalryUnit("name",10,10,0);
+            assertTrue(true);
+        }catch (Exception e){
+            fail();
+        }
+
+    }
+
+
     /**
      * Testing if the getName method works.
      */
     @Test
+    @DisplayName("Test getName method for the unit.")
     void testGetName() {
         //Assert positive
         assertEquals("name", unit.getName());
@@ -37,6 +111,7 @@ class UnitTest{
      */
 
     @Test
+    @DisplayName("Test getHealth returns a correct health for each unit.")
     void testGetHealth() {
         //Assert positive
         assertEquals(40, unit.getHealth());
@@ -49,6 +124,7 @@ class UnitTest{
      */
 
     @Test
+    @DisplayName("Test the getAttack method for units.")
     void testGetAttack() {
         //Assert positive
         assertEquals(30, unit.getAttack());
@@ -61,6 +137,7 @@ class UnitTest{
      */
 
     @Test
+    @DisplayName("Test the getArmour for unit.")
     void testGetArmor() {
         //Assert positive
         assertEquals(10, unit.getArmor());
@@ -73,6 +150,7 @@ class UnitTest{
      */
 
     @Test
+    @DisplayName("Test that the method sets health. (Positive)")
     void testSetHealth() {
         //Act
         unit.setHealth(50);
@@ -88,6 +166,7 @@ class UnitTest{
      */
 
     @Test
+    @DisplayName("Test if attack-count increments after an attack for the unit.")
     void testGetAttackCount() {
         //Assert positive
         assertEquals(30, unit.getAttack());
@@ -100,6 +179,7 @@ class UnitTest{
      */
 
     @Test
+    @DisplayName("Test that the toString is overwritten for the Unit.")
     void testToString() {
         //Assert positive
         assertEquals("Name: name::HP: 40::Attack: 30", unit.toString());
@@ -114,6 +194,7 @@ class UnitTest{
      */
 
     @Test
+    @DisplayName("Test attack method for each type of unit.")
     void testAttack() {
         //Assert
         Unit attacker = new CavalryUnit("unit1",100,10,10);

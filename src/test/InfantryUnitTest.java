@@ -1,8 +1,17 @@
 import backend.units.*;
 import backend.units.Unit;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+/**
+ * Infantry unit test class.
+ *
+ * @author Kjetil Indrehus
+ * @version 1.0-SNAPSHOT 16.02.2022
+ *
+ */
 
 class InfantryUnitTest {
     /**
@@ -11,6 +20,7 @@ class InfantryUnitTest {
      */
 
     @Test
+    @DisplayName("Test default attack value for infantry, is correct.")
     void testDefaultAttackArmor(){
         /*
         ATTACK = 12
@@ -34,6 +44,7 @@ class InfantryUnitTest {
      */
 
     @Test
+    @DisplayName("Test that the attack bonus changes for the infantry after attack.")
     void testGetAttackBonus() {
         //Arrange
         Unit unit = new InfantryUnit("name",10);
@@ -57,11 +68,11 @@ class InfantryUnitTest {
 
     /**
      * Method to test the getResistBonus for the infantry unit.
-     * The
-     *
+     * The resist bonus should change.
      */
 
     @Test
+    @DisplayName("Test that infantry resist bonus changes after attacked.")
     void testGetResistBonus() {
         //Arrange
         Unit unit = new InfantryUnit("name",10);
