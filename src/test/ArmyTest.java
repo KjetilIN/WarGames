@@ -2,6 +2,8 @@ import backend.units.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +28,45 @@ class ArmyTest {
     private Army defaultArmy;
     private Army emptyArmy;
     private Unit unitToAdd;
+    private Army armyWithFiveEach;
 
     @BeforeEach
     void setupArmyForTest(){
         defaultArmy = new Army("name");
         emptyArmy= new Army("name",new ArrayList<>());
         unitToAdd = new RangedUnit("ranged",19);
+        armyWithFiveEach = new Army("ArmyWithFive");
+
+        // TODO: 20.03.2022 Ask to put this in a for-loop (?)
+
+        /* 5 infantry units */
+        armyWithFiveEach.add(new InfantryUnit("Name",3));
+        armyWithFiveEach.add(new InfantryUnit("Name",3));
+        armyWithFiveEach.add(new InfantryUnit("Name",3));
+        armyWithFiveEach.add(new InfantryUnit("Name",3));
+        armyWithFiveEach.add(new InfantryUnit("Name",3));
+
+        /* 5 cavalry units */
+        armyWithFiveEach.add(new CavalryUnit("Name",3));
+        armyWithFiveEach.add(new CavalryUnit("Name",3));
+        armyWithFiveEach.add(new CavalryUnit("Name",3));
+        armyWithFiveEach.add(new CavalryUnit("Name",3));
+        armyWithFiveEach.add(new CavalryUnit("Name",3));
+
+        /* 5 ranged units */
+        armyWithFiveEach.add(new RangedUnit("Name",3));
+        armyWithFiveEach.add(new RangedUnit("Name",3));
+        armyWithFiveEach.add(new RangedUnit("Name",3));
+        armyWithFiveEach.add(new RangedUnit("Name",3));
+        armyWithFiveEach.add(new RangedUnit("Name",3));
+
+        /* 5 commander units */
+        armyWithFiveEach.add(new CommanderUnit("Name",3));
+        armyWithFiveEach.add(new CommanderUnit("Name",3));
+        armyWithFiveEach.add(new CommanderUnit("Name",3));
+        armyWithFiveEach.add(new CommanderUnit("Name",3));
+        armyWithFiveEach.add(new CommanderUnit("Name",3));
+
     }
 
     /**
@@ -244,6 +279,41 @@ class ArmyTest {
         assertTrue(defaultArmy.equals(emptyArmy));
         assertNotEquals(defaultArmy, randomArmy);
     }
+
+    @Test
+    @DisplayName("Test if getInfantryUnits works.")
+    void testGetInfatryUnits() {
+        assertEquals(0, emptyArmy.getInfantryUnits().size());
+        assertEquals(5, armyWithFiveEach.getInfantryUnits().size());
+
+    }
+
+    @Test
+    @DisplayName("Test if getCavalryUnits works.")
+    void testGetCavalryUnit() {
+        assertEquals(0, emptyArmy.getCavalryUnits().size());
+        /* Should get all 5 cavalry units and 5 commander units, because of inheritance*/
+        assertEquals(10, armyWithFiveEach.getCavalryUnits().size());
+
+    }
+
+    @Test
+    @DisplayName("Test if getRangedUnits works.")
+    void testGetRangedUnits() {
+        assertEquals(0, emptyArmy.getRangedUnits().size());
+        assertEquals(5, armyWithFiveEach.getRangedUnits().size());
+
+    }
+
+    @Test
+    @DisplayName("Test if getCommanderUnits works.")
+    void testGetCommanderUnits() {
+        assertEquals(0, emptyArmy.getCommanderUnits().size());
+        assertEquals(5, armyWithFiveEach.getCommanderUnits().size());
+
+    }
+
+
 
 
 }

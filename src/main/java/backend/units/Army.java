@@ -117,10 +117,41 @@ public class Army {
         return units;
     }
 
+    /**
+     * A method that gets all the InfantryUnits.
+     *
+     * @return returns a list of infantry units.
+     */
     public List<Unit> getInfantryUnits(){
         return this.units.stream().filter(InfantryUnit.class::isInstance).collect(Collectors.toList());
     }
 
+    /**
+     * A method that gets all the CavalryUnit.
+     *
+     * @return returns a list of Cavalry-units.
+     */
+    public List<Unit> getCavalryUnits(){
+        return this.units.stream().filter(CavalryUnit.class::isInstance).collect(Collectors.toList());
+    }
+
+    /**
+     * A method that gets all the RangedUnit.
+     *
+     * @return returns a list of Ranged-units.
+     */
+    public List<Unit> getRangedUnits(){
+        return this.units.stream().filter(RangedUnit.class::isInstance).collect(Collectors.toList());
+    }
+
+    /**
+     * A method that gets all the CommanderUnit.
+     *
+     * @return returns a list of Commander-units.
+     */
+    public List<Unit> getCommanderUnits(){
+        return this.units.stream().filter(CommanderUnit.class::isInstance).collect(Collectors.toList());
+    }
 
     /**
      * Gets a random unit from the army.
