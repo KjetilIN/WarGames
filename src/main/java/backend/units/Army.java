@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * The Army class that holds all the units for a single class.
@@ -114,6 +115,10 @@ public class Army {
      */
     public List<Unit> getAllUnits(){
         return units;
+    }
+
+    public List<Unit> getInfantryUnits(){
+        return this.units.stream().filter(InfantryUnit.class::isInstance).collect(Collectors.toList());
     }
 
 
