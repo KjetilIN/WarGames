@@ -1,4 +1,4 @@
-package backend.units;
+package no.ntnu.wargames.backend.units;
 
 /**
  * The cavalry unit class.

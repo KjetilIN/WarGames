@@ -1,4 +1,4 @@
-package backend.units;
+package no.ntnu.wargames.backend.units;
 
 /**
  * Class to represent the infantry unit. Inference from the unit class.

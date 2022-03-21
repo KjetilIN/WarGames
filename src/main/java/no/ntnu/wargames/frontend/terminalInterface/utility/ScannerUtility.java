@@ -1,4 +1,4 @@
-package frontend.terminalInterface.utility;
+package no.ntnu.wargames.frontend.terminalInterface.utility;
 
 import java.util.Scanner;
 

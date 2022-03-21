@@ -1,7 +1,7 @@
-package backend;
+package no.ntnu.wargames.backend;
 
-import backend.units.Army;
-import backend.units.Unit;
+import no.ntnu.wargames.backend.units.Army;
+import no.ntnu.wargames.backend.units.Unit;
 
 import java.util.Random;
 

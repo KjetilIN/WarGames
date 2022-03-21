@@ -1,4 +1,4 @@
-package backend.units;
+package no.ntnu.wargames.backend.units;
 
 import java.util.ArrayList;
 import java.util.List;

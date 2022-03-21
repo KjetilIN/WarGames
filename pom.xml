@@ -39,7 +39,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>no.ntnu.idatg2001.PomDemoApp</mainClass>
+                            <mainClass>no.ntnu.wargames.frontend.terminalInterface.TerminalGui</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

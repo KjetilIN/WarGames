@@ -1,4 +1,4 @@
-package backend.units;
+package no.ntnu.wargames.backend.units;
 
 /**
  * The ranged unit class. A sub-class of unit.

@@ -1,5 +1,7 @@
-import backend.units.CavalryUnit;
-import backend.units.Unit;
+package no.ntnu.wargames;
+
+import no.ntnu.wargames.backend.units.CavalryUnit;
+import no.ntnu.wargames.backend.units.Unit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

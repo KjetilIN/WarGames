@@ -1,9 +1,9 @@
-import backend.units.*;
+package no.ntnu.wargames;
+
+import no.ntnu.wargames.backend.units.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.ArrayList;
 import java.util.List;

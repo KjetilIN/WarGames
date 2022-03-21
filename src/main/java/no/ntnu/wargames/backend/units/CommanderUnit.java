@@ -1,4 +1,4 @@
-package backend.units;
+package no.ntnu.wargames.backend.units;
 
 /**
  * The commander unit that extends the CavalryUnit.

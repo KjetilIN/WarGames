@@ -1,7 +1,7 @@
-package frontend.terminalInterface;
-import backend.Battle;
-import backend.units.*;
-import frontend.terminalInterface.utility.ScannerUtility;
+package no.ntnu.wargames.frontend.terminalInterface;
+import no.ntnu.wargames.backend.Battle;
+import no.ntnu.wargames.frontend.terminalInterface.utility.ScannerUtility;
+import no.ntnu.wargames.backend.units.*;
 
 /**
  * The text-based application used for running the app thought the terminal.

@@ -1,9 +1,9 @@
-import backend.units.*;
+package no.ntnu.wargames;
+
+import no.ntnu.wargames.backend.units.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import javax.swing.text.AbstractDocument;
 
 import static org.junit.jupiter.api.Assertions.*;
 
