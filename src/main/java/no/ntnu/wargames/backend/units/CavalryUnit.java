@@ -15,6 +15,7 @@ public class CavalryUnit extends Unit {
      */
     private static final int ATTACK = 20;
     private static final int ARMOR = 12;
+    private String unitType = "Cavalry";
 
     /**
      * Cavalry Unit with all fields available for change.
@@ -63,5 +64,10 @@ public class CavalryUnit extends Unit {
     @Override
     public int getResistBonus() {
         return 3;
+    }
+
+    @Override
+    public String getUnitType() {
+        return this.unitType;
     }
 }

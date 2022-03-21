@@ -15,6 +15,7 @@ public class setupLoadMain extends Application {
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("setUpPage.fxml"));
         Scene scene = new Scene(loader.load());
+        stage.setTitle("WarGames");
         stage.setScene(scene);
         stage.show();
     }

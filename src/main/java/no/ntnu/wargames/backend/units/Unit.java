@@ -118,7 +118,11 @@ public abstract class Unit {
         return this.attackCount;
     }
 
-
+    /**
+     * Abstract method to get the unit type.
+     * @return returns the unit type as string
+     */
+    public abstract String getUnitType();
 
     /**
      * This method return basic information about a unit in a string.

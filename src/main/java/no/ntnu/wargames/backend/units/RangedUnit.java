@@ -13,6 +13,7 @@ public class RangedUnit extends Unit{
      */
     private static final int ATTACK = 15;
     private static final int ARMOR = 8;
+    private String unitType = "Ranged";
 
     /**
      * The ranged unit constructor with all of UNit fields as arguments.
@@ -62,5 +63,10 @@ public class RangedUnit extends Unit{
             return 6;
         }
         return getAttackCount() == 1 ? 4 : 2; // else check if it is the second attack and then return 4, else returns 2.
+    }
+
+    @Override
+    public String getUnitType() {
+        return this.unitType;
     }
 }

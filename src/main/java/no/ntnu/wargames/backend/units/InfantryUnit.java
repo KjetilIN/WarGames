@@ -11,6 +11,7 @@ public class InfantryUnit extends Unit {
      */
     private static final int ATTACK = 12;
     private static final int ARMOR = 10;
+    private String unitType = "Infantry";
 
     /**
      * This is the infantry unit constructor all fields.
@@ -56,4 +57,10 @@ public class InfantryUnit extends Unit {
     public int getResistBonus() {
         return 1;
     }
+
+    @Override
+    public String getUnitType() {
+        return this.unitType;
+    }
+
 }
