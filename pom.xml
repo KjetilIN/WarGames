@@ -72,7 +72,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.3</version>
                 <configuration>
-                    <mainClass>no.ntnu.cardgame.Main</mainClass>
+                    <mainClass>no.ntnu.wargames.setupLoadMain</mainClass>
                 </configuration>
             </plugin>
         </plugins>
