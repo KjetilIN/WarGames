@@ -58,6 +58,10 @@ public class Army {
         this.units = units;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     /**
      * Getter for the name of the army.
      *
