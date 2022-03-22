@@ -12,6 +12,13 @@ import java.util.ArrayList;
 
 public class FileHandler {
 
+    /**
+     * Method that returns the army from the .csv file.
+     *
+     * @param path path of the file as Path object.
+     * @return returns a army object from the file.
+     * @throws IllegalArgumentException throws exception if anything is wrong.
+     */
     public static Army getArmyFromFileCSV(Path path) throws IllegalArgumentException{
         Army returnArmy = new Army(" ",new ArrayList<>());
         ArrayList<String> lines = new ArrayList<>();
