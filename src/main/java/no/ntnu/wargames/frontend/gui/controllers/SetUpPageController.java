@@ -4,10 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
@@ -19,6 +16,7 @@ import no.ntnu.wargames.backend.units.Unit;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class SetUpPageController implements Initializable {
@@ -30,6 +28,10 @@ public class SetUpPageController implements Initializable {
     /* First army methods/fields*/
     @FXML
     private TextField pathArmy1;
+
+    @FXML
+    private Label txtArmy1Name;
+
     private ObservableList<Unit> observableListArmy1;
     @FXML
     private ImageView iconCheckArmy1;
@@ -71,9 +73,20 @@ public class SetUpPageController implements Initializable {
         }
     }
 
-
-
+    @FXML
+    public void onEditNameArmy1(){
+        String result = openEditNameDialog();
+        if(result != null){
+            txtArmy1Name.setText(result);
+            army1.setName(result);
+        }else{
+            Alert waring = new Alert(Alert.AlertType.WARNING);
+            waring.setContentText("NO NAME WAS GIVEN");
+            waring.showAndWait();
+        }
+    }
     /* Methods that are common */
+
     @FXML
     public File getFile(){
         FileChooser fileChooser = new FileChooser();
@@ -83,6 +96,19 @@ public class SetUpPageController implements Initializable {
         return fileChooser.showOpenDialog(null);
     }
 
+    public String openEditNameDialog(){
+        TextInputDialog d = new TextInputDialog();
+        d.setTitle("ARMY NAME");
+        d.setContentText("Enter army name:");
+        d.initStyle(StageStyle.UNDECORATED);
+
+        Optional<String> userResponse = d.showAndWait();
+
+        return userResponse.orElse(null);
+    }
+
+
+    /* Init method for the */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         army1 = new Army("Army 1", new ArrayList<>());
