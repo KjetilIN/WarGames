@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
@@ -67,7 +68,7 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Label layoutX="490.0" layoutY="103.0" prefHeight="17.0" prefWidth="81.0" text="Army 2">
+                  <Label layoutX="500.0" layoutY="103.0" prefHeight="17.0" prefWidth="81.0" text="Army 2:">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -94,12 +95,23 @@
                      <image>
                         <Image url="@icon/editIcon.png" />
                      </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </ImageView>
-                  <Label fx:id="txtArmy2Name" layoutX="562.0" layoutY="106.0" text="None" />
+                  <Label fx:id="txtArmy2Name" layoutX="583.0" layoutY="106.0" text="None" />
                   <ImageView fx:id="iconCheckArmy2" fitHeight="23.0" fitWidth="24.0" layoutX="665.0" layoutY="415.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@icon/check.png" />
                      </image>
+                  </ImageView>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="468.0" layoutY="104.0" onMouseClicked="#onEditNameArmy2" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icon/editIcon.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </ImageView>
                </children>
                <padding>

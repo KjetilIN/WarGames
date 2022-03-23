@@ -113,6 +113,18 @@ public class SetUpPageController implements Initializable {
         }
     }
 
+    @FXML
+    public void onEditNameArmy2(){
+        String result = DialogWindow.openEditNameDialog();
+        if(result != null){
+            txtArmy2Name.setText(result);
+            army2.setName(result);
+        }else{
+            DialogWindow.openWarningDialog("NO NAME FOUND");
+        }
+    }
+
+
 
 
 
