@@ -31,4 +31,11 @@ public class DialogWindow {
         waring.setContentText(context);
         waring.showAndWait();
     }
+
+    public static void openExceptionDialog(Exception e){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText(e.getMessage());
+        alert.initStyle(StageStyle.DECORATED);
+        alert.showAndWait();
+    }
 }

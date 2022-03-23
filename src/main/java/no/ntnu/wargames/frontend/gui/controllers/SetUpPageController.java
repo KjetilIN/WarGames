@@ -6,7 +6,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
-import javafx.stage.FileChooser;
 import javafx.stage.StageStyle;
 import no.ntnu.wargames.backend.file.FileHandler;
 import no.ntnu.wargames.backend.units.Army;
@@ -16,7 +15,6 @@ import no.ntnu.wargames.frontend.gui.dialog.DialogWindow;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class SetUpPageController implements Initializable {
@@ -140,13 +138,10 @@ public class SetUpPageController implements Initializable {
             Army newArmy = FileHandler.getArmyFromFileCSV(file.toPath());
             army = new Army(newArmy.getName());
             army.addAll(newArmy.getAllUnits());
-            txtArmyName.setText(army.getName().replaceAll(",",""));
+            txtArmyName.setText(army.getName().replace(",",""));
             observableList.setAll(army.getAllUnits());
         }catch (Exception e){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(e.getMessage());
-            alert.initStyle(StageStyle.DECORATED);
-            alert.showAndWait();
+            DialogWindow.openExceptionDialog(e);
         }
         icon.setVisible(true);
         tabel.refresh();
