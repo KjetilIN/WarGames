@@ -43,8 +43,8 @@
          <BorderPane.margin>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </BorderPane.margin>
-         <center>
-            <AnchorPane prefHeight="515.0" prefWidth="808.0">
+         <top>
+            <AnchorPane prefHeight="515.0" prefWidth="808.0" BorderPane.alignment="CENTER">
                <children>
                   <TableView fx:id="tableViewArmy1" layoutX="129.0" layoutY="131.0" prefHeight="278.0" prefWidth="227.0">
                     <columns>
@@ -54,11 +54,12 @@
                     </columns>
                   </TableView>
                   <Label layoutX="128.0" layoutY="418.0" text="File Path" />
-                  <Label layoutX="463.0" layoutY="418.0" text="File Path" />
-                  <TableView layoutX="455.0" layoutY="131.0" prefHeight="278.0" prefWidth="243.0">
+                  <Label layoutX="455.0" layoutY="418.0" text="File Path" />
+                  <TableView fx:id="tableViewArmy2" layoutX="455.0" layoutY="131.0" prefHeight="278.0" prefWidth="243.0">
                      <columns>
-                        <TableColumn prefWidth="75.0" text="C1" />
-                        <TableColumn prefWidth="75.0" text="C2" />
+                        <TableColumn fx:id="nameColumnArmy2" prefWidth="75.0" text="Name" />
+                        <TableColumn fx:id="typeColumnArmy2" prefWidth="100.00006103515625" text="Unit-Type" />
+                        <TableColumn fx:id="healthColumnArmy2" prefWidth="66.6666259765625" text="Health" />
                      </columns>
                   </TableView>
                   <Label layoutX="186.0" layoutY="104.0" prefHeight="17.0" prefWidth="81.0" text="Army 1: ">
@@ -77,9 +78,9 @@
                      </font>
                   </Label>
                   <TextField fx:id="pathArmy1" editable="false" layoutX="176.0" layoutY="414.0" />
-                  <TextField layoutX="530.0" layoutY="414.0" />
+                  <TextField fx:id="pathArmy2" layoutX="508.0" layoutY="414.0" />
                   <Button layoutX="231.0" layoutY="447.0" mnemonicParsing="false" onAction="#onAddArmy1" prefHeight="25.0" prefWidth="119.0" text="Get Army From File" />
-                  <Button layoutX="570.0" layoutY="447.0" mnemonicParsing="false" text="Get Army From File" />
+                  <Button layoutX="570.0" layoutY="447.0" mnemonicParsing="false" onAction="#onAddArmy2" text="Get Army From File" />
                   <Button layoutX="129.0" layoutY="447.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Add Unit" />
                   <Button layoutX="455.0" layoutY="447.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Add Unit" />
                   <Line endX="10.0" endY="-18.0" layoutX="407.0" layoutY="115.0" startX="10.0" startY="357.0" strokeWidth="5.0" />
@@ -94,12 +95,18 @@
                         <Image url="@icon/editIcon.png" />
                      </image>
                   </ImageView>
+                  <Label fx:id="txtArmy2Name" layoutX="562.0" layoutY="106.0" text="None" />
+                  <ImageView fx:id="iconCheckArmy2" fitHeight="23.0" fitWidth="24.0" layoutX="665.0" layoutY="415.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icon/check.png" />
+                     </image>
+                  </ImageView>
                </children>
                <padding>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </padding>
             </AnchorPane>
-         </center>
+         </top>
       </BorderPane>
    </center>
 </BorderPane>
