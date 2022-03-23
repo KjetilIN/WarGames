@@ -12,6 +12,7 @@ import javafx.stage.StageStyle;
 import no.ntnu.wargames.backend.file.FileHandler;
 import no.ntnu.wargames.backend.units.Army;
 import no.ntnu.wargames.backend.units.Unit;
+import no.ntnu.wargames.frontend.gui.dialog.DialogWindow;
 
 import java.io.File;
 import java.net.URL;
@@ -47,13 +48,10 @@ public class SetUpPageController implements Initializable {
 
     @FXML
     public void onAddArmy1(){
-        File file = getFile();
+        File file = FileHandler.getFile();
         if(file == null){
             /* Prompt user with Error alert. No feedback needed.*/
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("No file chosen. Please add a csv file!");
-            alert.initStyle(StageStyle.DECORATED);
-            alert.showAndWait();
+            DialogWindow.openWarningDialog("No file was found!");
             pathArmy1.setText("NONE");
         }else{
             pathArmy1.setText(file.getName());
@@ -75,36 +73,13 @@ public class SetUpPageController implements Initializable {
 
     @FXML
     public void onEditNameArmy1(){
-        String result = openEditNameDialog();
+        String result = DialogWindow.openEditNameDialog();
         if(result != null){
             txtArmy1Name.setText(result);
             army1.setName(result);
         }else{
-            Alert waring = new Alert(Alert.AlertType.WARNING);
-            waring.setContentText("NO NAME WAS GIVEN");
-            waring.showAndWait();
+            DialogWindow.openWarningDialog("NO NAME FOUND");
         }
-    }
-    /* Methods that are common */
-
-    @FXML
-    public File getFile(){
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("CSV Files","*.csv")
-        );
-        return fileChooser.showOpenDialog(null);
-    }
-
-    public String openEditNameDialog(){
-        TextInputDialog d = new TextInputDialog();
-        d.setTitle("ARMY NAME");
-        d.setContentText("Enter army name:");
-        d.initStyle(StageStyle.UNDECORATED);
-
-        Optional<String> userResponse = d.showAndWait();
-
-        return userResponse.orElse(null);
     }
 
 

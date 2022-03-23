@@ -1,14 +1,19 @@
 package no.ntnu.wargames.backend.file;
 
+import javafx.stage.FileChooser;
 import no.ntnu.wargames.backend.units.*;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+
+/**
+ * Class that handles file input and output.
+ *
+ * @author Kjetil Indrehus
+ * @version 0.0.1
+ */
 
 public class FileHandler {
 
@@ -65,5 +70,19 @@ public class FileHandler {
         }
         return returnArmy;
 
+    }
+
+
+    /**
+     * Opens a window to open the file.
+     *
+     * @return returns a file object from the file-chooser window.
+     */
+    public static File getFile(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("CSV Files","*.csv")
+        );
+        return fileChooser.showOpenDialog(null);
     }
 }
