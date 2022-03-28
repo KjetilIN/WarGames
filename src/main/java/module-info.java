@@ -1,6 +1,7 @@
 module no.ntnu.wargames{
-    requires javafx.controls;
+
     requires javafx.fxml;
+    requires javafx.controls;
 
     opens no.ntnu.wargames.frontend.gui.controllers to javafx.fxml;
     exports no.ntnu.wargames.frontend.gui.controllers;
