@@ -6,7 +6,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
-import javafx.stage.StageStyle;
 import no.ntnu.wargames.backend.file.FileHandler;
 import no.ntnu.wargames.backend.units.Army;
 import no.ntnu.wargames.backend.units.Unit;
@@ -138,13 +137,26 @@ public class SetUpPageController implements Initializable {
     *
     * */
 
+
+    /**
+     * Method to set an army in a given tableview.
+     *
+     * @param file file of the army.
+     * @param army the army class to store the army
+     * @param pathArmy text field to output the file path of the army.
+     * @param txtArmyName text field of the army name.
+     * @param observableList the observable list to the table
+     * @param icon the "check" icon for validating file.
+     * @param table the table of the army
+     */
+
     public void setArmyFromFile(File file,
                                 Army army,
                                 TextField pathArmy,
                                 Label txtArmyName,
                                 ObservableList<Unit> observableList,
                                 ImageView icon,
-                                TableView<Unit> tabel){
+                                TableView<Unit> table){
         pathArmy.setText(file.getName());
         try{
             Army newArmy = FileHandler.getArmyFromFileCSV(file.toPath());
@@ -156,7 +168,7 @@ public class SetUpPageController implements Initializable {
             DialogWindow.openExceptionDialog(e);
         }
         icon.setVisible(true);
-        tabel.refresh();
+        table.refresh();
 
     }
 
