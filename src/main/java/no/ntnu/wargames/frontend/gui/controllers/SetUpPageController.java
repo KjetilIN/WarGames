@@ -9,11 +9,13 @@ import javafx.scene.image.ImageView;
 import no.ntnu.wargames.backend.file.FileHandler;
 import no.ntnu.wargames.backend.units.Army;
 import no.ntnu.wargames.backend.units.Unit;
+import no.ntnu.wargames.frontend.gui.dialog.CreateUnitDialog;
 import no.ntnu.wargames.frontend.gui.dialog.DialogWindow;
 
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class SetUpPageController implements Initializable {
@@ -74,6 +76,11 @@ public class SetUpPageController implements Initializable {
         }
     }
 
+    @FXML
+    public void onAddUnitArmy1(){
+        addUnitToTable(tableViewArmy1,observableListArmy1,army1);
+    }
+
     /*
     *  Second army fields
     *
@@ -123,6 +130,13 @@ public class SetUpPageController implements Initializable {
         }
     }
 
+    @FXML
+    public void onAddUnitArmy2(){
+        addUnitToTable(tableViewArmy2,observableListArmy2,army2);
+    }
+
+
+
 
 
 
@@ -170,6 +184,27 @@ public class SetUpPageController implements Initializable {
         icon.setVisible(true);
         table.refresh();
 
+    }
+
+    /**
+     * Add a new unit to the table.
+     * Opens a new dialog pane and gets response.
+     * Dialog pane handles wrong input.
+     *
+     * @param tableView table of the army.
+     * @param observableList the observable list of the army
+     * @param army the army that the new unit is added to.
+     */
+
+    public void addUnitToTable(TableView tableView,ObservableList observableList, Army army){
+        CreateUnitDialog dialog = new CreateUnitDialog();
+        Optional<Unit> unit = dialog.showAndWait();
+
+        if(unit.isPresent()){
+            Unit newUnit = unit.get();
+            observableList.add(newUnit);
+            tableView.refresh();
+        }
     }
 
 

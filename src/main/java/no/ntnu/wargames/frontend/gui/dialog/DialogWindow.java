@@ -1,8 +1,19 @@
 package no.ntnu.wargames.frontend.gui.dialog;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.TextInputDialog;
+import javafx.geometry.Insets;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import no.ntnu.wargames.backend.units.Unit;
 
 import java.util.Optional;
 
@@ -37,5 +48,39 @@ public class DialogWindow {
         alert.setContentText(e.getMessage());
         alert.initStyle(StageStyle.DECORATED);
         alert.showAndWait();
+    }
+
+    public static void openAddUnitDialog(){
+        Dialog<Unit> dialog = new Dialog<>();
+        //Setting the title
+        dialog.setTitle("Add Unit Dialog");
+
+        //Header
+        Label label = new Label("ADD UNIT");
+        dialog.getDialogPane().setHeaderText("ADD UNIT");
+
+        //Textfeilds
+        TextField name = new TextField();
+        name.setPromptText("Unit name");
+
+        TextField type = new TextField();
+        type.setPromptText("Unit type");
+
+        //Pane
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 20, 10, 10));
+        grid.add(new Label("Name:"), 0, 0);
+        grid.add(name, 1, 0);
+        grid.add(new Label("Type:"), 0, 1);
+        grid.add(type, 1, 1);
+        dialog.getDialogPane().setContent(grid);
+
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL);
+        //Show
+        dialog.show();
+
+
     }
 }
