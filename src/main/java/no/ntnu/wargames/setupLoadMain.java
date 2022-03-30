@@ -1,10 +1,14 @@
 package no.ntnu.wargames;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.util.Scanner;
 
@@ -13,10 +17,17 @@ public class setupLoadMain extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("setUpPage.fxml"));
-        Scene scene = new Scene(loader.load());
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("loadScreen.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
         stage.setTitle("WarGames");
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         stage.show();
     }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
 }
