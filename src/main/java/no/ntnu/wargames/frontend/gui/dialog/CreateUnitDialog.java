@@ -1,15 +1,13 @@
 package no.ntnu.wargames.frontend.gui.dialog;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
+
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import no.ntnu.wargames.backend.units.Unit;
 import no.ntnu.wargames.backend.units.UnitFactory;
 
-import java.util.InputMismatchException;
+
 
 public class CreateUnitDialog extends Dialog<Unit> {
 
@@ -67,24 +65,44 @@ public class CreateUnitDialog extends Dialog<Unit> {
 
         setResultConverter((ButtonType type)->{
             if(type == ButtonType.OK){
-                boolean choiceboxSelected = choiceBox.getSelectionModel() != null
+                boolean checkboxSelected = choiceBox.getSelectionModel() != null
                         && !choiceBox.getSelectionModel().isEmpty();
 
-                boolean nameGiven = !name.getText().isEmpty();
+                //Check if name is not empty and is only letters and numbers
+                boolean nameGiven = !name.getText().isEmpty() && name.getText().matches("[a-zA-Z0-9]*");
 
-                int health = Integer.parseInt(healthTextField.getText());
 
-                if(choiceboxSelected && nameGiven){
+                //Validate that health was given
+                boolean healthGiven = !healthTextField.getText().isBlank();
+                int health;
+                try{
+                    health = Integer.parseInt(healthTextField.getText());
+                }catch (NumberFormatException e){
+                    healthGiven = false;
+                    health = -1; //this value will never be used
+                }
+
+
+                if(checkboxSelected && nameGiven && healthGiven){
+                    //If all the requirements are correct, then we make a new unit.
                     UnitFactory factory = new UnitFactory();
                     return factory.createUnit(choiceBox.getValue(),name.getText(),health);
                 }
 
+                // TODO: 30.03.2022 find best way to not have duplicated code 
+                
                 //Opens waring dialog based on missing input
-                if(!nameGiven){
-                    DialogWindow.openWarningDialog("No name was given");
-                }else if(!choiceboxSelected){
-                    DialogWindow.openWarningDialog("No unit choice was made");
-                }else{
+                if(!nameGiven && checkboxSelected && healthGiven){
+                    DialogWindow.openWarningDialog("No name was given"
+                            + "\n" + "Therefore now unit was added!");
+                }else if(!checkboxSelected && nameGiven && healthGiven){
+                    DialogWindow.openWarningDialog("No unit choice was made" +
+                            "\n" + "Therefore now unit was added!");
+                }else if (!healthGiven && checkboxSelected && nameGiven){
+                    DialogWindow.openWarningDialog("No health was given."
+                            + "\n" + "Therefore now unit was added!");
+
+                }else {
                     DialogWindow.openWarningDialog("Please enter name and unit type...");
                 }
 

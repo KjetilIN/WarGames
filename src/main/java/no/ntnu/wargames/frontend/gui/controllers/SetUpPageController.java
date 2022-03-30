@@ -200,7 +200,7 @@ public class SetUpPageController implements Initializable {
         CreateUnitDialog dialog = new CreateUnitDialog();
         Optional<Unit> unit = dialog.showAndWait();
 
-        if(unit.isPresent()){
+        if(unit.isPresent() && unit != null){
             Unit newUnit = unit.get();
             observableList.add(newUnit);
             tableView.refresh();
