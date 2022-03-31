@@ -1,6 +1,7 @@
 package no.ntnu.wargames.frontend.gui.controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -11,10 +12,8 @@ import no.ntnu.wargames.backend.units.Army;
 import no.ntnu.wargames.backend.units.Unit;
 import no.ntnu.wargames.frontend.gui.dialog.CreateUnitDialog;
 import no.ntnu.wargames.frontend.gui.dialog.DialogWindow;
-
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -22,7 +21,6 @@ public class SetUpPageController implements Initializable {
     /* Common fields */
     private Army army1;
     private Army army2;
-
 
     /*
     * First army methods/fields
@@ -61,7 +59,7 @@ public class SetUpPageController implements Initializable {
             pathArmy1.setText("NONE");
             iconCheckArmy1.setVisible(false);
         }else{
-            setArmyFromFile(file,army1,pathArmy1,txtArmy1Name,observableListArmy1,iconCheckArmy1,tableViewArmy1);
+            setArmyFromFile(file,pathArmy1,txtArmy1Name,observableListArmy1,iconCheckArmy1,tableViewArmy1);
         }
     }
 
@@ -78,7 +76,7 @@ public class SetUpPageController implements Initializable {
 
     @FXML
     public void onAddUnitArmy1(){
-        addUnitToTable(tableViewArmy1,observableListArmy1,army1);
+        addUnitToTable(tableViewArmy1,observableListArmy1);
     }
 
     /*
@@ -115,7 +113,7 @@ public class SetUpPageController implements Initializable {
             pathArmy2.setText("NONE");
             iconCheckArmy2.setVisible(false);
         }else{
-            setArmyFromFile(file,army2,pathArmy2,txtArmy2Name,observableListArmy2,iconCheckArmy2,tableViewArmy2);
+            setArmyFromFile(file,pathArmy2,txtArmy2Name,observableListArmy2,iconCheckArmy2,tableViewArmy2);
         }
     }
 
@@ -132,7 +130,7 @@ public class SetUpPageController implements Initializable {
 
     @FXML
     public void onAddUnitArmy2(){
-        addUnitToTable(tableViewArmy2,observableListArmy2,army2);
+        addUnitToTable(tableViewArmy2,observableListArmy2);
     }
 
 
@@ -147,16 +145,13 @@ public class SetUpPageController implements Initializable {
     * Next section has common methods for both tableviews.
     * The method takes parameter from the javafx components and file.
     *
-    *
-    *
-    * */
+    */
 
 
     /**
      * Method to set an army in a given tableview.
      *
      * @param file file of the army.
-     * @param army the army class to store the army
      * @param pathArmy text field to output the file path of the army.
      * @param txtArmyName text field of the army name.
      * @param observableList the observable list to the table
@@ -165,7 +160,6 @@ public class SetUpPageController implements Initializable {
      */
 
     public void setArmyFromFile(File file,
-                                Army army,
                                 TextField pathArmy,
                                 Label txtArmyName,
                                 ObservableList<Unit> observableList,
@@ -174,10 +168,8 @@ public class SetUpPageController implements Initializable {
         pathArmy.setText(file.getName());
         try{
             Army newArmy = FileHandler.getArmyFromFileCSV(file.toPath());
-            army = new Army(newArmy.getName());
-            army.addAll(newArmy.getAllUnits());
-            txtArmyName.setText(army.getName().replace(",",""));
-            observableList.setAll(army.getAllUnits());
+            txtArmyName.setText(newArmy.getName().replace(",",""));
+            observableList.setAll(newArmy.getAllUnits());
         }catch (Exception e){
             DialogWindow.openExceptionDialog(e);
         }
@@ -193,10 +185,9 @@ public class SetUpPageController implements Initializable {
      *
      * @param tableView table of the army.
      * @param observableList the observable list of the army
-     * @param army the army that the new unit is added to.
      */
 
-    public void addUnitToTable(TableView tableView,ObservableList observableList, Army army){
+    public void addUnitToTable(TableView<Unit> tableView,ObservableList observableList){
         CreateUnitDialog dialog = new CreateUnitDialog();
         Optional<Unit> unit = dialog.showAndWait();
 
@@ -207,35 +198,131 @@ public class SetUpPageController implements Initializable {
         }
     }
 
+    @FXML
+    public void onBack(){
+        /* Go back to load screen page (switching scene) */
+        System.exit(0);
+
+        // TODO: 31.03.2022 Make scene switch(?)
+
+    }
+
+    /**
+     * Gets the selected unit from the tables.
+     * Goes through the list of table views.
+     *
+     * @return returns the selected unit, or null if no unit has been selected.
+     */
+
+    public Unit getSelectedUnit(){
+        Unit result = null;
+        if(tableViewArmy1.getSelectionModel().isEmpty()
+                && !tableViewArmy2.getSelectionModel().isEmpty()){
+            result = tableViewArmy1.getSelectionModel().getSelectedItem();
+        }else if(!tableViewArmy1.getSelectionModel().isEmpty()
+                && tableViewArmy2.getSelectionModel().isEmpty()){
+            result = tableViewArmy2.getSelectionModel().getSelectedItem();
+        }
+        return result;
+    }
+
+    @FXML
+    private void editUnit(ActionEvent actionEvent) {
+        Unit selectedUnit = getSelectedUnit();
+
+        if(selectedUnit != null){
+            CreateUnitDialog createUnitDialog = new CreateUnitDialog(selectedUnit);
+            createUnitDialog.showAndWait();
+
+            //Refresh both tables
+            tableViewArmy1.refresh();
+            tableViewArmy2.refresh();
+        }else{
+            DialogWindow.openWarningDialog("No unit was selected!");
+        }
+
+
+
+    }
+
+    @FXML
+    public void onDelete(){
+        Unit selectedUnit = getSelectedUnit();
+        if(selectedUnit != null){
+            //Alert the user that a unit is about to be deleted
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("Delete Unit");
+            alert.setContentText("You are about to delete:"
+                    + "\n" + selectedUnit.getName() + ","
+                    + selectedUnit.getUnitType() + ","
+                    + selectedUnit.getHealth()
+                    + "\n" + "Are you sure?"
+            );
+            alert.showAndWait();
+
+            if(alert.getResult() == ButtonType.OK){
+                /* Removes unit and refreshes both tables */
+
+                // TODO: 31.03.2022 Find out why it doesn't remove from both
+                observableListArmy1.remove(selectedUnit);
+                observableListArmy2.remove(selectedUnit);
+                tableViewArmy1.refresh();
+                tableViewArmy2.refresh();
+            }
+        }else{
+            DialogWindow.openWarningDialog("No unit was selected!");
+        }
+
+
+    }
+
+    private void initTableview(TextField path,
+                               ImageView icon,
+                               ObservableList observableList,
+                               TableView<Unit> tableView,
+                               TableColumn<Unit,String> namecolumn,
+                               TableColumn<Unit,String> typecolumn,
+                               TableColumn<Unit,String> healthcolumn
+
+    ) {
+        path.setText("NONE");
+        icon.setVisible(false);
+        tableView.setItems(observableList);
+        namecolumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        typecolumn.setCellValueFactory(new PropertyValueFactory<>("unitType"));
+        healthcolumn.setCellValueFactory(new PropertyValueFactory<>("health"));
+
+        tableView.refresh();
+    }
+
+
+
+
 
     /* Init method for the setup controller*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         /*Army 1 setup*/
-        army1 = new Army("Army 1", new ArrayList<>());
-        pathArmy1.setText("NONE");
-        iconCheckArmy1.setVisible(false);
-
+        this.army1 = new Army("NO NAME GIVEN");
         observableListArmy1 = FXCollections.observableList(army1.getAllUnits());
-        tableViewArmy1.setItems(observableListArmy1);
-        nameColumnArmy1.setCellValueFactory(new PropertyValueFactory<>("name"));
-        typeColumnArmy1.setCellValueFactory(new PropertyValueFactory<>("unitType"));
-        healthColumnArmy1.setCellValueFactory(new PropertyValueFactory<>("health"));
-
-        tableViewArmy1.refresh();
+        initTableview(pathArmy1,
+                iconCheckArmy1,
+                observableListArmy1,
+                tableViewArmy1,
+                nameColumnArmy1,
+                typeColumnArmy1,
+                healthColumnArmy1);
 
         /*Army 2 setup*/
-
-        army2 = new Army("Army 2", new ArrayList<>());
-        pathArmy2.setText("NONE");
-        iconCheckArmy2.setVisible(false);
-
+        this.army2 = new Army("NO NAME GIVEN");
         observableListArmy2 = FXCollections.observableList(army2.getAllUnits());
-        tableViewArmy2.setItems(observableListArmy2);
-        nameColumnArmy2.setCellValueFactory(new PropertyValueFactory<>("name"));
-        typeColumnArmy2.setCellValueFactory(new PropertyValueFactory<>("unitType"));
-        healthColumnArmy2.setCellValueFactory(new PropertyValueFactory<>("health"));
+        initTableview(pathArmy2,
+                iconCheckArmy2,
+                observableListArmy2,
+                tableViewArmy2,
+                nameColumnArmy2,
+                typeColumnArmy2,
+                healthColumnArmy2);
 
-        tableViewArmy2.refresh();
     }
 }

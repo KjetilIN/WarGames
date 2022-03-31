@@ -6,7 +6,7 @@ package no.ntnu.wargames.backend.units;
  * @version 1.0-SNAPSHOT 15.02.22
  */
 public abstract class Unit {
-    private final String name;
+    private String name;
     private int health;
     private final int attack;
     private final int armor;
@@ -59,6 +59,12 @@ public abstract class Unit {
      */
     public boolean isAlive(){
         return isAlive;
+    }
+
+    public void setName(String newName){
+        if(!newName.isEmpty() && newName != null){
+            this.name = newName;
+        }
     }
 
     /**

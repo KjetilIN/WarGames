@@ -7,26 +7,37 @@ import javafx.scene.layout.GridPane;
 import no.ntnu.wargames.backend.units.Unit;
 import no.ntnu.wargames.backend.units.UnitFactory;
 
+// TODO: 30.03.2022 Refactor and clean up
 
 
 public class CreateUnitDialog extends Dialog<Unit> {
 
-    // TODO: 30.03.2022 Refactor and clean up
 
+
+    private Mode mode;
     private Unit unit;
+
+    private enum Mode{
+        EDIT,NEW
+    }
 
     public  CreateUnitDialog(){
         super();
+        this.mode = Mode.NEW; //Set mode to new player
         createContent();
     }
 
+    public CreateUnitDialog(Unit unit){
+        /* Set up constructor for edit*/
+        this.unit = unit;
+        this.mode = Mode.EDIT;
+        if(unit != null){
+            createContent();
+        }
+
+    }
+
     public void createContent(){
-
-        //Setting the title
-        setTitle("Add Unit Dialog");
-
-        //Header
-        getDialogPane().setHeaderText("Add a new Unit");
 
         //Input prompt
         TextField name = new TextField();
@@ -48,6 +59,14 @@ public class CreateUnitDialog extends Dialog<Unit> {
             }
         });
 
+        if((mode == Mode.EDIT)) {
+            name.setText(this.unit.getName());
+            healthTextField.setText(Integer.toString(this.unit.getHealth()));
+            choiceBox.setValue(this.unit.getUnitType());
+
+        }
+
+
         //Pane
         GridPane grid = new GridPane();
         grid.setHgap(10);
@@ -61,7 +80,24 @@ public class CreateUnitDialog extends Dialog<Unit> {
         grid.add(healthTextField,1,2);
         getDialogPane().setContent(grid);
 
-        getDialogPane().getButtonTypes().addAll(ButtonType.OK,ButtonType.CANCEL);
+        if(this.mode == Mode.EDIT){
+            grid.getChildren().removeIf(node -> GridPane.getRowIndex(node) == 1);
+        }
+
+        if (this.mode == Mode.EDIT) {
+            getDialogPane().getButtonTypes().addAll(ButtonType.OK);
+        }else {
+            getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+        }
+
+        if(this.mode == Mode.NEW) {
+            setTitle("New Unit");
+            setHeaderText("Create new unit!");
+        }else if(this.mode == Mode.EDIT) {
+            setTitle("Unit Edit");
+            setHeaderText("Edit unit");
+        }
+
 
         setResultConverter((ButtonType type)->{
             if(type == ButtonType.OK){
@@ -84,27 +120,36 @@ public class CreateUnitDialog extends Dialog<Unit> {
 
 
                 if(checkboxSelected && nameGiven && healthGiven){
-                    //If all the requirements are correct, then we make a new unit.
                     UnitFactory factory = new UnitFactory();
-                    return factory.createUnit(choiceBox.getValue(),name.getText(),health);
+                    if(mode == Mode.NEW){
+                        //If all the requirements are correct, then we make a new unit.
+                        return factory.createUnit(choiceBox.getValue(),name.getText(),health);
+                    }else{
+                        this.unit.setHealth(health);
+                        this.unit.setName(name.getText());
+                        return this.unit;
+                    }
+
                 }
 
                 // TODO: 30.03.2022 find best way to not have duplicated code 
-                
-                //Opens waring dialog based on missing input
-                if(!nameGiven && checkboxSelected && healthGiven){
-                    DialogWindow.openWarningDialog("No name was given"
-                            + "\n" + "Therefore now unit was added!");
-                }else if(!checkboxSelected && nameGiven && healthGiven){
-                    DialogWindow.openWarningDialog("No unit choice was made" +
-                            "\n" + "Therefore now unit was added!");
-                }else if (!healthGiven && checkboxSelected && nameGiven){
-                    DialogWindow.openWarningDialog("No health was given."
-                            + "\n" + "Therefore now unit was added!");
+                if(this.mode == Mode.NEW){
+                    //Opens waring dialog based on missing input
+                    if(!nameGiven && checkboxSelected && healthGiven){
+                        DialogWindow.openWarningDialog("No name was given"
+                                + "\n" + "Therefore now unit was added!");
+                    }else if(!checkboxSelected && nameGiven && healthGiven){
+                        DialogWindow.openWarningDialog("No unit choice was made" +
+                                "\n" + "Therefore now unit was added!");
+                    }else if (!healthGiven && checkboxSelected && nameGiven){
+                        DialogWindow.openWarningDialog("No health was given."
+                                + "\n" + "Therefore now unit was added!");
 
-                }else {
-                    DialogWindow.openWarningDialog("Please enter name and unit type...");
+                    }else {
+                        DialogWindow.openWarningDialog("Please enter name and unit type...");
+                    }
                 }
+
 
             }
             

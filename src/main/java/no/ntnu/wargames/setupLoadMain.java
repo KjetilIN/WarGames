@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -22,6 +23,8 @@ public class setupLoadMain extends Application {
         Scene scene = new Scene(root);
         stage.setTitle("WarGames");
         stage.initStyle(StageStyle.UNDECORATED);
+        Image icon = new Image(getClass().getResourceAsStream("/no/ntnu/wargames/icon/logoIcon.PNG"));
+        stage.getIcons().add(icon);
         stage.setScene(scene);
         stage.show();
     }

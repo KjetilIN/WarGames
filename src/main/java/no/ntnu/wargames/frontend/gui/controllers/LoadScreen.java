@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
@@ -32,24 +33,27 @@ public class LoadScreen implements Initializable {
 
     @FXML
     public void onStart(ActionEvent event) throws IOException {
+        /* Load the setup page (switching scene) */
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/no/ntnu/wargames/setUpPage.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         root = loader.load();
         scene = new Scene(root);
         stage.setScene(scene);
-        stage.centerOnScreen(); // Loads the stage in the middle 
+        stage.centerOnScreen(); // Loads the stage in the middle
+        Image icon = new Image(getClass().getResourceAsStream("/no/ntnu/wargames/icon/logoIcon.PNG"));
+        stage.getIcons().add(icon);
         stage.show();
 
         /* Lambda methods so that the undecorated screen is movable*/
-        root.setOnMousePressed(event12 -> {
+        root.setOnMousePressed(mousePressedEvent -> {
             /* When pressed we change the mouse position*/
-            xOffset = event12.getSceneX();
-            yOffset = event12.getSceneY();
+            xOffset = mousePressedEvent.getSceneX();
+            yOffset = mousePressedEvent.getSceneY();
         });
-        root.setOnMouseDragged(event1 -> {
+        root.setOnMouseDragged(dragEvent -> {
             /* Change the window position when the user drag the window*/
-            stage.setX(event1.getScreenX() - xOffset);
-            stage.setY(event1.getScreenY() - yOffset);
+            stage.setX(dragEvent.getScreenX() - xOffset);
+            stage.setY(dragEvent.getScreenY() - yOffset);
         });
     }
 
@@ -58,6 +62,6 @@ public class LoadScreen implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        //As of now, nothing happens
     }
 }
