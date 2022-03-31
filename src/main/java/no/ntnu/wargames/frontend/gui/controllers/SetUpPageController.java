@@ -3,16 +3,25 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import no.ntnu.wargames.backend.file.FileHandler;
 import no.ntnu.wargames.backend.units.Army;
 import no.ntnu.wargames.backend.units.Unit;
 import no.ntnu.wargames.frontend.gui.dialog.CreateUnitDialog;
 import no.ntnu.wargames.frontend.gui.dialog.DialogWindow;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -21,6 +30,9 @@ public class SetUpPageController implements Initializable {
     /* Common fields */
     private Army army1;
     private Army army2;
+
+    @FXML
+    private BorderPane mainPage;
 
     /*
     * First army methods/fields
@@ -276,6 +288,32 @@ public class SetUpPageController implements Initializable {
 
     }
 
+    @FXML
+    public void onGoToSimulationPane() throws IOException {
+        Stage prevStage = (Stage)mainPage.getScene().getWindow();
+        prevStage.close();
+        this.army2.addAll(observableListArmy2);
+        System.out.println("SIZE BEFORE:");
+        System.out.println(this.army1.getAllUnits().size());
+
+        //New scene opener
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/no/ntnu/wargames/simulation.fxml"));
+        Scene scene = new Scene(loader.load());
+        Stage stage = new Stage();
+
+        //Send information to the new frame.
+        simulationController simulationController = loader.getController();
+        simulationController.sendArmyToSimulation(this.army1,this.army2);
+
+        //New style for the new stage
+        stage.setTitle("WarGames");
+        stage.initStyle(StageStyle.DECORATED);
+        Image icon = new Image(getClass().getResourceAsStream("/no/ntnu/wargames/icon/logoIcon.PNG"));
+        stage.getIcons().add(icon);
+        stage.setScene(scene);
+        stage.show();
+    }
+
     private void initTableview(TextField path,
                                ImageView icon,
                                ObservableList observableList,
@@ -304,7 +342,7 @@ public class SetUpPageController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         /*Army 1 setup*/
         this.army1 = new Army("NO NAME GIVEN");
-        observableListArmy1 = FXCollections.observableList(army1.getAllUnits());
+        observableListArmy1 = FXCollections.observableList(this.army1.getAllUnits());
         initTableview(pathArmy1,
                 iconCheckArmy1,
                 observableListArmy1,
@@ -315,7 +353,7 @@ public class SetUpPageController implements Initializable {
 
         /*Army 2 setup*/
         this.army2 = new Army("NO NAME GIVEN");
-        observableListArmy2 = FXCollections.observableList(army2.getAllUnits());
+        observableListArmy2 = FXCollections.observableList(this.army2.getAllUnits());
         initTableview(pathArmy2,
                 iconCheckArmy2,
                 observableListArmy2,
