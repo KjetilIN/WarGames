@@ -230,11 +230,19 @@ public class SetUpPageController implements Initializable {
         Unit result = null;
         if(tableViewArmy1.getSelectionModel().isEmpty()
                 && !tableViewArmy2.getSelectionModel().isEmpty()){
-            result = tableViewArmy1.getSelectionModel().getSelectedItem();
+            result = tableViewArmy2.getSelectionModel().getSelectedItem();
         }else if(!tableViewArmy1.getSelectionModel().isEmpty()
                 && tableViewArmy2.getSelectionModel().isEmpty()){
-            result = tableViewArmy2.getSelectionModel().getSelectedItem();
+            result = tableViewArmy1.getSelectionModel().getSelectedItem();
         }
+
+        // TODO: 03.04.2022 error if both are selected.  
+
+        /*Clear selection history*/
+        tableViewArmy1.getSelectionModel().clearSelection();
+        tableViewArmy2.getSelectionModel().clearSelection();
+
+
         return result;
     }
 
