@@ -71,7 +71,7 @@ public class SetUpPageController implements Initializable {
             pathArmy1.setText("NONE");
             iconCheckArmy1.setVisible(false);
         }else{
-            setArmyFromFile(file,pathArmy1,txtArmy1Name,observableListArmy1,iconCheckArmy1,tableViewArmy1);
+            setArmyFromFile(file,this.army1,pathArmy1,txtArmy1Name,observableListArmy1,iconCheckArmy1,tableViewArmy1);
         }
     }
 
@@ -125,7 +125,7 @@ public class SetUpPageController implements Initializable {
             pathArmy2.setText("NONE");
             iconCheckArmy2.setVisible(false);
         }else{
-            setArmyFromFile(file,pathArmy2,txtArmy2Name,observableListArmy2,iconCheckArmy2,tableViewArmy2);
+            setArmyFromFile(file,this.army2,pathArmy2,txtArmy2Name,observableListArmy2,iconCheckArmy2,tableViewArmy2);
         }
     }
 
@@ -172,6 +172,7 @@ public class SetUpPageController implements Initializable {
      */
 
     public void setArmyFromFile(File file,
+                                Army army,
                                 TextField pathArmy,
                                 Label txtArmyName,
                                 ObservableList<Unit> observableList,
@@ -179,9 +180,9 @@ public class SetUpPageController implements Initializable {
                                 TableView<Unit> table){
         pathArmy.setText(file.getName());
         try{
-            Army newArmy = FileHandler.getArmyFromFileCSV(file.toPath());
-            txtArmyName.setText(newArmy.getName().replace(",",""));
-            observableList.setAll(newArmy.getAllUnits());
+            army = FileHandler.getArmyFromFileCSV(file.toPath());
+            txtArmyName.setText(army.getName().replace(",",""));
+            observableList.setAll(army.getAllUnits());
         }catch (Exception e){
             DialogWindow.openExceptionDialog(e);
         }
@@ -236,7 +237,7 @@ public class SetUpPageController implements Initializable {
             result = tableViewArmy1.getSelectionModel().getSelectedItem();
         }
 
-        // TODO: 03.04.2022 error if both are selected.  
+        // TODO: 03.04.2022 error if both are selected.
 
         /*Clear selection history*/
         tableViewArmy1.getSelectionModel().clearSelection();
@@ -300,14 +301,14 @@ public class SetUpPageController implements Initializable {
     public void onGoToSimulationPane() throws IOException {
         Stage prevStage = (Stage)mainPage.getScene().getWindow();
         prevStage.close();
-        this.army2.addAll(observableListArmy2);
-        System.out.println("SIZE BEFORE:");
-        System.out.println(this.army1.getAllUnits().size());
 
         //New scene opener
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/no/ntnu/wargames/simulation.fxml"));
         Scene scene = new Scene(loader.load());
         Stage stage = new Stage();
+
+        this.army1.setName(txtArmy1Name.getText());
+        this.army2.setName(txtArmy2Name.getText());
 
         //Send information to the new frame.
         simulationController simulationController = loader.getController();
