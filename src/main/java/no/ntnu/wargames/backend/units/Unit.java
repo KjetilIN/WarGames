@@ -6,12 +6,15 @@ package no.ntnu.wargames.backend.units;
  * @version 1.0-SNAPSHOT 15.02.22
  */
 public abstract class Unit {
+
+    /*Fields for the unit*/
     private String name;
     private int health;
     private final int attack;
     private final int armor;
     private int attackCount;
     private boolean isAlive;
+
 
     /**
      * This is a constructor for the Unit class.
@@ -75,6 +78,8 @@ public abstract class Unit {
     public void setAlive(boolean alive) {
         this.isAlive = alive;
     }
+
+
 
     /**
      * Method that sets the health of the unit given.

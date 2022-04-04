@@ -25,7 +25,7 @@ public class UnitFactory {
      * @param unitHealth health as integer
      * @return returns a new unit based on the input, else return null
      */
-    public Unit createUnit(String unitType,String unitName, int unitHealth){
+    public static Unit createUnit(String unitType,String unitName, int unitHealth){
         if(unitHealth <= 0 || unitName.isEmpty()){return null;}
         return switch (unitType) {
             case "Ranged" -> new RangedUnit(unitName, unitHealth);
@@ -49,7 +49,7 @@ public class UnitFactory {
      * @throws IllegalArgumentException throws exception if a given argument is wrong. Check the exception message.
      */
 
-    public List<Unit> createListOfUnit(int amount, String unitType,String unitName, int unitHealth) throws IllegalArgumentException{
+    public static List<Unit> createListOfUnit(int amount, String unitType,String unitName, int unitHealth) throws IllegalArgumentException{
         List<Unit> unitList = new ArrayList<>();
 
         /*Check if the given parameters are correct, then throws correct exception*/

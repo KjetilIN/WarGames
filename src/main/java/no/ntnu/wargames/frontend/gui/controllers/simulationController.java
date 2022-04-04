@@ -4,6 +4,7 @@ package no.ntnu.wargames.frontend.gui.controllers;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.AreaChart;
@@ -59,7 +60,6 @@ public class simulationController implements Initializable {
         army1SumHealth.setName("HP sum of " + this.army1.getName()+"'s army");
         army2SumHealth.setName("HP sum of " + this.army2.getName()+"'s army");
 
-
         String textLog = "";
         int attackCount = 1;
         while(army1.hasUnits() && army2.hasUnits()){
@@ -78,8 +78,6 @@ public class simulationController implements Initializable {
         this.unitGraph.setCreateSymbols(false);
         this.healthGraph.getData().addAll(army1SumHealth,army2SumHealth);
         this.healthGraph.setCreateSymbols(false);
-
-
 
 
 

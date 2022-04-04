@@ -49,23 +49,8 @@ public class FileHandler {
             String type = words[0];
             String name = words[1];
             int health = Integer.parseInt(words[2]);
-            Unit unitToAdd;
-            switch (type){
-                case "Infantry":
-                    unitToAdd = new InfantryUnit(name,health);
-                    break;
-                case "Ranged":
-                    unitToAdd = new RangedUnit(name,health);
-                    break;
-                case "Commander":
-                    unitToAdd = new CommanderUnit(name,health);
-                    break;
-                case "Cavalry":
-                    unitToAdd = new CavalryUnit(name,health);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Unit type not found");
-            }
+            Unit unitToAdd = UnitFactory.createUnit(type,name,health);
+            if(unitToAdd == null){throw new IllegalArgumentException("Unit type was not found!");}
             returnArmy.add(unitToAdd);
 
         }
