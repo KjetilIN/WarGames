@@ -69,4 +69,25 @@ public class RangedUnit extends Unit{
     public String getUnitType() {
         return this.unitType;
     }
+
+    /**
+     * The terrain bonus method for ranged unit.
+     *
+     * The ranged unit as advantage on Hill, and gets attack bonus.
+     * In a forest, will the unit struggle, and therefor loose attack bonus.
+     * No defence bonus is lost.
+     *
+     * @return returns a list of attack and defence bonus.
+     */
+
+    @Override
+    public int[] getTerrainBonusAttackDefence() {
+        int[] bonusResult = {0, 0};
+        if (getTerrain().equals("Hill")) {
+            bonusResult[0] = 3;
+        }else if(getTerrain().equals("Forest")){
+            bonusResult[0] = -2;
+        }
+        return bonusResult;
+    }
 }
