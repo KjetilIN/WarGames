@@ -163,9 +163,14 @@ public class Army {
      * @return returns a random unit from the army.
      */
     public Unit getRandomUnit(){
-        // TODO: 18.02.2022 Ask if needed to make new random (random class?)
+        // TODO: 04.04.2022 Update this
         random = new Random();
         return units.get(random.nextInt(getAllUnits().size()));
+    }
+
+    public int getAllUnitHealthSum(){
+        // TODO: 04.04.2022 Make test
+        return this.units.stream().reduce(0,(subtotal,unit)->subtotal+unit.getHealth(),Integer::sum);
     }
 
     /**
