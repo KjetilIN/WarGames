@@ -1,5 +1,7 @@
 package no.ntnu.wargames.backend.units;
 
+import java.util.Objects;
+
 /**
  * The cavalry unit class.
  * Extends the unit class.
@@ -15,17 +17,17 @@ public class CavalryUnit extends Unit {
      */
     private static final int ATTACK = 20;
     private static final int ARMOR = 12;
-    private String unitType = "Cavalry";
+    private static final String UNIT_TYPE = "Cavalry";
 
     /**
      * Cavalry Unit with all fields available for change.
      *
-     * @param name name of the cavalry unit.
+     * @param name   name of the cavalry unit.
      * @param health health of the cavalry unit.
      * @param attack attack of the cavalry unit.
-     * @param armor armor of the cavalry unit.
+     * @param armor  armor of the cavalry unit.
      */
-    public CavalryUnit(String name, int health, int attack, int armor){
+    public CavalryUnit(String name, int health, int attack, int armor) {
         super(name, health, attack, armor);
     }
 
@@ -33,12 +35,12 @@ public class CavalryUnit extends Unit {
      * Constructor for the cavalry unit.
      * The attack and armor with this constructor, are constant.
      *
-     * @param name name of the calvary unit.
+     * @param name   name of the calvary unit.
      * @param health health of the calvary unit.
      */
 
-    public CavalryUnit(String name, int health){
-        super(name,health,ATTACK,ARMOR);
+    public CavalryUnit(String name, int health) {
+        super(name, health, ATTACK, ARMOR);
     }
 
     /**
@@ -51,7 +53,13 @@ public class CavalryUnit extends Unit {
 
     @Override
     public int getAttackBonus() {
-        return getAttackCount() == 0 ? 6 : 4;
+        int attackBonus = getAttackCount() == 0 ? 6 : 4;
+        try{
+            attackBonus += getTerrainBonusAttackDefence()[0];
+        }catch (IllegalArgumentException e){};
+
+        return attackBonus;
+
     }
 
     /**
@@ -63,11 +71,45 @@ public class CavalryUnit extends Unit {
 
     @Override
     public int getResistBonus() {
-        return 3;
+        int resistBonus = 3;
+        try{
+            resistBonus+=getTerrainBonusAttackDefence()[1];
+        }catch (IllegalArgumentException e){
+            if(e.getMessage().equals("defence")){
+                return 0;
+            }
+        }
+
+        return resistBonus;
     }
 
     @Override
     public String getUnitType() {
-        return this.unitType;
+        return UNIT_TYPE;
+    }
+
+
+    /**
+     * The terrain bonus method for cavalry unit.
+     *
+     * The cavalry unit is good in plains terrain. Therefor it receives an attack bonus of 3.
+     * However, in a forest the unit struggle to defend itself, and looses all defence bonus.
+     * For the other terrains, no bonus is added.
+     *
+     * @return returns a list of attack and defence bonus.
+     * @throws IllegalArgumentException throws exception if cavalry unit looses all defence bonus.
+     */
+
+    @Override
+    public int[] getTerrainBonusAttackDefence() throws IllegalArgumentException {
+        int[] bonusResult = {0, 0};
+        if(getTerrain().equals("Plains")){
+            bonusResult[0] = 3;
+        }else if(getTerrain().equals("Forest")){
+            /*Unit looses all defence bonus*/
+            throw new IllegalArgumentException("defence");
+        }
+
+        return bonusResult;
     }
 }

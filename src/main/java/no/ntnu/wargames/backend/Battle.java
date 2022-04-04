@@ -66,6 +66,22 @@ public class Battle {
      * @return returns a string of information
      */
 
+
+    /**
+     * Set the terrain for all the unit in the battle.
+     * Goes through all the units.
+     *
+     * @param terrain of the units.
+     */
+    public void setTerrainForALL(String terrain){
+        for(Unit unit: this.armyOne.getAllUnits()){
+            unit.setTerrain(terrain);
+        }
+        for (Unit unit: this.armyTwo.getAllUnits()){
+            unit.setTerrain(terrain);
+        }
+    }
+
     public String simulateStep(){
         String res; //String to be given
 

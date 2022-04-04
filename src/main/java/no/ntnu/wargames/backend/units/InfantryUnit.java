@@ -44,7 +44,7 @@ public class InfantryUnit extends Unit {
      */
     @Override
     public int getAttackBonus() {
-        return 3;
+        return 3 + getTerrainBonusAttackDefence()[0];
     }
 
     /**
@@ -55,12 +55,31 @@ public class InfantryUnit extends Unit {
      */
     @Override
     public int getResistBonus() {
-        return 1;
+        return 1 + getTerrainBonusAttackDefence()[1];
     }
 
     @Override
     public String getUnitType() {
         return this.unitType;
+    }
+
+    /**
+     * The terrain bonus method for infantry unit.
+     *
+     * The infantry unit has a huge advantage in a forest.
+     * Therefor it receives both an extra attack and defence bonus.
+     *
+     * @return returns a list of attack and defence bonus.
+     */
+
+    @Override
+    public int[] getTerrainBonusAttackDefence(){
+        int[] bonusResult = {0, 0};
+        if(getTerrain().equals("Forest")){
+            bonusResult[0] = 3;
+            bonusResult[1] = 3;
+        }
+        return bonusResult;
     }
 
 }

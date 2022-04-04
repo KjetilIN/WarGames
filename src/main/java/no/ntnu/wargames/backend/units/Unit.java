@@ -14,6 +14,11 @@ public abstract class Unit {
     private final int armor;
     private int attackCount;
     private boolean isAlive;
+    private Terrain terrain;
+
+    private enum Terrain{
+        NONE,HILL,PLAINS,FOREST
+    }
 
 
     /**
@@ -33,6 +38,7 @@ public abstract class Unit {
             this.armor = armor;
             this.attackCount = 0;
             this.isAlive = true;
+            this.terrain = Terrain.NONE;
         }else{
             throw new IllegalArgumentException("Unit constructor was given invalid value(s)");
         }
@@ -40,20 +46,22 @@ public abstract class Unit {
     }
 
     public String getName(){
-        return name;
+        return this.name;
     }
 
     public int getHealth() {
-        return health;
+        return this.health;
     }
 
     public int getAttack() {
-        return attack;
+        return this.attack;
     }
 
     public int getArmor() {
-        return armor;
+        return this.armor;
     }
+
+    public String getTerrain(){return String.valueOf(this.terrain);}
 
     /**
      * Boolean value that check if the hero is alive.
@@ -80,6 +88,19 @@ public abstract class Unit {
     }
 
 
+    /**
+     * Method that sets the terrain of the unit.
+     *
+     * @param terrain terrain type as string.
+     */
+    public void setTerrain(String terrain) {
+        switch (terrain) {
+            case "Hill" -> this.terrain = Terrain.HILL;
+            case "Forest" -> this.terrain = Terrain.FOREST;
+            case "PLAINS" -> this.terrain = Terrain.PLAINS;
+            default -> this.terrain = Terrain.NONE;
+        }
+    }
 
     /**
      * Method that sets the health of the unit given.
@@ -131,9 +152,21 @@ public abstract class Unit {
 
     /**
      * Abstract method to get the unit type.
+     *
      * @return returns the unit type as string
      */
     public abstract String getUnitType();
+
+    /**
+     * Abstract method to get the terrain bonus as a list.
+     * The list returned has the terrain attack and defence bonus.
+     * At index 0, attack bonus from terrain.
+     * At index 1, defence bonus from terrain.
+     *
+     * @return returns the terrain bonus
+     * @throws IllegalArgumentException throw exception if unit looses all bonus.
+     */
+    public abstract int[] getTerrainBonusAttackDefence() throws IllegalArgumentException;
 
     /**
      * This method return basic information about a unit in a string.
