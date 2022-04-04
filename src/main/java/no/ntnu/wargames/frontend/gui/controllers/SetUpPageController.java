@@ -39,10 +39,7 @@ public class SetUpPageController implements Initializable {
     *
     * Contains the fields for the first army.
     *
-    *
-    *
-    *
-    * */
+    */
     @FXML
     private TextField pathArmy1;
 
@@ -80,7 +77,7 @@ public class SetUpPageController implements Initializable {
         String result = DialogWindow.openEditNameDialog();
         if(result != null){
             txtArmy1Name.setText(result);
-            army1.setName(result);
+            this.army1.setName(result);
         }else{
             DialogWindow.openWarningDialog("NO NAME FOUND");
         }
@@ -134,7 +131,7 @@ public class SetUpPageController implements Initializable {
         String result = DialogWindow.openEditNameDialog();
         if(result != null){
             txtArmy2Name.setText(result);
-            army2.setName(result);
+            this.army2.setName(result);
         }else{
             DialogWindow.openWarningDialog("NO NAME FOUND");
         }
@@ -307,6 +304,7 @@ public class SetUpPageController implements Initializable {
         Scene scene = new Scene(loader.load());
         Stage stage = new Stage();
 
+        // Set name of the army
         this.army1.setName(txtArmy1Name.getText());
         this.army2.setName(txtArmy2Name.getText());
 

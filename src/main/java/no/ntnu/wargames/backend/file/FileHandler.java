@@ -41,7 +41,8 @@ public class FileHandler {
         /* Check if file has no content*/
         if(lines.isEmpty()){throw new IllegalArgumentException("No content in file");}
 
-        returnArmy.setName(lines.get(0));
+        returnArmy.setName(lines.get(0).replace(",",""));
+        System.out.println(returnArmy.getName());
         for(int i = 1; i< lines.size();i++){
             String [] words = lines.get(i).split(",");
             if(words.length < 3){throw new IllegalArgumentException("Wrong file Format!");}
