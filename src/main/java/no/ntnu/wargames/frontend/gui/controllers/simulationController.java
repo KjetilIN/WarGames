@@ -8,11 +8,16 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.util.Duration;
 import no.ntnu.wargames.backend.Battle;
 import no.ntnu.wargames.backend.units.Army;
@@ -43,6 +48,8 @@ public class simulationController implements Initializable {
     @FXML
     private Label unitCountArmy2;
 
+    @FXML
+    private Canvas canvas;
 
     @FXML
     private AreaChart<String,Number> unitGraph;
@@ -126,6 +133,16 @@ public class simulationController implements Initializable {
         timeline = new Timeline(new KeyFrame(Duration.millis(20),this::simStep));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+
+        //Remove later
+        Image tile = new Image("C:\\Users\\kjeti\\OneDrive\\Dokumenter\\NTNU Dataingeniør Gjøvik 2021-2024\\ÅrNr1\\2.semester\\IDATG2001 Programering 2\\mappeOppgave\\WarGames\\src\\main\\resources\\no\\ntnu\\wargames\\fxpixelart\\grass_dark.png");
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        for(int i = 0; i< canvas.getHeight()/16;i++){
+            for(int k = 0; k<canvas.getWidth()/16;k++){
+                gc.drawImage(tile,i*16,k*16);
+            }
+        }
+
 
     }
 

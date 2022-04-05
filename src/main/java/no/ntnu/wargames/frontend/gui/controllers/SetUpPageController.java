@@ -318,6 +318,7 @@ public class SetUpPageController implements Initializable {
         Image icon = new Image(getClass().getResourceAsStream("/no/ntnu/wargames/icon/logoIcon.PNG"));
         stage.getIcons().add(icon);
         stage.setScene(scene);
+        stage.setFullScreen(false); //change value for fullscreen
         stage.show();
     }
 

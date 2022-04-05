@@ -120,7 +120,7 @@
                      </cursor>
                   </ImageView>
                   <Line endX="265.22222900390625" endY="366.0000305175781" layoutX="417.0" layoutY="125.0" startX="-280.5555725097656" startY="366.0000305175781" strokeWidth="5.0" />
-                  <Button layoutX="200.0" layoutY="509.0" mnemonicParsing="false" onAction="#editUnit" text="Edit Unit">
+                  <Button layoutX="313.0" layoutY="511.0" mnemonicParsing="false" onAction="#editUnit" text="Edit Unit">
                      <graphic>
                         <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -129,7 +129,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button layoutX="330.0" layoutY="508.0" mnemonicParsing="false" onAction="#onDelete" prefHeight="34.0" prefWidth="112.0" text="Delete Unit">
+                  <Button layoutX="425.0" layoutY="510.0" mnemonicParsing="false" onAction="#onDelete" prefHeight="34.0" prefWidth="112.0" text="Delete Unit">
                      <graphic>
                         <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -138,11 +138,29 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button layoutX="470.0" layoutY="508.0" mnemonicParsing="false" onAction="#onGoToSimulationPane" prefHeight="35.0" prefWidth="176.0" text="Start simulation">
+                  <Button layoutX="560.0" layoutY="508.0" mnemonicParsing="false" onAction="#onGoToSimulationPane" prefHeight="35.0" prefWidth="176.0" text="Start simulation">
                      <graphic>
                         <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@icon/data-management.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button layoutX="204.0" layoutY="510.0" mnemonicParsing="false" text="Add Army">
+                     <graphic>
+                        <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icon/armyIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button layoutX="93.0" layoutY="510.0" mnemonicParsing="false" text="Save army">
+                     <graphic>
+                        <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icon/diskette.png" />
                            </image>
                         </ImageView>
                      </graphic>

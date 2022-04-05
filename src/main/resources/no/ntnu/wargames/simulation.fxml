@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.chart.AreaChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -14,7 +15,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.shape.Line?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="817.0" prefWidth="1051.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.wargames.frontend.gui.controllers.simulationController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="621.0" prefWidth="936.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.wargames.frontend.gui.controllers.simulationController">
    <top>
       <MenuBar prefHeight="23.0" prefWidth="617.0" BorderPane.alignment="CENTER">
         <menus>
@@ -37,11 +38,11 @@
       </MenuBar>
    </top>
    <center>
-      <AnchorPane prefHeight="718.0" prefWidth="1056.0" BorderPane.alignment="BOTTOM_CENTER">
+      <AnchorPane prefHeight="527.0" prefWidth="816.0" BorderPane.alignment="BOTTOM_CENTER">
          <children>
-            <TextArea fx:id="battleLog" layoutX="555.0" layoutY="62.0" prefHeight="371.0" prefWidth="396.0" />
-            <Button layoutX="744.0" layoutY="706.0" mnemonicParsing="false" onAction="#onSimulate" text="Start Simulation" />
-            <AreaChart fx:id="unitGraph" layoutX="23.0" layoutY="22.0" prefHeight="248.0" prefWidth="307.0">
+            <TextArea fx:id="battleLog" layoutX="375.0" layoutY="506.0" prefHeight="132.0" prefWidth="245.0" />
+            <Button layoutX="644.0" layoutY="519.0" mnemonicParsing="false" onAction="#onSimulate" text="Start Simulation" />
+            <AreaChart fx:id="unitGraph" animated="false" layoutX="19.0" layoutY="86.0" prefHeight="208.0" prefWidth="338.0">
               <xAxis>
                 <CategoryAxis side="BOTTOM" />
               </xAxis>
@@ -49,7 +50,7 @@
                 <NumberAxis side="LEFT" />
               </yAxis>
             </AreaChart>
-            <AreaChart fx:id="healthGraph" layoutX="33.0" layoutY="278.0" prefHeight="206.0" prefWidth="287.0">
+            <AreaChart fx:id="healthGraph" animated="false" layoutX="24.0" layoutY="329.0" prefHeight="193.0" prefWidth="341.0">
               <xAxis>
                 <CategoryAxis side="BOTTOM" />
               </xAxis>
@@ -57,14 +58,15 @@
                 <NumberAxis side="LEFT" />
               </yAxis>
             </AreaChart>
-            <Label layoutX="62.0" layoutY="508.0" text="Army 1:" />
-            <Label layoutX="257.0" layoutY="508.0" text="Army 2:" />
-            <Line endX="211.0" layoutX="141.0" layoutY="532.0" startX="-100.0" />
-            <Line endX="-90.0" endY="194.0" layoutX="265.0" layoutY="509.0" startX="-90.0" startY="-5.0" />
-            <Label layoutX="41.0" layoutY="542.0" text="Units: " />
-            <Label layoutX="187.0" layoutY="542.0" prefHeight="17.0" prefWidth="33.0" text="Units: " />
-            <Label fx:id="unitCountArmy1" layoutX="89.0" layoutY="542.0" text="0" />
-            <Label fx:id="unitCountArmy2" layoutX="226.0" layoutY="542.0" text="0" />
+            <Label layoutX="57.0" layoutY="540.0" text="Army 1:" />
+            <Label layoutX="252.0" layoutY="540.0" text="Army 2:" />
+            <Line endX="211.0" layoutX="136.0" layoutY="564.0" startX="-100.0" />
+            <Line endX="-90.00001525878906" endY="111.6666259765625" layoutX="260.0" layoutY="541.0" startX="-90.0" startY="-5.0" />
+            <Label layoutX="36.0" layoutY="574.0" text="Units: " />
+            <Label layoutX="182.0" layoutY="574.0" prefHeight="17.0" prefWidth="33.0" text="Units: " />
+            <Label fx:id="unitCountArmy1" layoutX="84.0" layoutY="574.0" text="0" />
+            <Label fx:id="unitCountArmy2" layoutX="221.0" layoutY="574.0" text="0" />
+            <Canvas fx:id="canvas" height="328.0" layoutX="483.0" layoutY="111.0" width="410.0" />
          </children>
          <BorderPane.margin>
             <Insets />
