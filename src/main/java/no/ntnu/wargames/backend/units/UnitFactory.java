@@ -16,6 +16,7 @@ public class UnitFactory {
     /*Unit types*/
     public static final List<String> UNIT_TYPES = List.of("Ranged","Infantry","Commander","Cavalry");
 
+    private UnitFactory(){};
 
     /**
      * Factory method that returns a new unit.

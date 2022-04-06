@@ -5,8 +5,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -18,6 +16,7 @@ import javafx.stage.StageStyle;
 import no.ntnu.wargames.backend.file.FileHandler;
 import no.ntnu.wargames.backend.units.Army;
 import no.ntnu.wargames.backend.units.Unit;
+import no.ntnu.wargames.frontend.gui.dialog.AddArmyDialog;
 import no.ntnu.wargames.frontend.gui.dialog.CreateUnitDialog;
 import no.ntnu.wargames.frontend.gui.dialog.DialogWindow;
 import java.io.File;
@@ -339,6 +338,12 @@ public class SetUpPageController implements Initializable {
         healthcolumn.setCellValueFactory(new PropertyValueFactory<>("health"));
 
         tableView.refresh();
+    }
+
+    @FXML
+    public void onAddRandomArmy(){
+        AddArmyDialog addArmyDialog = new AddArmyDialog();
+        addArmyDialog.showAndWait();
     }
 
 

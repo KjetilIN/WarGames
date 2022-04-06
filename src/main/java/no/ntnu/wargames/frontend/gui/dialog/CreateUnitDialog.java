@@ -120,10 +120,9 @@ public class CreateUnitDialog extends Dialog<Unit> {
 
 
                 if(checkboxSelected && nameGiven && healthGiven){
-                    UnitFactory factory = new UnitFactory();
                     if(mode == Mode.NEW){
                         //If all the requirements are correct, then we make a new unit.
-                        return factory.createUnit(choiceBox.getValue(),name.getText(),health);
+                        return UnitFactory.createUnit(choiceBox.getValue(),name.getText(),health);
                     }else{
                         this.unit.setHealth(health);
                         this.unit.setName(name.getText());

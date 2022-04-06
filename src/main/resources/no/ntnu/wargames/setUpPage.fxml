@@ -147,7 +147,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button layoutX="204.0" layoutY="510.0" mnemonicParsing="false" text="Add Army">
+                  <Button layoutX="204.0" layoutY="510.0" mnemonicParsing="false" onAction="#onAddRandomArmy" text="Add Army">
                      <graphic>
                         <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                            <image>
