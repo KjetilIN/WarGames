@@ -28,13 +28,25 @@ public class UnitFactory {
      */
     public static Unit createUnit(String unitType,String unitName, int unitHealth){
         if(unitHealth <= 0 || unitName.isEmpty()){return null;}
-        return switch (unitType) {
-            case "Ranged" -> new RangedUnit(unitName, unitHealth);
-            case "Infantry" -> new InfantryUnit(unitName, unitHealth);
-            case "Commander" -> new CommanderUnit(unitName, unitHealth);
-            case "Cavalry" -> new CavalryUnit(unitName, unitHealth);
-            default -> null;
-        };
+        Unit returnUnit;
+        switch (unitType) {
+            case "Ranged":
+                returnUnit = new RangedUnit(unitName, unitHealth);
+                break;
+            case "Infantry":
+                returnUnit = new InfantryUnit(unitName, unitHealth);
+                break;
+            case "Commander":
+                returnUnit = new CommanderUnit(unitName, unitHealth);
+                break;
+            case "Cavalry":
+                returnUnit = new CavalryUnit(unitName, unitHealth);
+                break;
+            default:
+                returnUnit = null;
+                break;
+        }
+        return returnUnit;
     }
 
 

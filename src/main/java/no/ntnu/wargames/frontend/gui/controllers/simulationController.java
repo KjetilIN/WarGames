@@ -16,8 +16,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.util.Duration;
 import no.ntnu.wargames.backend.Battle;
 import no.ntnu.wargames.backend.units.Army;
@@ -129,6 +127,7 @@ public class simulationController implements Initializable {
 
     @FXML
     public void onSimulate(){
+        /*
         setupGraphsBeforeSim();
         timeline = new Timeline(new KeyFrame(Duration.millis(20),this::simStep));
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -142,6 +141,8 @@ public class simulationController implements Initializable {
                 gc.drawImage(tile,i*16,k*16);
             }
         }
+
+         */
 
 
     }

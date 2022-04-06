@@ -1,7 +1,5 @@
 package no.ntnu.wargames.backend.units;
 
-import java.util.Objects;
-
 /**
  * The cavalry unit class.
  * Extends the unit class.

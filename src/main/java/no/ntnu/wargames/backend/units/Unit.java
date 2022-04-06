@@ -95,10 +95,18 @@ public abstract class Unit {
      */
     public void setTerrain(String terrain) {
         switch (terrain) {
-            case "Hill" -> this.terrain = Terrain.HILL;
-            case "Forest" -> this.terrain = Terrain.FOREST;
-            case "PLAINS" -> this.terrain = Terrain.PLAINS;
-            default -> this.terrain = Terrain.NONE;
+            case "Hill":
+                this.terrain = Terrain.HILL;
+                break;
+            case "Forest":
+                this.terrain = Terrain.FOREST;
+                break;
+            case "PLAINS":
+                this.terrain = Terrain.PLAINS;
+                break;
+            default:
+                this.terrain = Terrain.NONE;
+                break;
         }
     }
 
