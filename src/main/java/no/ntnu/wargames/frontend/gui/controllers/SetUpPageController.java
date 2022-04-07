@@ -22,6 +22,7 @@ import no.ntnu.wargames.frontend.gui.dialog.DialogWindow;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -187,6 +188,8 @@ public class SetUpPageController implements Initializable {
 
     }
 
+
+
     /**
      * Add a new unit to the table.
      * Opens a new dialog pane and gets response.
@@ -343,7 +346,44 @@ public class SetUpPageController implements Initializable {
     @FXML
     public void onAddRandomArmy(){
         AddArmyDialog addArmyDialog = new AddArmyDialog();
-        addArmyDialog.showAndWait();
+        Optional<Army> result = addArmyDialog.showAndWait();
+        System.out.println("NULL ARMY");
+        if(result.isPresent() && result != null){
+            Army army = result.get();
+
+            //FIRST NUMBER IS OPTION
+            try{
+                int option = Integer.parseInt(army.getName().substring(0,1));
+                army.setName(army.getName().substring(1));
+
+                if(option == 0){
+                    observableListArmy1.setAll(army.getAllUnits());
+                    txtArmy1Name.setText(army.getName());
+
+                }else if (option == 1){
+                    observableListArmy2.setAll(army.getAllUnits());
+                    txtArmy2Name.setText(army.getName());
+                }else{
+
+                    observableListArmy1.setAll(army.getAllUnits());
+                    txtArmy1Name.setText(army.getName());
+
+                    observableListArmy2.setAll(army.getAllUnits());
+                    txtArmy2Name.setText(army.getName());
+
+                }
+                tableViewArmy1.refresh();
+                tableViewArmy2.refresh();
+            }catch (NumberFormatException e){DialogWindow.openWarningDialog("Wrong format");}
+
+
+
+
+
+
+
+
+        }
     }
 
 

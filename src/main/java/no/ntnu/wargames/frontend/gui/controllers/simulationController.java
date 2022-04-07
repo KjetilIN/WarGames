@@ -3,6 +3,7 @@ package no.ntnu.wargames.frontend.gui.controllers;
 
 
 
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -127,11 +128,13 @@ public class simulationController implements Initializable {
 
     @FXML
     public void onSimulate(){
-        /*
+
         setupGraphsBeforeSim();
         timeline = new Timeline(new KeyFrame(Duration.millis(20),this::simStep));
-        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
+
+        /*
 
         //Remove later
         Image tile = new Image("C:\\Users\\kjeti\\OneDrive\\Dokumenter\\NTNU Dataingeniør Gjøvik 2021-2024\\ÅrNr1\\2.semester\\IDATG2001 Programering 2\\mappeOppgave\\WarGames\\src\\main\\resources\\no\\ntnu\\wargames\\fxpixelart\\grass_dark.png");

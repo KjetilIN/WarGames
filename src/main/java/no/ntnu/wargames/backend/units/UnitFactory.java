@@ -14,7 +14,7 @@ import java.util.List;
 public class UnitFactory {
 
     /*Unit types*/
-    public static final List<String> UNIT_TYPES = List.of("Ranged","Infantry","Commander","Cavalry");
+    private static final List<String> UNIT_TYPES = List.of("Ranged","Infantry","Commander","Cavalry");
 
     private UnitFactory(){};
 

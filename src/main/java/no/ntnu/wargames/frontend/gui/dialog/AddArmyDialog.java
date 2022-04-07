@@ -3,18 +3,37 @@ package no.ntnu.wargames.frontend.gui.dialog;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import no.ntnu.wargames.backend.units.Army;
+import no.ntnu.wargames.backend.units.UnitFactory;
 
-public class AddArmyDialog extends Dialog<Army> {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 
-    private Army returnArmy;
+public class AddArmyDialog extends Dialog<Army>{
+
+    /*Unit types*/
+    private static final List<String> UNIT_TYPES = List.of("Ranged","Infantry","Commander","Cavalry");
+    private List<Spinner<Integer>> unitSpinners;
 
     public AddArmyDialog(){
         super();
+        unitSpinners = new ArrayList<>();
         createContent();
     }
 
     private void createContent() {
+        //Header text
+        getDialogPane().setHeaderText("Add army!");
+
+        //Margin
+
+
         /*Name of the army*/
         TextField armyName = new TextField();
         armyName.setPromptText("Enter army name...");
@@ -25,9 +44,6 @@ public class AddArmyDialog extends Dialog<Army> {
         pickArmy.getItems().add("Army 2");
         pickArmy.getItems().add("Both");
 
-        /*Name of all units*/
-        TextField unitName = new TextField();
-        unitName.setPromptText("Name for each unit..");
 
         /*Spinner for unit count*/
         Spinner<Integer> rangedSpinner = new Spinner(0,50,0);
@@ -35,13 +51,27 @@ public class AddArmyDialog extends Dialog<Army> {
         Spinner<Integer> infantrySpinner = new Spinner(0,50,0);
         Spinner<Integer> cavalrySpinner = new Spinner(0,50,0);
 
+        /* Field for a unit*/
+        TextField unitNames = new TextField();
+        unitNames.setPromptText("Unit(s) name...");
 
+        TextField health = new TextField();
+        health.setPromptText("Unit(s) health...");
+
+        health.textProperty().addListener((observable, oldValue, newValue) -> {
+            // force the field to be numeric only
+            if (!newValue.matches("\\d*")) {
+                health.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
 
         /*Grid*/
         GridPane grid = new GridPane();
+        /*Set spacing between elements*/
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(20, 20, 10, 10));
+
         grid.add(new Label("Army name:"), 0, 0);
         grid.add(armyName, 1, 0);
         grid.add(new Label("Add army in:"), 0, 1);
@@ -54,14 +84,84 @@ public class AddArmyDialog extends Dialog<Army> {
         grid.add(commanderSpinner,1,4);
         grid.add(new Label("Cavalry:"),0,5);
         grid.add(cavalrySpinner,1,5);
+        grid.add(new Label("Unit(s) name: "),0,6);
+        grid.add(unitNames,1,6);
+        grid.add(new Label("Set Unit(s) health: "),0,7);
+        grid.add(health,1,7);
+
         getDialogPane().setContent(grid);
+
+        /*Add all the spinners*/
+        unitSpinners.add(rangedSpinner);
+        unitSpinners.add(infantrySpinner);
+        unitSpinners.add(commanderSpinner);
+        unitSpinners.add(cavalrySpinner);
 
         /*Buttons*/
         getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
 
 
 
+        /*Result converter*/
+        setResultConverter((ButtonType buttonType)->{
+            if(buttonType == ButtonType.OK) {
+                Army result = null;
+
+                if (armyName.getText().length() > 0 && !pickArmy.getSelectionModel().isEmpty()
+                        && unitNames.getText().length() > 0 && health.getText().length() > 0 && Integer.parseInt(health.getText()) > 0) {
+
+
+                    result = new Army(armyName.getText());
+
+
+                    boolean hasUnitToAdd = false;
+                    for (int i = 0; i < unitSpinners.size(); i++) { // for each unit-type, add units
+                        try {
+                            int spinnerValue = unitSpinners.get(i).getValue();
+                            if (spinnerValue > 0) { //add only if there is
+                                hasUnitToAdd = true;
+                                result.addAll(UnitFactory.createListOfUnit(spinnerValue, UNIT_TYPES.get(i), unitNames.getText(), Integer.parseInt(health.getText())));
+                            }
+                        } catch (NumberFormatException e) {DialogWindow.openWarningDialog(e.getMessage());}
+
+
+                    }
+                    if(!hasUnitToAdd){
+                        DialogWindow.openWarningDialog("No unit(s) was added.\n" +
+                                "Please use enter amount each type when adding the units!");
+                        return null;
+                    }
+
+
+                    result.setName(pickArmy.getSelectionModel().getSelectedIndex()+armyName.getText());
+
+                }else{
+                    String errorMessage = "Wrong format: \n";
+                    if(armyName.getText().length() == 0){
+                        errorMessage += "- No army name given. \n";
+                    }
+                    if(pickArmy.getSelectionModel().isEmpty()){
+                        errorMessage+= "- No selection for were the army is set. \n";
+                    }
+                    if(unitNames.getText().length() == 0){
+                        errorMessage += "- No unit name given. \n";
+                    }
+                    if( health.getText().length() == 0){
+                        errorMessage += "- Health was not given.";
+                    }else if(Integer.parseInt(health.getText()) == 0){
+                        errorMessage += "- Health was 0!";
+                    }
+                    DialogWindow.openWarningDialog(errorMessage);
+
+                }
+                return result;
+            }
+
+            return null;
+        });
 
 
     }
+
+
 }
