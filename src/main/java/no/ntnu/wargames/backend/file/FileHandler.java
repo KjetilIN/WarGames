@@ -58,6 +58,22 @@ public class FileHandler {
 
     }
 
+    public static Path saveArmyToFile(Army army)throws IllegalArgumentException{
+        if(army == null){throw new IllegalArgumentException("Army for save was empty.");}
+        File file = new File(army.getName()+".csv");
+
+        try (BufferedWriter writer = Files.newBufferedWriter(file.toPath())) {
+            writer.write(army.getName()+",\n");
+            for (Unit unit : army.getAllUnits()) {
+                writer.write(unit.getUnitType()+","+unit.getName()+","+unit.getHealth()+"\n");
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return file.toPath().toAbsolutePath();
+    }
+
 
     /**
      * Opens a window to open the file.

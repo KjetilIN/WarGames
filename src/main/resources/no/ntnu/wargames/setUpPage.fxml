@@ -156,7 +156,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button layoutX="93.0" layoutY="510.0" mnemonicParsing="false" text="Save army">
+                  <Button layoutX="93.0" layoutY="510.0" mnemonicParsing="false" onAction="#onSave" text="Save army">
                      <graphic>
                         <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                            <image>

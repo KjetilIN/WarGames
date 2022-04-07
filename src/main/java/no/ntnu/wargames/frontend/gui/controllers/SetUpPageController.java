@@ -19,6 +19,8 @@ import no.ntnu.wargames.backend.units.Unit;
 import no.ntnu.wargames.frontend.gui.dialog.AddArmyDialog;
 import no.ntnu.wargames.frontend.gui.dialog.CreateUnitDialog;
 import no.ntnu.wargames.frontend.gui.dialog.DialogWindow;
+import no.ntnu.wargames.frontend.gui.dialog.SaveOptionDialog;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -264,6 +266,40 @@ public class SetUpPageController implements Initializable {
 
 
     }
+    @FXML
+    public void onSave(){
+        SaveOptionDialog saveOptionDialog = new SaveOptionDialog();
+        Optional<Integer> optionalInteger = saveOptionDialog.showAndWait();
+        if(optionalInteger.isPresent()){
+            int option = optionalInteger.get();
+            String pathSavedTo = "The army(s) was saved here : \n \n";
+
+
+            switch (option){
+                case 0:
+                    pathSavedTo += String.valueOf(FileHandler.saveArmyToFile(this.army1));
+                    break;
+                case 1:
+                    pathSavedTo += String.valueOf(FileHandler.saveArmyToFile(this.army2));
+                    break;
+                case 2:
+                    pathSavedTo += FileHandler.saveArmyToFile(this.army1) +"\n";
+                    pathSavedTo += FileHandler.saveArmyToFile(this.army2);
+                    break;
+                default:
+                    DialogWindow.openWarningDialog("Save option is not added!");
+            }
+
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Saved!");
+            alert.setContentText(pathSavedTo);
+            alert.setWidth(60);
+            alert.showAndWait();
+        }
+
+        
+    }
 
     @FXML
     public void onDelete(){
@@ -356,18 +392,23 @@ public class SetUpPageController implements Initializable {
                 int option = Integer.parseInt(army.getName().substring(0,1));
                 army.setName(army.getName().substring(1));
 
+                // TODO: 07.04.2022 write switchcase  
+
                 if(option == 0){
+                    army1.setName(army.getName());
                     observableListArmy1.setAll(army.getAllUnits());
                     txtArmy1Name.setText(army.getName());
 
                 }else if (option == 1){
+                    army2.setName(army.getName());
                     observableListArmy2.setAll(army.getAllUnits());
                     txtArmy2Name.setText(army.getName());
                 }else{
-
+                    army1.setName(army.getName());
                     observableListArmy1.setAll(army.getAllUnits());
                     txtArmy1Name.setText(army.getName());
 
+                    army2.setName(army.getName());
                     observableListArmy2.setAll(army.getAllUnits());
                     txtArmy2Name.setText(army.getName());
 
@@ -375,13 +416,6 @@ public class SetUpPageController implements Initializable {
                 tableViewArmy1.refresh();
                 tableViewArmy2.refresh();
             }catch (NumberFormatException e){DialogWindow.openWarningDialog("Wrong format");}
-
-
-
-
-
-
-
 
         }
     }

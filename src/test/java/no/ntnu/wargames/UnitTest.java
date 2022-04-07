@@ -25,12 +25,12 @@ class UnitTest{
 
     /**
      * Test that the unit constructor is correct.
-     * Shold not throw exceptions.
+     * Should not throw exceptions.
      */
 
     @Test
     @DisplayName("Test constructor for all unit types.")
-    void testUnitContructor(){
+    void testUnitConstructor(){
         try{
             Unit cavalryUnit = new CavalryUnit("name",10,10,10);
             Unit rangedUnit = new RangedUnit("name",10,10,10);
