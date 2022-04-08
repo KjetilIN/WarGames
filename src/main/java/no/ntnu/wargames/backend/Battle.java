@@ -2,8 +2,6 @@ package no.ntnu.wargames.backend;
 
 import no.ntnu.wargames.backend.units.Army;
 import no.ntnu.wargames.backend.units.Unit;
-
-import java.util.Locale;
 import java.util.Random;
 
 /**
@@ -39,6 +37,7 @@ public class Battle {
 
     /**
      * The method to simulate an attack and get information back.
+     * Uses attacker and defender are chosen in the {@link class#simulateStep()} method.
      *
      * @param defendUnit the unit that defends.
      * @param attackUnit the unit that attacks.
@@ -60,12 +59,6 @@ public class Battle {
         return res;
     }
 
-    /**
-     * Simulates one attack.
-     * Chooses a side that attack, and uses the simulateSep method to get information from the attack.
-     *
-     * @return returns a string of information
-     */
 
 
     /**
@@ -83,6 +76,13 @@ public class Battle {
         }
     }
 
+    /**
+     * Simulates one attack.
+     * Chooses a side that attack.
+     * Uses the {@link class#simulateAttack(Unit, Unit, Army, Army)} method to get information from the attack.
+     *
+     * @return returns a string of information
+     */
     public String simulateStep(){
         String res; //String to be given
 
