@@ -94,11 +94,11 @@ public abstract class Unit {
      * @param terrain terrain type as string.
      */
     public void setTerrain(String terrain) {
-        switch (terrain) {
-            case "Hill":
+        switch (terrain.toUpperCase()) {
+            case "HILL":
                 this.terrain = Terrain.HILL;
                 break;
-            case "Forest":
+            case "FOREST":
                 this.terrain = Terrain.FOREST;
                 break;
             case "PLAINS":
