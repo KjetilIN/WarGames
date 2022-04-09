@@ -13,8 +13,9 @@ import java.util.Random;
  */
 
 public class Battle {
-    private final Army armyOne;
-    private final Army armyTwo;
+
+    private Army armyOne;
+    private Army armyTwo;
     private Random random;
 
     /**
@@ -26,7 +27,7 @@ public class Battle {
      */
 
     public Battle(Army armyOne, Army armyTwo){
-        if(armyOne == null || armyTwo == null || !armyOne.hasUnits() || !armyTwo.hasUnits()){
+        if(armyOne == null || armyTwo == null){
             throw new IllegalArgumentException("Army(s) given are empty.");
         }
         this.armyOne = armyOne;

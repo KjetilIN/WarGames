@@ -1,6 +1,7 @@
 package no.ntnu.wargames.frontend;
 
 import no.ntnu.wargames.backend.Battle;
+import no.ntnu.wargames.backend.units.Army;
 
 
 /**
@@ -15,8 +16,13 @@ public class Facade {
 
     private static volatile Facade instance;
     private Battle battle;
+    private Army armyOne;
+    private Army armyTwo;
 
     private Facade(){
+        armyOne = new Army("NONE");
+        armyTwo = new Army("NONE");
+        battle = new Battle(armyOne,armyTwo);
 
     }
 
@@ -42,4 +48,21 @@ public class Facade {
     public Battle getBattle() {
         return battle;
     }
+
+    public Army getArmyOne() {
+        return this.armyOne;
+    }
+
+    public Army getArmyTwo() {
+        return this.armyTwo;
+    }
+
+    public void setArmyOne(Army armyOne) {
+        this.armyOne = armyOne;
+    }
+
+    public void setArmyTwo(Army armyTwo) {
+        this.armyTwo = armyTwo;
+    }
+
 }

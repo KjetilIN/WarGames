@@ -20,6 +20,8 @@ import javafx.scene.image.Image;
 import javafx.util.Duration;
 import no.ntnu.wargames.backend.Battle;
 import no.ntnu.wargames.backend.units.Army;
+import no.ntnu.wargames.frontend.Facade;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -58,13 +60,6 @@ public class simulationController implements Initializable {
 
     @FXML
     private TextArea battleLog;
-
-    public void sendArmyToSimulation(Army army1, Army army2){
-        this.army1 = army1;
-        this.army2 = army2;
-        this.battle = new Battle(army1,army2);
-
-    }
 
     public void setupGraphsBeforeSim(){
 
@@ -153,6 +148,12 @@ public class simulationController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //Init the fields from facade
+        this.battle = Facade.getInstance().getBattle();
+        this.army1 = Facade.getInstance().getArmyOne();
+        this.army2 = Facade.getInstance().getArmyTwo();
+
+        //Counter
         this.simulationStep = 0;
         //Setting style for unit graph
         this.unitGraph.setTitle("Units in army");

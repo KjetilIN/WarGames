@@ -16,6 +16,7 @@ import javafx.stage.StageStyle;
 import no.ntnu.wargames.backend.file.FileHandler;
 import no.ntnu.wargames.backend.units.Army;
 import no.ntnu.wargames.backend.units.Unit;
+import no.ntnu.wargames.frontend.Facade;
 import no.ntnu.wargames.frontend.gui.dialog.AddArmyDialog;
 import no.ntnu.wargames.frontend.gui.dialog.CreateUnitDialog;
 import no.ntnu.wargames.frontend.gui.dialog.DialogWindow;
@@ -346,9 +347,11 @@ public class SetUpPageController implements Initializable {
         this.army1.setName(txtArmy1Name.getText());
         this.army2.setName(txtArmy2Name.getText());
 
+        /*
         //Send information to the new frame.
         simulationController simulationController = loader.getController();
         simulationController.sendArmyToSimulation(this.army1,this.army2);
+        */
 
         //New style for the new stage
         stage.setTitle("WarGames");
@@ -428,7 +431,7 @@ public class SetUpPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         /*Army 1 setup*/
-        this.army1 = new Army("NO NAME GIVEN");
+        this.army1 = Facade.getInstance().getArmyOne();
         observableListArmy1 = FXCollections.observableList(this.army1.getAllUnits());
         initTableview(pathArmy1,
                 iconCheckArmy1,
@@ -439,7 +442,7 @@ public class SetUpPageController implements Initializable {
                 healthColumnArmy1);
 
         /*Army 2 setup*/
-        this.army2 = new Army("NO NAME GIVEN");
+        this.army2 = Facade.getInstance().getArmyTwo();
         observableListArmy2 = FXCollections.observableList(this.army2.getAllUnits());
         initTableview(pathArmy2,
                 iconCheckArmy2,
