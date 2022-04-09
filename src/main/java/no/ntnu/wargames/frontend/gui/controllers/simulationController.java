@@ -17,12 +17,15 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import no.ntnu.wargames.backend.Battle;
 import no.ntnu.wargames.backend.units.Army;
 import no.ntnu.wargames.frontend.Facade;
 
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 
@@ -50,7 +53,10 @@ public class simulationController implements Initializable {
     private Label unitCountArmy2;
 
     @FXML
-    private Canvas canvas;
+    private Canvas backgroundCanvas;
+
+    @FXML
+    private Canvas unitCanvas;
 
     @FXML
     private AreaChart<String,Number> unitGraph;
@@ -129,19 +135,39 @@ public class simulationController implements Initializable {
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
 
-        /*
+
 
         //Remove later
-        Image tile = new Image("C:\\Users\\kjeti\\OneDrive\\Dokumenter\\NTNU Dataingeniør Gjøvik 2021-2024\\ÅrNr1\\2.semester\\IDATG2001 Programering 2\\mappeOppgave\\WarGames\\src\\main\\resources\\no\\ntnu\\wargames\\fxpixelart\\grass_dark.png");
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        for(int i = 0; i< canvas.getHeight()/16;i++){
-            for(int k = 0; k<canvas.getWidth()/16;k++){
+        Image tile = new Image("C:\\Users\\kjeti\\OneDrive\\Skrivebord\\HillBackground.png");
+        GraphicsContext gc = backgroundCanvas.getGraphicsContext2D();
+
+        gc.drawImage(tile,0,0,backgroundCanvas.getWidth(),backgroundCanvas.getHeight());
+        /*
+        for(int i = 0; i< backgroundCanvas.getHeight()/16;i++){
+            for(int k = 0; k<backgroundCanvas.getWidth()/16;k++){
                 gc.drawImage(tile,i*16,k*16);
             }
         }
-
          */
 
+    }
+    @FXML
+    public void onStick(){
+        Image stick = new Image("C:\\Users\\kjeti\\OneDrive\\Skrivebord\\stickMan.png");
+        GraphicsContext gc = unitCanvas.getGraphicsContext2D();
+        Image transparent = new Image("C:\\Users\\kjeti\\OneDrive\\Skrivebord\\unvisible.png");
+        Random random = new Random();
+        gc.clearRect(0, 0, unitCanvas.getWidth(), unitCanvas.getHeight());
+        for(int i = 0; i< backgroundCanvas.getHeight()/16;i++){
+            for(int k = 0; k<backgroundCanvas.getWidth()/16;k++){
+                if(random.nextInt(5) == 0){
+                    gc.drawImage(stick,i*16,k*16);
+                }else{
+                    gc.drawImage(transparent,i*16,k*16);
+                }
+
+            }
+        }
 
     }
 
