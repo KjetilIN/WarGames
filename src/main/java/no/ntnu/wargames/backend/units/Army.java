@@ -1,5 +1,7 @@
 package no.ntnu.wargames.backend.units;
 
+import no.ntnu.wargames.backend.designPattern.RandomSingleton;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -11,7 +13,7 @@ import java.util.stream.Collectors;
  * This class has all the methods for the list of units.
  *
  * @author Kjetil Indrehus
- * @version 1.0-SNAPSHOT 09.02.2022
+ * @version 1.0-SNAPSHOT
  */
 
 public class Army {
@@ -35,7 +37,7 @@ public class Army {
         }else{
             this.name = name;
         }
-
+        random = RandomSingleton.getInstance().getRandom();
         units = new ArrayList<>();
     }
 
@@ -163,8 +165,6 @@ public class Army {
      * @return returns a random unit from the army.
      */
     public Unit getRandomUnit(){
-        // TODO: 04.04.2022 Update this
-        random = new Random();
         return units.get(random.nextInt(getAllUnits().size()));
     }
 

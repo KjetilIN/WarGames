@@ -1,6 +1,7 @@
 package no.ntnu.wargames.backend;
 
 import no.ntnu.wargames.backend.units.Army;
+import no.ntnu.wargames.backend.designPattern.RandomSingleton;
 import no.ntnu.wargames.backend.units.Unit;
 import java.util.Random;
 
@@ -32,7 +33,7 @@ public class Battle {
         }
         this.armyOne = armyOne;
         this.armyTwo = armyTwo;
-        this.random = new Random();
+        this.random = RandomSingleton.getInstance().getRandom(); //Get random object from singleton
 
     }
 

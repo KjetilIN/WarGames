@@ -16,7 +16,7 @@ import javafx.stage.StageStyle;
 import no.ntnu.wargames.backend.file.FileHandler;
 import no.ntnu.wargames.backend.units.Army;
 import no.ntnu.wargames.backend.units.Unit;
-import no.ntnu.wargames.frontend.Facade;
+import no.ntnu.wargames.backend.designPattern.Facade;
 import no.ntnu.wargames.frontend.gui.dialog.AddArmyDialog;
 import no.ntnu.wargames.frontend.gui.dialog.CreateUnitDialog;
 import no.ntnu.wargames.frontend.gui.dialog.DialogWindow;
@@ -25,7 +25,6 @@ import no.ntnu.wargames.frontend.gui.dialog.SaveOptionDialog;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
 

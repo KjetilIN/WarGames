@@ -17,16 +17,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import no.ntnu.wargames.backend.Battle;
 import no.ntnu.wargames.backend.units.Army;
-import no.ntnu.wargames.frontend.Facade;
+import no.ntnu.wargames.backend.designPattern.Facade;
 import no.ntnu.wargames.frontend.gui.canvasLogic.Grid;
 
 import java.net.URL;
-import java.util.Random;
 import java.util.ResourceBundle;
 
 
