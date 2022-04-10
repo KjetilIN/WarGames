@@ -23,6 +23,7 @@ import javafx.util.Duration;
 import no.ntnu.wargames.backend.Battle;
 import no.ntnu.wargames.backend.units.Army;
 import no.ntnu.wargames.frontend.Facade;
+import no.ntnu.wargames.frontend.gui.canvasLogic.Grid;
 
 import java.net.URL;
 import java.util.Random;
@@ -38,6 +39,7 @@ public class simulationController implements Initializable {
     private Army army2;
     private Timeline timeline;
     private int simulationStep;
+    private Grid canvasGrid;
 
     private XYChart.Series<String , Number> army1UnitsSeries;
     private XYChart.Series<String, Number> army2UnitsSeries;
@@ -153,21 +155,8 @@ public class simulationController implements Initializable {
     }
     @FXML
     public void onStick(){
-        Image stick = new Image("C:\\Users\\kjeti\\OneDrive\\Skrivebord\\stickMan.png");
-        GraphicsContext gc = unitCanvas.getGraphicsContext2D();
-        Image transparent = new Image("C:\\Users\\kjeti\\OneDrive\\Skrivebord\\unvisible.png");
-        Random random = new Random();
-        gc.clearRect(0, 0, unitCanvas.getWidth(), unitCanvas.getHeight());
-        for(int i = 0; i< backgroundCanvas.getHeight()/16;i++){
-            for(int k = 0; k<backgroundCanvas.getWidth()/16;k++){
-                if(random.nextInt(5) == 0){
-                    gc.drawImage(stick,i*16,k*16);
-                }else{
-                    gc.drawImage(transparent,i*16,k*16);
-                }
-
-            }
-        }
+        Grid grid = new Grid(unitCanvas.getWidth(),unitCanvas.getHeight());
+        GraphicsContext gc = grid.drawUnitLineUp(unitCanvas,army1,army2);
 
     }
 
@@ -178,6 +167,9 @@ public class simulationController implements Initializable {
         this.battle = Facade.getInstance().getBattle();
         this.army1 = Facade.getInstance().getArmyOne();
         this.army2 = Facade.getInstance().getArmyTwo();
+
+        //Setup canvas
+        this.canvasGrid = new Grid(backgroundCanvas.getWidth(),backgroundCanvas.getHeight());
 
         //Counter
         this.simulationStep = 0;
