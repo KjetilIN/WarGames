@@ -58,17 +58,19 @@
                 <NumberAxis side="LEFT" />
               </yAxis>
             </AreaChart>
-            <Label layoutX="57.0" layoutY="540.0" text="Army 1:" />
-            <Label layoutX="252.0" layoutY="540.0" text="Army 2:" />
+            <Label layoutX="35.0" layoutY="539.0" text="Army 1:" />
+            <Label layoutX="178.0" layoutY="538.0" text="Army 2:" />
             <Line endX="211.0" layoutX="136.0" layoutY="564.0" startX="-100.0" />
             <Line endX="-90.00001525878906" endY="111.6666259765625" layoutX="260.0" layoutY="541.0" startX="-90.0" startY="-5.0" />
             <Label layoutX="36.0" layoutY="574.0" text="Units: " />
             <Label layoutX="182.0" layoutY="574.0" prefHeight="17.0" prefWidth="33.0" text="Units: " />
             <Label fx:id="unitCountArmy1" layoutX="84.0" layoutY="574.0" text="0" />
             <Label fx:id="unitCountArmy2" layoutX="221.0" layoutY="574.0" text="0" />
-            <Canvas fx:id="backgroundCanvas" height="400.0" layoutX="383.0" layoutY="83.0" width="500.0" />
-            <Canvas fx:id="unitCanvas" height="400.0" layoutX="383.0" layoutY="83.0" width="500.0" />
-            <Button layoutX="644.0" layoutY="559.0" mnemonicParsing="false" onAction="#onStick" text="Add Stick" />
+            <Canvas fx:id="backgroundCanvas" height="416.0" layoutX="383.0" layoutY="83.0" width="496.0" />
+            <Canvas fx:id="unitCanvas" height="416.0" layoutX="383.0" layoutY="83.0" width="496.0" />
+            <Button layoutX="644.0" layoutY="559.0" mnemonicParsing="false" onAction="#onStick" prefHeight="25.0" prefWidth="105.0" text="Add Stick" />
+            <Label fx:id="txtNameArmyOne" layoutX="92.0" layoutY="539.0" text="NAME" />
+            <Label fx:id="txtNameArmyTwo" layoutX="232.0" layoutY="538.0" text="NAME" />
          </children>
          <BorderPane.margin>
             <Insets />

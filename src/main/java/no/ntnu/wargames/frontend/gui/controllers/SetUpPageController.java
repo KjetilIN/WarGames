@@ -17,10 +17,7 @@ import no.ntnu.wargames.backend.file.FileHandler;
 import no.ntnu.wargames.backend.units.Army;
 import no.ntnu.wargames.backend.units.Unit;
 import no.ntnu.wargames.backend.designPattern.Facade;
-import no.ntnu.wargames.frontend.gui.dialog.AddArmyDialog;
-import no.ntnu.wargames.frontend.gui.dialog.CreateUnitDialog;
-import no.ntnu.wargames.frontend.gui.dialog.DialogWindow;
-import no.ntnu.wargames.frontend.gui.dialog.SaveOptionDialog;
+import no.ntnu.wargames.frontend.gui.dialog.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -334,32 +331,33 @@ public class SetUpPageController implements Initializable {
 
     @FXML
     public void onGoToSimulationPane() throws IOException {
-        Stage prevStage = (Stage)mainPage.getScene().getWindow();
-        prevStage.close();
+        SimulationSettingsDialog settingsDialog = new SimulationSettingsDialog();
+        Optional<Integer> result = settingsDialog.showAndWait();
+        if(result != null && result.isPresent()){
+            // Set name of the army
+            Facade.getInstance().getArmyOne().setName(txtArmy1Name.getText());
+            Facade.getInstance().getArmyTwo().setName(txtArmy2Name.getText());
+            Stage prevStage = (Stage)mainPage.getScene().getWindow();
+            prevStage.close();
 
-        //New scene opener
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/no/ntnu/wargames/simulation.fxml"));
-        Scene scene = new Scene(loader.load());
-        Stage stage = new Stage();
+            //New scene opener
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/no/ntnu/wargames/simulation.fxml"));
+            Scene scene = new Scene(loader.load());
+            Stage stage = new Stage();
 
-        // Set name of the army
-        this.army1.setName(txtArmy1Name.getText());
-        this.army2.setName(txtArmy2Name.getText());
+            simulationController controller = loader.getController();
+            controller.setDelay(result.get());
 
-        /*
-        //Send information to the new frame.
-        simulationController simulationController = loader.getController();
-        simulationController.sendArmyToSimulation(this.army1,this.army2);
-        */
+            //New style for the new stage
+            stage.setTitle("WarGames");
+            stage.initStyle(StageStyle.DECORATED);
+            Image icon = new Image(getClass().getResourceAsStream("/no/ntnu/wargames/icon/logoIcon.PNG"));
+            stage.getIcons().add(icon);
+            stage.setScene(scene);
+            stage.setFullScreen(false); //change value for fullscreen
+            stage.show();
+        }
 
-        //New style for the new stage
-        stage.setTitle("WarGames");
-        stage.initStyle(StageStyle.DECORATED);
-        Image icon = new Image(getClass().getResourceAsStream("/no/ntnu/wargames/icon/logoIcon.PNG"));
-        stage.getIcons().add(icon);
-        stage.setScene(scene);
-        stage.setFullScreen(false); //change value for fullscreen
-        stage.show();
     }
 
     private void initTableview(TextField path,

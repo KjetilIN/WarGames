@@ -36,7 +36,8 @@ public class simulationController implements Initializable {
     private Army army2;
     private Timeline timeline;
     private int simulationStep;
-    private Grid canvasGrid;
+    private int delay;
+    private Grid canvasDrawUtility;
 
     private XYChart.Series<String , Number> army1UnitsSeries;
     private XYChart.Series<String, Number> army2UnitsSeries;
@@ -52,6 +53,12 @@ public class simulationController implements Initializable {
     private Label unitCountArmy2;
 
     @FXML
+    private Label txtNameArmyOne;
+
+    @FXML
+    private Label txtNameArmyTwo;
+
+    @FXML
     private Canvas backgroundCanvas;
 
     @FXML
@@ -65,6 +72,10 @@ public class simulationController implements Initializable {
 
     @FXML
     private TextArea battleLog;
+
+    public void setDelay(int delay) {
+        this.delay = delay;
+    }
 
     public void setupGraphsBeforeSim(){
 
@@ -105,6 +116,10 @@ public class simulationController implements Initializable {
             army2SumHealth.getData().add(new XYChart.Data<>(String.valueOf(simulationStep),this.army2.getAllUnitHealthSum()));
             battleLog.setText(battleLog.getText()+ textLog);
             simulationStep++;
+            Grid grid = new Grid(this.unitCanvas,this.unitCanvas.getWidth(),this.unitCanvas.getHeight());
+            grid.drawRandomBackground(this.unitCanvas,this.army1,this.army2);
+        }else{
+            timeline.stop();
         }
 
     }
@@ -130,8 +145,9 @@ public class simulationController implements Initializable {
     public void onSimulate(){
 
         setupGraphsBeforeSim();
-        timeline = new Timeline(new KeyFrame(Duration.millis(20),this::simStep));
+        timeline = new Timeline(new KeyFrame(Duration.millis(200),this::simStep));
         timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.setOnFinished(finish -> notifyWinner()); // TODO: 10.04.2022 Fix this 
         timeline.play();
 
 
@@ -152,8 +168,8 @@ public class simulationController implements Initializable {
     }
     @FXML
     public void onStick(){
-        Grid grid = new Grid(unitCanvas.getWidth(),unitCanvas.getHeight());
-        GraphicsContext gc = grid.drawUnitLineUp(unitCanvas,army1,army2);
+        Grid grid = new Grid(unitCanvas,unitCanvas.getWidth(),unitCanvas.getHeight());
+        grid.drawRandomBackground(this.unitCanvas,this.army1,this.army2);
 
     }
 
@@ -166,7 +182,16 @@ public class simulationController implements Initializable {
         this.army2 = Facade.getInstance().getArmyTwo();
 
         //Setup canvas
-        this.canvasGrid = new Grid(backgroundCanvas.getWidth(),backgroundCanvas.getHeight());
+        this.canvasDrawUtility = new Grid(this.backgroundCanvas,backgroundCanvas.getWidth(),backgroundCanvas.getHeight());
+
+        //SetUp Information
+        txtNameArmyOne.setText(this.army1.getName());
+        txtNameArmyTwo.setText(this.army2.getName());
+
+        this.backgroundCanvas = new Canvas();
+        this.canvasDrawUtility.drawBackground(Facade.getInstance().getArmyOne().getAllUnits().get(0).getTerrain());
+
+
 
         //Counter
         this.simulationStep = 0;

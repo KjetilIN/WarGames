@@ -42,7 +42,6 @@ public class FileHandler {
         if(lines.isEmpty()){throw new IllegalArgumentException("No content in file");}
 
         returnArmy.setName(lines.get(0).replace(",",""));
-        System.out.println(returnArmy.getName());
         for(int i = 1; i< lines.size();i++){
             String [] words = lines.get(i).split(",");
             /*Each unit lines will have: type,name,health == 3 words. If a line doesn't, throw exception */
