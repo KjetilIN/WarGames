@@ -345,7 +345,7 @@ public class SetUpPageController implements Initializable {
             Scene scene = new Scene(loader.load());
             Stage stage = new Stage();
 
-            simulationController controller = loader.getController();
+            SimulationController controller = loader.getController();
             controller.setDelay(result.get());
 
             //New style for the new stage

@@ -21,13 +21,13 @@ import javafx.util.Duration;
 import no.ntnu.wargames.backend.Battle;
 import no.ntnu.wargames.backend.units.Army;
 import no.ntnu.wargames.backend.designPattern.Facade;
-import no.ntnu.wargames.frontend.gui.canvasLogic.Grid;
+import no.ntnu.wargames.frontend.gui.canvasLogic.Painter;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class simulationController implements Initializable {
+public class SimulationController implements Initializable {
 
 
     /*Fields for the simulation*/
@@ -37,7 +37,7 @@ public class simulationController implements Initializable {
     private Timeline timeline;
     private int simulationStep;
     private int delay;
-    private Grid canvasDrawUtility;
+    private Painter canvasDrawUtility;
 
     private XYChart.Series<String , Number> army1UnitsSeries;
     private XYChart.Series<String, Number> army2UnitsSeries;
@@ -59,6 +59,12 @@ public class simulationController implements Initializable {
     private Label txtNameArmyTwo;
 
     @FXML
+    private Label txtWinner;
+
+    @FXML
+    private Label txtTerrain;
+
+    @FXML
     private Canvas backgroundCanvas;
 
     @FXML
@@ -75,6 +81,10 @@ public class simulationController implements Initializable {
 
     public void setDelay(int delay) {
         this.delay = delay;
+    }
+
+    public int getDelay(){
+        return this.delay;
     }
 
     public void setupGraphsBeforeSim(){
@@ -106,6 +116,7 @@ public class simulationController implements Initializable {
     public void simStep(ActionEvent event){
         String textLog = "";
         if (army1.hasUnits() && army2.hasUnits()){
+            txtWinner.setText("......");
             textLog += battle.simulateStep() +"\n";
             unitCountArmy1.setText(String.valueOf(army1.getAllUnits().size()));
             unitCountArmy2.setText(String.valueOf(army2.getAllUnits().size()));
@@ -116,9 +127,14 @@ public class simulationController implements Initializable {
             army2SumHealth.getData().add(new XYChart.Data<>(String.valueOf(simulationStep),this.army2.getAllUnitHealthSum()));
             battleLog.setText(battleLog.getText()+ textLog);
             simulationStep++;
-            Grid grid = new Grid(this.unitCanvas,this.unitCanvas.getWidth(),this.unitCanvas.getHeight());
-            grid.drawRandomBackground(this.unitCanvas,this.army1,this.army2);
+            canvasDrawUtility.drawRandomAttackFrame(this.unitCanvas,this.army1,this.army2);
         }else{
+            if(army1.hasUnits()){
+                txtWinner.setText(this.army1.getName());
+            }else{
+                txtWinner.setText(this.army2.getName());
+            }
+
             timeline.stop();
         }
 
@@ -126,7 +142,7 @@ public class simulationController implements Initializable {
 
 
     public void notifyWinner(){
-        String winnerArmyName = "";
+        String winnerArmyName;
         if(this.army1.hasUnits()){
             winnerArmyName = this.army1.getName();
         }else{
@@ -145,31 +161,17 @@ public class simulationController implements Initializable {
     public void onSimulate(){
 
         setupGraphsBeforeSim();
-        timeline = new Timeline(new KeyFrame(Duration.millis(200),this::simStep));
+        timeline = new Timeline(new KeyFrame(Duration.millis(getDelay()),this::simStep));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.setOnFinished(finish -> notifyWinner()); // TODO: 10.04.2022 Fix this 
         timeline.play();
 
-
-
-        //Remove later
-        Image tile = new Image("C:\\Users\\kjeti\\OneDrive\\Skrivebord\\HillBackground.png");
-        GraphicsContext gc = backgroundCanvas.getGraphicsContext2D();
-
-        gc.drawImage(tile,0,0,backgroundCanvas.getWidth(),backgroundCanvas.getHeight());
-        /*
-        for(int i = 0; i< backgroundCanvas.getHeight()/16;i++){
-            for(int k = 0; k<backgroundCanvas.getWidth()/16;k++){
-                gc.drawImage(tile,i*16,k*16);
-            }
-        }
-         */
-
     }
+
     @FXML
     public void onStick(){
-        Grid grid = new Grid(unitCanvas,unitCanvas.getWidth(),unitCanvas.getHeight());
-        grid.drawRandomBackground(this.unitCanvas,this.army1,this.army2);
+        Painter grid = new Painter(unitCanvas.getWidth(),unitCanvas.getHeight());
+        grid.drawUnitLineUp(unitCanvas,this.army1,this.army2);
 
     }
 
@@ -182,16 +184,15 @@ public class simulationController implements Initializable {
         this.army2 = Facade.getInstance().getArmyTwo();
 
         //Setup canvas
-        this.canvasDrawUtility = new Grid(this.backgroundCanvas,backgroundCanvas.getWidth(),backgroundCanvas.getHeight());
+        this.canvasDrawUtility = new Painter(backgroundCanvas.getWidth(),backgroundCanvas.getHeight());
 
         //SetUp Information
         txtNameArmyOne.setText(this.army1.getName());
         txtNameArmyTwo.setText(this.army2.getName());
+        txtTerrain.setText(this.army1.getAllUnits().get(0).getTerrain());
 
-        this.backgroundCanvas = new Canvas();
-        this.canvasDrawUtility.drawBackground(Facade.getInstance().getArmyOne().getAllUnits().get(0).getTerrain());
-
-
+        this.canvasDrawUtility.drawUnitLineUp(this.unitCanvas,this.army1,this.army2);
+        this.canvasDrawUtility.drawBackground(this.backgroundCanvas,this.army1.getRandomUnit().getTerrain());
 
         //Counter
         this.simulationStep = 0;

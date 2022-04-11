@@ -65,7 +65,7 @@ public class AddArmyDialog extends Dialog<Army>{
             }
         });
 
-        /*Grid*/
+        /*Painter*/
         GridPane grid = new GridPane();
         /*Set spacing between elements*/
         grid.setHgap(10);
