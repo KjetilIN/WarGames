@@ -94,7 +94,7 @@ public class CavalryUnit extends Unit {
      * However, in a forest the unit struggle to defend itself, and looses all defence bonus.
      * For the other terrains, no bonus is added.
      *
-     * @return returns a list of attack and defence bonus.
+     * @return returns a pair object of attack and defence bonus.
      * @throws IllegalArgumentException throws exception if cavalry unit looses all defence bonus.
      */
 

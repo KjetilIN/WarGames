@@ -82,7 +82,7 @@ public class RangedUnit extends Unit{
      * In a forest, will the unit struggle, and therefore loose attack bonus.
      * No defence bonus is lost.
      *
-     * @return returns a list of attack and defence bonus.
+     * @return returns a pair object of attack and defence bonus.
      */
 
     @Override

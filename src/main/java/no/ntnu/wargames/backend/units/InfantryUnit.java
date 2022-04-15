@@ -71,7 +71,7 @@ public class InfantryUnit extends Unit {
      * The infantry unit has a huge advantage in a forest.
      * Therefore, it receives both an extra attack and defence bonus.
      *
-     * @return returns a list of attack and defence bonus.
+     * @return returns a pair object of attack and defence bonus.
      */
 
     @Override

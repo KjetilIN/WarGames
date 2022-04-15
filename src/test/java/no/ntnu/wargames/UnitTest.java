@@ -183,7 +183,7 @@ class UnitTest{
     void testToString() {
         //Assert positive
         assertEquals("Name: name::HP: 40::Attack: 30", unit.toString());
-        //Assert negative
+
         assertNotEquals("String", unit.toString());
 
     }
@@ -221,11 +221,11 @@ class UnitTest{
         attacker.attack(weakUnit); // case 1
         attacker.attack(armorUnit);
 
-        //Assert positive
+        //Assert
+
         assertEquals(92, weakUnit.getHealth());
         assertEquals(200,armorUnit.getHealth());
 
-        //Assert negative
         assertNotEquals(100,weakUnit.getHealth());
         assertNotEquals(287,armorUnit.getHealth());
     }

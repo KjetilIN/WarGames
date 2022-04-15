@@ -127,27 +127,19 @@ class RangedUnitTest{
         assertEquals(3+3,hillUnit.getAttackBonus());
         assertEquals(6,hillUnit.getResistBonus());
 
-
-
         /* Forest bonus */
-
-
         assertEquals(-2,forestUnit.getTerrainBonusAttackDefence().getKey());
         assertEquals(0,forestUnit.getTerrainBonusAttackDefence().getValue());
 
         assertEquals(3-2,forestUnit.getAttackBonus());
         assertEquals(6,forestUnit.getResistBonus());
 
-
         /* No bonus bonus */
-
-
         assertEquals(0,noBonusUnit.getTerrainBonusAttackDefence().getKey());
         assertEquals(0,noBonusUnit.getTerrainBonusAttackDefence().getValue());
 
         assertEquals(3,noBonusUnit.getAttackBonus());
         assertEquals(6,noBonusUnit.getResistBonus());
-
 
     }
 }

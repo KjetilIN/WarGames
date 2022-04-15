@@ -32,10 +32,10 @@ class CavalryUnitTest {
 
         //Arrange
         Unit unit = new CavalryUnit("name",10);
-        //Assert Positive
+        //Assert
         assertEquals(20,unit.getAttack());
         assertEquals(12,unit.getArmor());
-        //Assert Negative
+
         assertNotEquals(10, unit.getAttack());
         assertNotEquals(10,unit.getArmor());
     }
@@ -51,18 +51,17 @@ class CavalryUnitTest {
         //Arrange
         Unit unit = new CavalryUnit("name",10);
         Unit unit2 = new CavalryUnit("name2",10);
-        //Assert positive
+        //Assert
         assertEquals(6,unit.getAttackBonus());
-        //Assert negative
         assertNotEquals(0, unit.getAttackBonus());
 
         //Act - We attack the unit once so the attack-bonus should be 4 not 6.
         unit2.attack(unit);
 
-        //Assert Positive
+        //Assert
         assertEquals(1, unit.getAttackCount());
         assertEquals(4,unit.getAttackBonus());
-        //Assert negative
+
         assertNotEquals(0,unit.getAttackCount());
         assertNotEquals(6,unit.getAttackBonus());
 
@@ -79,18 +78,17 @@ class CavalryUnitTest {
         //Arrange
         Unit unit = new CavalryUnit("name",10);
         Unit unit2 = new CavalryUnit("name2",10);
-        //Assert positive
+        //Assert
         assertEquals(3,unit.getResistBonus());
-        //Assert negative
         assertNotEquals(0, unit.getResistBonus());
 
         //Act - We attack the unit once but resistance bonus should not change
         unit2.attack(unit);
 
-        //Assert Positive
+        //Assert
         assertEquals(1, unit.getAttackCount());
         assertEquals(3,unit.getResistBonus());
-        //Assert negative
+
         assertNotEquals(0,unit.getAttackCount());
         assertNotEquals(6,unit.getResistBonus());
     }

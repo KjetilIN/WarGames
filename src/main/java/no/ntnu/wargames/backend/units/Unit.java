@@ -4,6 +4,7 @@ import javafx.util.Pair;
 
 /**
  * This class represents a unit.
+ *
  * @author Kjetil Indrehus
  * @version 1.0-SNAPSHOT 15.02.22
  */
