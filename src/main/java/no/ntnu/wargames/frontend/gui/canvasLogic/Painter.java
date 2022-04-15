@@ -30,6 +30,7 @@ public class Painter {
     /*Map Images*/
     private final static Image HILL = new Image(String.valueOf(Painter.class.getResource("/no/ntnu/wargames/fxpixelart/world/HILL.png")));
     private final static Image PLAINS = new Image(String.valueOf(Painter.class.getResource("/no/ntnu/wargames/fxpixelart/world/PLAINS.png")));
+    private final static Image FOREST = new Image(String.valueOf(Painter.class.getResource("/no/ntnu/wargames/fxpixelart/world/FOREST.png")));
 
     /**
      * Constructor for the Painter class.
@@ -63,7 +64,7 @@ public class Painter {
                 graphicsContext.drawImage(HILL,0,0,canvasWidth,canvasHeight);
                 break;
             case "FOREST":
-                //image forest
+                graphicsContext.drawImage(FOREST,0,0,canvasWidth,canvasHeight);
                 break;
             case "PLAINS":
                 graphicsContext.drawImage(PLAINS,0,0,canvasWidth,canvasHeight);
