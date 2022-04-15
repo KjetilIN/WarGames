@@ -95,4 +95,57 @@ class CavalryUnitTest {
         assertNotEquals(6,unit.getResistBonus());
     }
 
+    @Test
+    @DisplayName("Test terrain bonus for CavalryUnit ")
+    void testTerrainBonusCavalry(){
+        //Arrange
+        Unit bonusUnit = new CavalryUnit("Cavalry1",10);
+        Unit looseAllDefenceUnit = new CavalryUnit("Cavalry1",10);
+        Unit noBonusUnit1 = new CavalryUnit("Temp",10);
+        Unit noBonusUnit2 = new CavalryUnit("Temp",10);
+
+        //Act
+        bonusUnit.setTerrain("Plains");
+        looseAllDefenceUnit.setTerrain("Forest");
+        noBonusUnit1.setTerrain("Hill");
+        noBonusUnit1.setTerrain("Unknown");
+
+
+
+        //Assert
+
+        /*Check both defence and attack values are correct if terrain is plains */
+        assertEquals(3,bonusUnit.getTerrainBonusAttackDefence().getKey());
+        assertEquals(0,bonusUnit.getTerrainBonusAttackDefence().getValue());
+
+        assertEquals(6+3,bonusUnit.getAttackBonus());
+        assertEquals(3,bonusUnit.getResistBonus());
+
+
+        /*Check both defence and attack for Forest. Should trow exception */
+        try{
+            int bonus = looseAllDefenceUnit.getTerrainBonusAttackDefence().getKey();
+            fail();
+        }catch (IllegalArgumentException e){
+            assertEquals("defence",e.getMessage());
+        }
+
+        assertEquals(6,looseAllDefenceUnit.getAttackBonus());
+        assertEquals(0,looseAllDefenceUnit.getResistBonus());
+
+        /*Check if other Terrains gives bonus (They should not)*/
+        //Hill as Terrain type
+        assertEquals(0,noBonusUnit1.getTerrainBonusAttackDefence().getValue());
+        assertEquals(0,noBonusUnit1.getTerrainBonusAttackDefence().getKey());
+        //Unknown Terrain type
+        assertEquals(0,noBonusUnit2.getTerrainBonusAttackDefence().getValue());
+        assertEquals(0,noBonusUnit2.getTerrainBonusAttackDefence().getKey());
+
+        assertEquals(6,noBonusUnit1.getAttackBonus());
+        assertEquals(6,noBonusUnit2.getAttackBonus());
+        assertEquals(3,noBonusUnit1.getResistBonus());
+        assertEquals(3,noBonusUnit2.getResistBonus());
+
+    }
+
 }

@@ -96,4 +96,35 @@ class InfantryUnitTest {
 
 
     }
+
+    @Test
+    @DisplayName("Test Terrain Bonus for the Infantry Unit")
+    void testTerrainBonus(){
+        //Arrange
+        Unit noBonusUnit = new InfantryUnit("Temp1",29);
+        Unit bonusUnit = new InfantryUnit("Temp2",29);
+
+        //Act
+        noBonusUnit.setTerrain("hill");
+        bonusUnit.setTerrain("Forest");
+
+        //Assert
+
+        /*Assert Bonus when Terrain is of type Forest */
+        assertEquals(3,bonusUnit.getTerrainBonusAttackDefence().getValue());
+        assertEquals(3,bonusUnit.getTerrainBonusAttackDefence().getKey());
+
+        assertEquals(3+3,bonusUnit.getAttackBonus());
+        assertEquals(1+3,bonusUnit.getResistBonus());
+
+        /*Assert no bonus added else*/
+        assertEquals(0,noBonusUnit.getTerrainBonusAttackDefence().getValue());
+        assertEquals(0,noBonusUnit.getTerrainBonusAttackDefence().getKey());
+
+        assertEquals(3,noBonusUnit.getAttackBonus());
+        assertEquals(1,noBonusUnit.getResistBonus());
+
+
+
+    }
 }

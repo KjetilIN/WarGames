@@ -1,5 +1,7 @@
 package no.ntnu.wargames.backend.units;
 
+import javafx.util.Pair;
+
 /**
  * The cavalry unit class.
  * Extends the unit class.
@@ -53,8 +55,8 @@ public class CavalryUnit extends Unit {
     public int getAttackBonus() {
         int attackBonus = getAttackCount() == 0 ? 6 : 4;
         try{
-            attackBonus += getTerrainBonusAttackDefence()[0];
-        }catch (IllegalArgumentException e){};
+            attackBonus += getTerrainBonusAttackDefence().getKey();
+        }catch (IllegalArgumentException ignored){}
 
         return attackBonus;
 
@@ -71,11 +73,9 @@ public class CavalryUnit extends Unit {
     public int getResistBonus() {
         int resistBonus = 3;
         try{
-            resistBonus+=getTerrainBonusAttackDefence()[1];
+            resistBonus+= getTerrainBonusAttackDefence().getValue();
         }catch (IllegalArgumentException e){
-            if(e.getMessage().equals("defence")){
-                return 0;
-            }
+            return 0;
         }
 
         return resistBonus;
@@ -90,7 +90,7 @@ public class CavalryUnit extends Unit {
     /**
      * The terrain bonus method for cavalry unit.
      *
-     * The cavalry unit is good in plains terrain. Therefor it receives an attack bonus of 3.
+     * The cavalry unit is good in plains terrain. Therefore, it receives an attack bonus of 3.
      * However, in a forest the unit struggle to defend itself, and looses all defence bonus.
      * For the other terrains, no bonus is added.
      *
@@ -99,15 +99,16 @@ public class CavalryUnit extends Unit {
      */
 
     @Override
-    public int[] getTerrainBonusAttackDefence() throws IllegalArgumentException {
-        int[] bonusResult = {0, 0};
-        if(getTerrain().equals("Plains")){
-            bonusResult[0] = 3;
-        }else if(getTerrain().equals("Forest")){
+    public Pair<Integer,Integer> getTerrainBonusAttackDefence() throws IllegalArgumentException{
+        int attack = 0;
+        int defence = 0;
+        if(getTerrain().equalsIgnoreCase("Plains")){
+            attack = 3;
+        }else if(getTerrain().equalsIgnoreCase("Forest")){
             /*Unit looses all defence bonus*/
             throw new IllegalArgumentException("defence");
         }
 
-        return bonusResult;
+        return new Pair<>(attack,defence);
     }
 }

@@ -1,5 +1,7 @@
 package no.ntnu.wargames.backend.units;
 
+import javafx.util.Pair;
+
 /**
  * Class to represent the infantry unit. Inference from the unit class.
  * @author Kjetil Indrehus
@@ -44,7 +46,7 @@ public class InfantryUnit extends Unit {
      */
     @Override
     public int getAttackBonus() {
-        return 3 + getTerrainBonusAttackDefence()[0];
+        return 3 + getTerrainBonusAttackDefence().getKey();
     }
 
     /**
@@ -55,7 +57,7 @@ public class InfantryUnit extends Unit {
      */
     @Override
     public int getResistBonus() {
-        return 1 + getTerrainBonusAttackDefence()[1];
+        return 1 + getTerrainBonusAttackDefence().getValue();
     }
 
     @Override
@@ -67,19 +69,20 @@ public class InfantryUnit extends Unit {
      * The terrain bonus method for infantry unit.
      *
      * The infantry unit has a huge advantage in a forest.
-     * Therefor it receives both an extra attack and defence bonus.
+     * Therefore, it receives both an extra attack and defence bonus.
      *
      * @return returns a list of attack and defence bonus.
      */
 
     @Override
-    public int[] getTerrainBonusAttackDefence(){
-        int[] bonusResult = {0, 0};
-        if(getTerrain().equals("Forest")){
-            bonusResult[0] = 3;
-            bonusResult[1] = 3;
+    public Pair<Integer,Integer> getTerrainBonusAttackDefence(){
+        int attack = 0;
+        int defence = 0;
+        if(getTerrain().equalsIgnoreCase("Forest")){
+            attack = 3;
+            defence = 3;
         }
-        return bonusResult;
+        return new Pair<>(attack,defence);
     }
 
 }

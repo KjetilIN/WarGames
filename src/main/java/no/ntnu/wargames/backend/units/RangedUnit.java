@@ -1,5 +1,7 @@
 package no.ntnu.wargames.backend.units;
 
+import javafx.util.Pair;
+
 /**
  * The ranged unit class. A sub-class of unit.
  *
@@ -45,7 +47,7 @@ public class RangedUnit extends Unit{
      */
     @Override
     public int getAttackBonus() {
-        return 3;
+        return 3 + getTerrainBonusAttackDefence().getKey();
     }
 
     /**
@@ -60,9 +62,12 @@ public class RangedUnit extends Unit{
     @Override
     public int getResistBonus() {
         if(getAttackCount() == 0){ // Returns a high value for the first attack
-            return 6;
+            return 6 + getTerrainBonusAttackDefence().getValue();
         }
-        return getAttackCount() == 1 ? 4 : 2; // else check if it is the second attack and then return 4, else returns 2.
+
+        // else check if it is the second attack and then return 4, else returns 2.
+        return getAttackCount() == 1 ?
+                4 + getTerrainBonusAttackDefence().getValue(): 2 + getTerrainBonusAttackDefence().getValue();
     }
 
     @Override
@@ -74,20 +79,22 @@ public class RangedUnit extends Unit{
      * The terrain bonus method for ranged unit.
      *
      * The ranged unit as advantage on Hill, and gets attack bonus.
-     * In a forest, will the unit struggle, and therefor loose attack bonus.
+     * In a forest, will the unit struggle, and therefore loose attack bonus.
      * No defence bonus is lost.
      *
      * @return returns a list of attack and defence bonus.
      */
 
     @Override
-    public int[] getTerrainBonusAttackDefence() {
-        int[] bonusResult = {0, 0};
-        if (getTerrain().equals("Hill")) {
-            bonusResult[0] = 3;
-        }else if(getTerrain().equals("Forest")){
-            bonusResult[0] = -2;
+    public Pair<Integer,Integer> getTerrainBonusAttackDefence() {
+        int attack;
+        if (getTerrain().equalsIgnoreCase("Hill")) {
+            attack = 3;
+        }else if(getTerrain().equalsIgnoreCase("Forest")){
+            attack = -2;
+        }else{
+            attack = 0;
         }
-        return bonusResult;
+        return new Pair<>(attack,0);
     }
 }

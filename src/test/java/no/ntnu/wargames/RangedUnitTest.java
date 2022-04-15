@@ -104,4 +104,50 @@ class RangedUnitTest{
         assertNotEquals(1,unit.getAttackCount());
         assertNotEquals(4,unit.getResistBonus());
     }
+
+    @Test
+    @DisplayName("Test Terrain Bonus for the Ranged Unit")
+    void testTerrainBonus(){
+        //Arrange
+        Unit hillUnit = new RangedUnit("Temp1",10);
+        Unit forestUnit = new RangedUnit("Temp1",10);
+        Unit noBonusUnit = new RangedUnit("Temp1",10);
+
+        //Act
+        hillUnit.setTerrain("hill");
+        forestUnit.setTerrain("forest");
+        noBonusUnit.setTerrain("plains");
+
+        //Assert
+
+        /* Hill bonus */
+        assertEquals(3,hillUnit.getTerrainBonusAttackDefence().getKey());
+        assertEquals(0,hillUnit.getTerrainBonusAttackDefence().getValue());
+
+        assertEquals(3+3,hillUnit.getAttackBonus());
+        assertEquals(6,hillUnit.getResistBonus());
+
+
+
+        /* Forest bonus */
+
+
+        assertEquals(-2,forestUnit.getTerrainBonusAttackDefence().getKey());
+        assertEquals(0,forestUnit.getTerrainBonusAttackDefence().getValue());
+
+        assertEquals(3-2,forestUnit.getAttackBonus());
+        assertEquals(6,forestUnit.getResistBonus());
+
+
+        /* No bonus bonus */
+
+
+        assertEquals(0,noBonusUnit.getTerrainBonusAttackDefence().getKey());
+        assertEquals(0,noBonusUnit.getTerrainBonusAttackDefence().getValue());
+
+        assertEquals(3,noBonusUnit.getAttackBonus());
+        assertEquals(6,noBonusUnit.getResistBonus());
+
+
+    }
 }

@@ -1,5 +1,7 @@
 package no.ntnu.wargames.backend.units;
 
+import javafx.util.Pair;
+
 /**
  * This class represents a unit.
  * @author Kjetil Indrehus
@@ -166,18 +168,18 @@ public abstract class Unit {
     public abstract String getUnitType();
 
     /**
-     * Abstract method to get the terrain bonus as a list.
+     * Abstract method to get the terrain bonus as a Pair object with two integers.
      * The list returned has the terrain attack and defence bonus.
-     * At index 0, attack bonus from terrain.
-     * At index 1, defence bonus from terrain.
+     * The pair key is attack, and defence is the value. See Pair doc referenced below:
+     * @see <a href="https://docs.oracle.com/javase/10/docs/api/javafx/util/Pair.html">Pair Doc</a>
      *
      * @return returns the terrain bonus
-     * @throws IllegalArgumentException throw exception if unit looses all bonus.
      */
-    public abstract int[] getTerrainBonusAttackDefence() throws IllegalArgumentException;
+    public abstract Pair<Integer,Integer> getTerrainBonusAttackDefence();
 
     /**
      * This method return basic information about a unit in a string.
+     *
      * @return returns a string of information
      */
     @Override
@@ -188,6 +190,7 @@ public abstract class Unit {
     /**
      * Method that does an attack on a unit.
      * Changes the unit health based on bonus's and the given attack.
+     *
      * @param unit the unit that are attacked.
      */
 
