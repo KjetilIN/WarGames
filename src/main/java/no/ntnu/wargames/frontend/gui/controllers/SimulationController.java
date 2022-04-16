@@ -10,13 +10,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import no.ntnu.wargames.backend.Battle;
 import no.ntnu.wargames.backend.units.Army;
@@ -37,13 +37,25 @@ public class SimulationController implements Initializable {
     private Timeline timeline;
     private int simulationStep;
     private int delay;
+    private boolean isPlaying;
     private Painter canvasDrawUtility;
+
+
+    /*Static Images*/
+    private static final Image PAUSE = new Image(String.valueOf(SimulationController.class.getResource("/no/ntnu/wargames/icon/pause.png")));
+    private static final Image PLAY = new Image(String.valueOf(SimulationController.class.getResource("/no/ntnu/wargames/icon/play-button.png")));
+
 
     private XYChart.Series<String , Number> army1UnitsSeries;
     private XYChart.Series<String, Number> army2UnitsSeries;
 
     private XYChart.Series<String,Number> army1SumHealth;
     private XYChart.Series<String,Number> army2SumHealth;
+
+    /*Images */
+    @FXML
+    private ImageView buttonIconPause;
+
 
     /*Info labels */
     @FXML
@@ -64,20 +76,31 @@ public class SimulationController implements Initializable {
     @FXML
     private Label txtTerrain;
 
+    /*Canvas*/
+
     @FXML
     private Canvas backgroundCanvas;
 
     @FXML
     private Canvas unitCanvas;
 
+    /* Charts */
     @FXML
     private AreaChart<String,Number> unitGraph;
 
     @FXML
     private AreaChart<String,Number> healthGraph;
 
+    /*Input fields */
     @FXML
     private TextArea battleLog;
+
+    /*Buttons */
+    @FXML
+    private Button buttonStart;
+
+    @FXML
+    private Button buttonPausePlay;
 
     public void setDelay(int delay) {
         this.delay = delay;
@@ -87,7 +110,7 @@ public class SimulationController implements Initializable {
         return this.delay;
     }
 
-    public void setupGraphsBeforeSim(){
+    private void setupGraphsBeforeSim(){
 
         unitGraph.getData().clear();
         healthGraph.getData().clear();
@@ -113,7 +136,7 @@ public class SimulationController implements Initializable {
 
     }
 
-    public void simStep(ActionEvent event){
+    private void simStep(ActionEvent event){
         String textLog = "";
         if (army1.hasUnits() && army2.hasUnits()){
             txtWinner.setText("......");
@@ -140,38 +163,32 @@ public class SimulationController implements Initializable {
 
     }
 
-
-    public void notifyWinner(){
-        String winnerArmyName;
-        if(this.army1.hasUnits()){
-            winnerArmyName = this.army1.getName();
-        }else{
-            winnerArmyName = this.army2.getName();
-        }
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Winner is "+winnerArmyName);
-        alert.setHeaderText("WINNER!");
-        alert.showAndWait();
-
-
-    }
-
     @FXML
     public void onSimulate(){
 
         setupGraphsBeforeSim();
+        buttonPausePlay.setDisable(false);
+        buttonStart.setDisable(true);
         timeline = new Timeline(new KeyFrame(Duration.millis(getDelay()),this::simStep));
         timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.setOnFinished(finish -> notifyWinner()); // TODO: 10.04.2022 Fix this 
         timeline.play();
+        isPlaying = true;
+
 
     }
 
     @FXML
-    public void onStick(){
-        Painter grid = new Painter(unitCanvas.getWidth(),unitCanvas.getHeight());
-        grid.drawUnitLineUp(unitCanvas,this.army1,this.army2);
+    public void onPause(){
+        if(isPlaying){
+            timeline.pause();
+            isPlaying = false;
+            buttonIconPause.setImage(PLAY);
+        }else{
+            timeline.play();
+            isPlaying = true;
+            buttonIconPause.setImage(PAUSE);
+        }
+
 
     }
 
@@ -185,14 +202,17 @@ public class SimulationController implements Initializable {
 
         //Setup canvas
         this.canvasDrawUtility = new Painter(backgroundCanvas.getWidth(),backgroundCanvas.getHeight());
+        this.canvasDrawUtility.drawUnitLineUp(this.unitCanvas,this.army1,this.army2);
+        this.canvasDrawUtility.drawBackground(this.backgroundCanvas,this.army1.getRandomUnit().getTerrain());
 
         //SetUp Information
         txtNameArmyOne.setText(this.army1.getName());
         txtNameArmyTwo.setText(this.army2.getName());
         txtTerrain.setText(this.army1.getAllUnits().get(0).getTerrain());
 
-        this.canvasDrawUtility.drawUnitLineUp(this.unitCanvas,this.army1,this.army2);
-        this.canvasDrawUtility.drawBackground(this.backgroundCanvas,this.army1.getRandomUnit().getTerrain());
+        //Button setup
+        buttonIconPause.setImage(PAUSE);
+        buttonPausePlay.setDisable(true);
 
         //Counter
         this.simulationStep = 0;
