@@ -18,25 +18,24 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="621.0" prefWidth="936.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.wargames.frontend.gui.controllers.SimulationController">
+<BorderPane fx:id="mainPage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="621.0" prefWidth="936.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.wargames.frontend.gui.controllers.SimulationController">
    <top>
       <MenuBar prefHeight="23.0" prefWidth="617.0" BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-                  <CheckMenuItem mnemonicParsing="false" text="Refresh" />
-              <MenuItem mnemonicParsing="false" text="Close" />
+                  <CheckMenuItem mnemonicParsing="false" selected="true" text="Refresh" />
+              <MenuItem mnemonicParsing="false" onAction="#onClose" text="Close" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
-              <MenuItem mnemonicParsing="false" text="Edit army(s)" />
+              <MenuItem mnemonicParsing="false" onAction="#onBackToSetUp" text="Edit army(s)" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-                  <MenuItem mnemonicParsing="false" text="Version" />
+              <MenuItem mnemonicParsing="false" onAction="#onGuide" text="Guide" />
             </items>
           </Menu>
         </menus>

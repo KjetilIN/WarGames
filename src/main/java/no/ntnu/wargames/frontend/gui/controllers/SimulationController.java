@@ -8,22 +8,27 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import no.ntnu.wargames.backend.Battle;
 import no.ntnu.wargames.backend.units.Army;
 import no.ntnu.wargames.backend.designPattern.Facade;
 import no.ntnu.wargames.frontend.gui.canvasLogic.Painter;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 
@@ -41,16 +46,19 @@ public class SimulationController implements Initializable {
     private Painter canvasDrawUtility;
 
 
-    /*Static Images*/
+    /*Static Fields*/
     private static final Image PAUSE = new Image(String.valueOf(SimulationController.class.getResource("/no/ntnu/wargames/icon/pause.png")));
     private static final Image PLAY = new Image(String.valueOf(SimulationController.class.getResource("/no/ntnu/wargames/icon/play-button.png")));
-
 
     private XYChart.Series<String , Number> army1UnitsSeries;
     private XYChart.Series<String, Number> army2UnitsSeries;
 
     private XYChart.Series<String,Number> army1SumHealth;
     private XYChart.Series<String,Number> army2SumHealth;
+
+    /* Pane */
+    @FXML
+    private BorderPane mainPage;
 
     /*Images */
     @FXML
@@ -102,14 +110,28 @@ public class SimulationController implements Initializable {
     @FXML
     private Button buttonPausePlay;
 
-    public void setDelay(int delay) {
-        this.delay = delay;
-    }
+    /*Methods for simulation delay*/
 
     public int getDelay(){
         return this.delay;
     }
+    public void setDelay(int delay) {
+        this.delay = delay;
+    }
 
+
+
+    /*Methods used in by Buttons etc */
+
+
+    /**
+     * Method that sets up the graph before simulation.
+     * First removes any data that is in the graph.
+     * Then defining a new XY Dataset for all the graphs.
+     * At last, it sets graph text.
+     * Method is called once on start.
+     *
+     */
     private void setupGraphsBeforeSim(){
 
         unitGraph.getData().clear();
@@ -136,6 +158,17 @@ public class SimulationController implements Initializable {
 
     }
 
+    /**
+     * Method that is called for each attack in the simulation.
+     * - Add attack to the battle log.
+     * - Calls the attack method and remove the units.
+     * - Add the data from the attack to the graphs.
+     * - Uses Painter class to set new positions for the units.
+     * - Shows the winner when the battle is over, and stops the timeline.
+     *
+     * @param event the event type when the button is called.
+     */
+
     private void simStep(ActionEvent event){
         String textLog = "";
         if (army1.hasUnits() && army2.hasUnits()){
@@ -157,11 +190,12 @@ public class SimulationController implements Initializable {
             }else{
                 txtWinner.setText(this.army2.getName());
             }
-
             timeline.stop();
         }
 
     }
+
+    /* Button Events */
 
     @FXML
     public void onSimulate(){
@@ -190,6 +224,56 @@ public class SimulationController implements Initializable {
         }
 
 
+    }
+
+    @FXML
+    public void onBackToSetUp(ActionEvent event) throws IOException {
+        Stage prevStage = (Stage)mainPage.getScene().getWindow();
+        prevStage.close();
+
+        //New scene opener
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/no/ntnu/wargames/setUpPage.fxml"));
+        Scene scene = new Scene(loader.load());
+        Stage stage = new Stage();
+
+        //New style for the new stage
+        stage.setTitle("WarGames");
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/no/ntnu/wargames/icon/logoIcon.PNG")));
+        stage.setScene(scene);
+        stage.show();
+
+    }
+
+    @FXML
+    public void onRefresh(){
+        // TODO: 16.04.2022 Refresh units for simulation
+    }
+
+    @FXML
+    public void onGuide(){
+        Alert guideInformation = new Alert(Alert.AlertType.INFORMATION);
+        guideInformation.setHeaderText("GUIDE");
+        guideInformation.setContentText("You are now on the simulation page! Somewhere we can:\n" +
+                "- Start a simulation by press START SIMULATION in the bottom right corner.\n" +
+                "- Pause/Play the simulation\n" +
+                "- Re-Run a simulation by picking File -> Refresh\n"+
+                "- Go back to editing a army by pressing Edit -> Edit army(s)\n"+
+                "- Use the Menu-Bar above for extra options.\n");
+        guideInformation.showAndWait();
+    }
+
+    @FXML
+    public void onClose(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("Exit");
+        alert.setContentText("You are about to close the app.\n" +
+                "Are you sure?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.get() == ButtonType.OK){
+            System.exit(0);
+        }
     }
 
 

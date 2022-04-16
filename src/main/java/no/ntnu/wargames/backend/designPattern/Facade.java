@@ -65,4 +65,13 @@ public class Facade {
         this.armyTwo = armyTwo;
     }
 
+    /**
+     * Method reset both army and battle class.
+     */
+    public void resetAll(){
+        setArmyOne(new Army("NONE"));
+        setArmyTwo(new Army("NONE"));
+        setBattle(new Battle(armyOne,armyTwo));
+    }
+
 }

@@ -30,13 +30,18 @@ public class SetUpPageController implements Initializable {
     private Army army1;
     private Army army2;
 
+    private static final String VERSION = "1.0-SNAPSHOT 16.04.2022";
+
     @FXML
     private BorderPane mainPage;
 
+
     /*
-    * First army methods/fields
     *
-    * Contains the fields for the first army.
+    *  ARMY ONE:
+    *  - FXML Fields
+    *  - Methods only used to change army one values
+    *  - Uses the Common method Below!
     *
     */
     @FXML
@@ -88,12 +93,13 @@ public class SetUpPageController implements Initializable {
     }
 
     /*
-    *  Second army fields
-    *
-    * All the fields and methods for the second army
-    *
-    *
-    */
+     *
+     *  ARMY TWO:
+     *  - FXML Fields
+     *  - Methods only used to change army two values
+     *  - Uses the Common method Below!
+     *
+     */
 
     @FXML
     private TableView<Unit> tableViewArmy2;
@@ -210,11 +216,24 @@ public class SetUpPageController implements Initializable {
     }
 
     @FXML
-    public void onBack(){
+    public void onBack() throws IOException{
         /* Go back to load screen page (switching scene) */
-        System.exit(0);
+        Stage currentPage = (Stage) mainPage.getScene().getWindow();
+        currentPage.close();
 
-        // TODO: 31.03.2022 Make scene switch(?)
+        /* Clear all the army classes*/
+        Facade.getInstance().resetAll();
+
+        /* Load the setup page (switching scene) */
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/no/ntnu/wargames/LoadScreen.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(loader.load());
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(scene);
+        stage.centerOnScreen(); // Loads the stage in the middle
+        Image icon = new Image(getClass().getResourceAsStream("/no/ntnu/wargames/icon/logoIcon.PNG"));
+        stage.getIcons().add(icon);
+        stage.show();
 
     }
 
@@ -291,7 +310,7 @@ public class SetUpPageController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("Saved!");
             alert.setContentText(pathSavedTo);
-            alert.setWidth(60);
+            alert.setWidth(70); // Wide width to get more space
             alert.showAndWait();
         }
 
@@ -315,8 +334,6 @@ public class SetUpPageController implements Initializable {
 
             if(alert.getResult() == ButtonType.OK){
                 /* Removes unit and refreshes both tables */
-
-                // TODO: 31.03.2022 Find out why it doesn't remove from both
                 observableListArmy1.remove(selectedUnit);
                 observableListArmy2.remove(selectedUnit);
                 tableViewArmy1.refresh();
@@ -331,33 +348,63 @@ public class SetUpPageController implements Initializable {
 
     @FXML
     public void onGoToSimulationPane() throws IOException {
-        SimulationSettingsDialog settingsDialog = new SimulationSettingsDialog();
-        Optional<Integer> result = settingsDialog.showAndWait();
-        if(result != null && result.isPresent()){
-            // Set name of the army
-            Facade.getInstance().getArmyOne().setName(txtArmy1Name.getText());
-            Facade.getInstance().getArmyTwo().setName(txtArmy2Name.getText());
-            Stage prevStage = (Stage)mainPage.getScene().getWindow();
-            prevStage.close();
+        if(this.army1.getAllUnits().size() < 2 || this.army2.getAllUnits().size() < 2){
+            Alert alertNoUnits = new Alert(Alert.AlertType.ERROR);
+            alertNoUnits.setHeaderText("UNIT(S) MISSING IN ARMY(S)");
+            alertNoUnits.setContentText("One or more army need units.\n" +
+                    "Please enter at least two unit for each army!");
+            alertNoUnits.showAndWait();
+        }else{
+            SimulationSettingsDialog settingsDialog = new SimulationSettingsDialog();
+            Optional<Integer> result = settingsDialog.showAndWait();
+            if(result != null && result.isPresent()){
+                // Set name of the army
+                Facade.getInstance().getArmyOne().setName(txtArmy1Name.getText());
+                Facade.getInstance().getArmyTwo().setName(txtArmy2Name.getText());
+                Stage prevStage = (Stage)mainPage.getScene().getWindow();
+                prevStage.close();
 
-            //New scene opener
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/no/ntnu/wargames/simulation.fxml"));
-            Scene scene = new Scene(loader.load());
-            Stage stage = new Stage();
+                //New scene opener
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/no/ntnu/wargames/simulation.fxml"));
+                Scene scene = new Scene(loader.load());
+                Stage stage = new Stage();
 
-            SimulationController controller = loader.getController();
-            controller.setDelay(result.get());
+                SimulationController controller = loader.getController();
+                controller.setDelay(result.get());
 
-            //New style for the new stage
-            stage.setTitle("WarGames");
-            stage.initStyle(StageStyle.DECORATED);
-            Image icon = new Image(getClass().getResourceAsStream("/no/ntnu/wargames/icon/logoIcon.PNG"));
-            stage.getIcons().add(icon);
-            stage.setScene(scene);
-            stage.setFullScreen(false); //change value for fullscreen
-            stage.show();
+                //New style for the new stage
+                stage.setTitle("WarGames");
+                stage.initStyle(StageStyle.DECORATED);
+                Image icon = new Image(getClass().getResourceAsStream("/no/ntnu/wargames/icon/logoIcon.PNG"));
+                stage.getIcons().add(icon);
+                stage.setScene(scene);
+                stage.setFullScreen(false); //change value for fullscreen
+                stage.show();
+            }
         }
 
+
+    }
+
+    @FXML
+    public void onVersion(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Version");
+        alert.setContentText("Current version : " + VERSION);
+        alert.showAndWait();
+    }
+
+    @FXML
+    public void onClose(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("Exit");
+        alert.setContentText("You are about to close the app.\n" +
+                "Are you sure?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.get() == ButtonType.OK){
+            System.exit(0);
+        }
     }
 
     private void initTableview(TextField path,
@@ -392,27 +439,28 @@ public class SetUpPageController implements Initializable {
                 int option = Integer.parseInt(army.getName().substring(0,1));
                 army.setName(army.getName().substring(1));
 
-                // TODO: 07.04.2022 write switchcase  
+                switch (option){
+                    case 0:
+                        army1.setName(army.getName());
+                        observableListArmy1.setAll(army.getAllUnits());
+                        txtArmy1Name.setText(army.getName());
+                        break;
+                    case 1:
+                        army2.setName(army.getName());
+                        observableListArmy2.setAll(army.getAllUnits());
+                        txtArmy2Name.setText(army.getName());
+                        break;
+                    default:
+                        army1.setName(army.getName());
+                        observableListArmy1.setAll(army.getAllUnits());
+                        txtArmy1Name.setText(army.getName());
 
-                if(option == 0){
-                    army1.setName(army.getName());
-                    observableListArmy1.setAll(army.getAllUnits());
-                    txtArmy1Name.setText(army.getName());
-
-                }else if (option == 1){
-                    army2.setName(army.getName());
-                    observableListArmy2.setAll(army.getAllUnits());
-                    txtArmy2Name.setText(army.getName());
-                }else{
-                    army1.setName(army.getName());
-                    observableListArmy1.setAll(army.getAllUnits());
-                    txtArmy1Name.setText(army.getName());
-
-                    army2.setName(army.getName());
-                    observableListArmy2.setAll(army.getAllUnits());
-                    txtArmy2Name.setText(army.getName());
+                        army2.setName(army.getName());
+                        observableListArmy2.setAll(army.getAllUnits());
+                        txtArmy2Name.setText(army.getName());
 
                 }
+
                 tableViewArmy1.refresh();
                 tableViewArmy2.refresh();
             }catch (NumberFormatException e){DialogWindow.openWarningDialog("Wrong format");}
@@ -429,6 +477,7 @@ public class SetUpPageController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         /*Army 1 setup*/
         this.army1 = Facade.getInstance().getArmyOne();
+        txtArmy1Name.setText(Facade.getInstance().getArmyOne().getName());
         observableListArmy1 = FXCollections.observableList(this.army1.getAllUnits());
         initTableview(pathArmy1,
                 iconCheckArmy1,
@@ -440,6 +489,7 @@ public class SetUpPageController implements Initializable {
 
         /*Army 2 setup*/
         this.army2 = Facade.getInstance().getArmyTwo();
+        txtArmy2Name.setText(Facade.getInstance().getArmyTwo().getName());
         observableListArmy2 = FXCollections.observableList(this.army2.getAllUnits());
         initTableview(pathArmy2,
                 iconCheckArmy2,
@@ -448,6 +498,7 @@ public class SetUpPageController implements Initializable {
                 nameColumnArmy2,
                 typeColumnArmy2,
                 healthColumnArmy2);
+
 
     }
 }

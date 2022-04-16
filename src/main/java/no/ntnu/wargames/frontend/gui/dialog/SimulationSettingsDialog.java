@@ -3,6 +3,7 @@ package no.ntnu.wargames.frontend.gui.dialog;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import no.ntnu.wargames.backend.designPattern.Facade;
 
 public class SimulationSettingsDialog extends Dialog<Integer> {
@@ -23,6 +24,9 @@ public class SimulationSettingsDialog extends Dialog<Integer> {
         TextField txtSimulationStep = new TextField();
         txtSimulationStep.setPromptText("Enter time between each attack....");
 
+        Label recommendedLabel = new Label("Recommended delay: 100-200 ms");
+        recommendedLabel.setTextFill(Color.RED);
+
         // force the field to be numeric only
         txtSimulationStep.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*")) {
@@ -38,6 +42,7 @@ public class SimulationSettingsDialog extends Dialog<Integer> {
         grid.add(choiceBox, 1, 0);
         grid.add(new Label("Delay(milliseconds):"),0,2);
         grid.add(txtSimulationStep,1,2);
+        grid.add(recommendedLabel,0,3,2,1);
         getDialogPane().setContent(grid);
 
 

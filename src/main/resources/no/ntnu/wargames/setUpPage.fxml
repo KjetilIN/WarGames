@@ -26,12 +26,12 @@
             <items>
               <MenuItem mnemonicParsing="false" text="About" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Version" />
+                  <MenuItem mnemonicParsing="false" onAction="#onVersion" text="Version" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Exit">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Exit App..." />
+                  <MenuItem mnemonicParsing="false" onAction="#onClose" text="Exit App..." />
                </items>
           </Menu>
         </menus>

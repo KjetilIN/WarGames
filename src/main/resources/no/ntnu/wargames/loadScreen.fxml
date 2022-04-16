@@ -19,9 +19,9 @@
             <Cursor fx:constant="HAND" />
          </cursor></Button>
       <Label layoutX="24.0" layoutY="369.0" text="Copyright © - Developed by Kjetil Indrehus" />
-      <ImageView fitHeight="28.0" fitWidth="20.0" layoutX="566.0" layoutY="14.0" onMouseClicked="#onExit" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="28.0" fitWidth="29.0" layoutX="557.0" layoutY="14.0" onMouseClicked="#onExit" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@icon/exit.png" />
+            <Image url="@icon/logout.png" />
          </image>
          <cursor>
             <Cursor fx:constant="HAND" />
