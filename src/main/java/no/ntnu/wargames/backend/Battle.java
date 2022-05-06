@@ -28,7 +28,7 @@ public class Battle {
      */
 
     public Battle(Army armyOne, Army armyTwo){
-        if(armyOne == null || armyTwo == null){
+        if(armyOne == null || !armyOne.hasUnits() || armyTwo == null || !armyTwo.hasUnits() ){
             throw new IllegalArgumentException("Army(s) given are empty.");
         }
         this.armyOne = armyOne;

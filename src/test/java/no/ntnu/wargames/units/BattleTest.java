@@ -1,7 +1,8 @@
-package no.ntnu.wargames;
+package no.ntnu.wargames.units;
 
 import no.ntnu.wargames.backend.Battle;
 import no.ntnu.wargames.backend.units.Army;
+import no.ntnu.wargames.backend.units.CavalryUnit;
 import no.ntnu.wargames.backend.units.InfantryUnit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -27,11 +28,28 @@ class BattleTest {
         battle = new Battle(armyOne,armyTwo);
     }
 
+    @Test
+    @DisplayName("Test empty army given is handled")
+    void testBattleConstuctor(){
+        //Arrange
+        Army army1 = new Army("Empty1");
+        Army army2 = new Army("Empty2");
+        army1.add(new CavalryUnit("Test",9,9,9));
+
+        //Assert
+        try{
+            Battle battle = new Battle(army1,army2);
+            fail();
+        }catch (Exception e){
+            assertEquals("Army(s) given are empty.",e.getMessage());
+        }
+    }
+
 
     @Test
     @DisplayName("Test setTerrain for expected and unexpected inputs")
     void testSetAllTerrain(){
-        //Assert
+        //Arrange
         Army armyTemp1 = new Army("Name");
         Army armyTemp2 = new Army("Army");
         Army armyTemp3 = new Army("Army");

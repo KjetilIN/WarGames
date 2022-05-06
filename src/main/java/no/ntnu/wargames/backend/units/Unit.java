@@ -192,6 +192,8 @@ public abstract class Unit {
      * Method that does an attack on a unit.
      * Changes the unit health based on bonus's and the given attack.
      *
+     * NB! This method only changes the health of the unit after an attack
+     *
      * @param unit the unit that are attacked.
      */
 

@@ -9,7 +9,6 @@ module no.ntnu.wargames{
     exports no.ntnu.wargames.backend.units;
     exports no.ntnu.wargames;
     opens no.ntnu.wargames to javafx.fxml, javafx.controls;
-    opens no.ntnu.wargames.frontend.terminalInterface;
     exports no.ntnu.wargames.backend.designPattern;
     opens no.ntnu.wargames.backend.designPattern to javafx.controls, javafx.fxml;
 
