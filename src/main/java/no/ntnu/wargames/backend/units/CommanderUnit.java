@@ -9,6 +9,8 @@ package no.ntnu.wargames.backend.units;
 public class CommanderUnit extends CavalryUnit {
 
 
+    private static final String TYPE = "Commander";
+
     /**
      * This is the commander unit constructor with all the fields.
      *
@@ -22,8 +24,6 @@ public class CommanderUnit extends CavalryUnit {
         super(name, health, attack, armor);
     }
 
-    private String unitType = "Commander";
-
     /**
      * Constructor for the commander unit.
      *
@@ -36,7 +36,7 @@ public class CommanderUnit extends CavalryUnit {
 
     @Override
     public String getUnitType(){
-        return this.unitType;
+        return TYPE;
     }
 
     

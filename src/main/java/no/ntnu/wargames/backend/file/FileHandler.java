@@ -73,7 +73,14 @@ public class FileHandler {
     public static Path saveArmyToFile(Army army)throws IllegalArgumentException{
         /*Army given must have units and not be null, else throw exception*/
         if(army == null || !army.hasUnits()){throw new IllegalArgumentException("Army for save was empty.");}
-        File file = new File(army.getName()+".csv"); //Create a new file
+
+        /* Open a window for choosing where the army is stored */
+        FileChooser chooser = new FileChooser();
+        chooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("CSV Files","*.csv")
+        );
+
+        File file = chooser.showSaveDialog(null); //Create a new file
 
         /*Write to file in correct format*/
         try (BufferedWriter writer = Files.newBufferedWriter(file.toPath())) {
