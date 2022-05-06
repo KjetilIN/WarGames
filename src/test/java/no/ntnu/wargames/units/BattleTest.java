@@ -38,7 +38,7 @@ class BattleTest {
 
         //Assert
         try{
-            Battle battle = new Battle(army1,army2);
+            Battle battle = new Battle(null,army2);
             fail();
         }catch (Exception e){
             assertEquals("Army(s) given are empty.",e.getMessage());
