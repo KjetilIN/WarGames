@@ -136,13 +136,13 @@ public class Painter {
     }
 
     /**
-     * A private method that removes all the graphic painted on the canvas.
+     * Method that removes all the graphic painted on the canvas.
      * Replaces all graphics with a transparent rectangle.
      *
      * @param canvas the given canvas to be cleared.
      */
 
-    private void clearCanvas(Canvas canvas){
+    public void clearCanvas(Canvas canvas){
         GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
         graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 

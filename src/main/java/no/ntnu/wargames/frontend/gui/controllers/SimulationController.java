@@ -18,6 +18,9 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -171,7 +174,7 @@ public class SimulationController implements Initializable {
 
     private void simStep(ActionEvent event){
         String textLog = "";
-        if (army1.hasUnits() && army2.hasUnits()){
+        if (this.army1.hasUnits() && this.army2.hasUnits()){
             txtWinner.setText("......");
             textLog += battle.simulateStep() +"\n";
             unitCountArmy1.setText(String.valueOf(army1.getAllUnits().size()));
@@ -193,6 +196,41 @@ public class SimulationController implements Initializable {
             timeline.stop();
         }
 
+    }
+
+    private void initBattle(){
+        //Init the fields from facade
+        this.army1 = new Army(Facade.getInstance().getArmyOne());
+        this.army2 = new Army(Facade.getInstance().getArmyTwo());
+        this.battle = new Battle(this.army1,this.army2);
+
+        //Setup canvas
+        this.canvasDrawUtility = new Painter(backgroundCanvas.getWidth(),backgroundCanvas.getHeight());
+        this.canvasDrawUtility.drawUnitLineUp(this.unitCanvas,this.army1,this.army2);
+        this.canvasDrawUtility.drawBackground(this.backgroundCanvas,this.army1.getRandomUnit().getTerrain());
+
+        //SetUp Information
+        txtNameArmyOne.setText(this.army1.getName());
+        txtNameArmyTwo.setText(this.army2.getName());
+        txtTerrain.setText(this.army1.getAllUnits().get(0).getTerrain());
+
+        //Button setup
+        buttonIconPause.setImage(PAUSE);
+        buttonPausePlay.setDisable(true);
+
+        //Counter
+        this.simulationStep = 0;
+        //Setting style for unit graph
+        this.unitGraph.setTitle("Units in army");
+        this.unitGraph.getYAxis().setLabel("Unit(s)");
+        this.unitGraph.getXAxis().setLabel("Attack(s)");
+        this.unitGraph.getXAxis().setTickLabelsVisible(false);
+        this.unitGraph.setCreateSymbols(false);
+
+        //Setting style for health graph
+        this.healthGraph.setTitle("Total HP");
+        this.healthGraph.getYAxis().setLabel("Sum of HP in Army");
+        this.healthGraph.getXAxis().setLabel("Attack(s)");
     }
 
     /* Button Events */
@@ -217,12 +255,13 @@ public class SimulationController implements Initializable {
             timeline.pause();
             isPlaying = false;
             buttonIconPause.setImage(PLAY);
+            buttonPausePlay.setText("Pause");
         }else{
             timeline.play();
             isPlaying = true;
             buttonIconPause.setImage(PAUSE);
+            buttonPausePlay.setText("Play");
         }
-
 
     }
 
@@ -247,7 +286,16 @@ public class SimulationController implements Initializable {
 
     @FXML
     public void onRefresh(){
-        // TODO: 16.04.2022 Refresh units for simulation
+        //Stops a ongoing simulation
+        this.timeline.stop();
+
+        //Reset for new battle
+        this.canvasDrawUtility.clearCanvas(this.unitCanvas);
+        initBattle();
+        setupGraphsBeforeSim();
+        buttonStart.setDisable(false);
+        buttonPausePlay.setDisable(true);
+
     }
 
     @FXML
@@ -279,37 +327,6 @@ public class SimulationController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //Init the fields from facade
-        this.battle = Facade.getInstance().getBattle();
-        this.army1 = Facade.getInstance().getArmyOne();
-        this.army2 = Facade.getInstance().getArmyTwo();
-
-        //Setup canvas
-        this.canvasDrawUtility = new Painter(backgroundCanvas.getWidth(),backgroundCanvas.getHeight());
-        this.canvasDrawUtility.drawUnitLineUp(this.unitCanvas,this.army1,this.army2);
-        this.canvasDrawUtility.drawBackground(this.backgroundCanvas,this.army1.getRandomUnit().getTerrain());
-
-        //SetUp Information
-        txtNameArmyOne.setText(this.army1.getName());
-        txtNameArmyTwo.setText(this.army2.getName());
-        txtTerrain.setText(this.army1.getAllUnits().get(0).getTerrain());
-
-        //Button setup
-        buttonIconPause.setImage(PAUSE);
-        buttonPausePlay.setDisable(true);
-
-        //Counter
-        this.simulationStep = 0;
-        //Setting style for unit graph
-        this.unitGraph.setTitle("Units in army");
-        this.unitGraph.getYAxis().setLabel("Unit(s)");
-        this.unitGraph.getXAxis().setLabel("Attack(s)");
-        this.unitGraph.getXAxis().setTickLabelsVisible(false);
-        this.unitGraph.setCreateSymbols(false);
-
-        //Setting style for health graph
-        this.healthGraph.setTitle("Total HP");
-        this.healthGraph.getYAxis().setLabel("Sum of HP in Army");
-        this.healthGraph.getXAxis().setLabel("Attack(s)");
+        initBattle();
     }
 }

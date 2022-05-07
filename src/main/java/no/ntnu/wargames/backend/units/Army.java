@@ -37,8 +37,27 @@ public class Army {
         }else{
             this.name = name;
         }
-        random = RandomSingleton.getInstance().getRandom();
-        units = new ArrayList<>();
+        
+        this.units = new ArrayList<>();
+        this.random = RandomSingleton.getInstance().getRandom();
+    }
+
+    /**
+     * Copy Constructor for the army class.
+     * Copy all the units by creating new Unit objects with the UnitFactory.
+     *
+     * @param army the army to copy
+     */
+    
+    public Army(Army army){
+        this.name = army.name;
+        this.units = new ArrayList<>();
+        for(Unit unit : army.getAllUnits()){
+            Unit newUnit = UnitFactory.createUnit(unit.getUnitType(),unit.getName(),unit.getHealth());
+            newUnit.setTerrain(army.getAllUnits().get(0).getTerrain());
+            this.units.add(newUnit);
+        }
+        this.random = RandomSingleton.getInstance().getRandom();
     }
 
     /**
@@ -165,11 +184,11 @@ public class Army {
      * @return returns a random unit from the army.
      */
     public Unit getRandomUnit(){
-        return units.get(random.nextInt(getAllUnits().size()));
+        return this.units.get(this.random.nextInt(getAllUnits().size()));
     }
 
     public int getAllUnitHealthSum(){
-        // TODO: 04.04.2022 Make test
+        // TODO: 07.05.2022 Make test 
         return this.units.stream().reduce(0,(subtotal,unit)->subtotal+unit.getHealth(),Integer::sum);
     }
 

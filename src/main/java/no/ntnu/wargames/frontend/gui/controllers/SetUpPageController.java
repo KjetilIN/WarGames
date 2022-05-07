@@ -430,7 +430,7 @@ public class SetUpPageController implements Initializable {
     public void onAddRandomArmy(){
         AddArmyDialog addArmyDialog = new AddArmyDialog();
         Optional<Army> result = addArmyDialog.showAndWait();
-        System.out.println("NULL ARMY");
+
         if(result.isPresent() && result != null){
             Army army = result.get();
 
