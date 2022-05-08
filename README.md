@@ -3,6 +3,9 @@
 ## About 
 
 
+![War](https://user-images.githubusercontent.com/66110094/167279945-8118c1fc-e2c5-4bb7-9199-aa6a649b8d84.gif)
+
+
 WarGames is an application created to simulate a war between two medieval armies. Watch a battle like no other unfold, and keep track of your army. Choose a terrain that is advantageous to your unit(s) type. Save your army as a .csv file, and use it to challenge others. 
 
 
