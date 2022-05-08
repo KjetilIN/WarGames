@@ -6,6 +6,7 @@ package no.ntnu.wargames.frontend.gui.controllers;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,15 +19,13 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Paint;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import no.ntnu.wargames.backend.Battle;
 import no.ntnu.wargames.backend.units.Army;
 import no.ntnu.wargames.backend.designPattern.Facade;
+import no.ntnu.wargames.backend.units.Unit;
 import no.ntnu.wargames.frontend.gui.canvasLogic.Painter;
 
 import java.io.IOException;
@@ -53,11 +52,18 @@ public class SimulationController implements Initializable {
     private static final Image PAUSE = new Image(String.valueOf(SimulationController.class.getResource("/no/ntnu/wargames/icon/pause.png")));
     private static final Image PLAY = new Image(String.valueOf(SimulationController.class.getResource("/no/ntnu/wargames/icon/play-button.png")));
 
-    private XYChart.Series<String , Number> army1UnitsSeries;
-    private XYChart.Series<String, Number> army2UnitsSeries;
 
-    private XYChart.Series<String,Number> army1SumHealth;
-    private XYChart.Series<String,Number> army2SumHealth;
+
+
+
+    /*
+
+    Main Page Info
+
+
+     */
+
+
 
     /* Pane */
     @FXML
@@ -66,14 +72,6 @@ public class SimulationController implements Initializable {
     /*Images */
     @FXML
     private ImageView buttonIconPause;
-
-
-    /*Info labels */
-    @FXML
-    private Label unitCountArmy1;
-
-    @FXML
-    private Label unitCountArmy2;
 
     @FXML
     private Label txtNameArmyOne;
@@ -88,12 +86,78 @@ public class SimulationController implements Initializable {
     private Label txtTerrain;
 
     /*Canvas*/
-
     @FXML
     private Canvas backgroundCanvas;
 
     @FXML
     private Canvas unitCanvas;
+
+    /*Buttons */
+    @FXML
+    private Button buttonStart;
+
+    @FXML
+    private Button buttonPausePlay;
+
+
+
+    /*
+
+    Army-Information-tab labels and information
+        - Below are labels for the Army Info tab.
+
+
+     */
+
+    @FXML
+    private Label txtTotalArmy1;
+
+    @FXML
+    private Label txtTotalArmy2;
+
+    @FXML
+    private Label txtCommanderArmy1;
+
+    @FXML
+    private Label txtCommanderArmy2;
+
+    @FXML
+    private Label txtCavalryArmy1;
+
+    @FXML
+    private Label txtCavalryArmy2;
+
+    @FXML
+    private Label txtInfantryArmy1;
+
+    @FXML
+    private Label txtInfantryArmy2;
+
+    @FXML
+    private Label txtRangedArmy1;
+
+    @FXML
+    private Label txtRangedArmy2;
+
+
+
+
+
+    /*
+
+    Graphs-Information-tab label and fields.
+        - Next section contains fields and labels for the graph information tab.
+
+
+     */
+
+
+    private XYChart.Series<String , Number> army1UnitsSeries;
+    private XYChart.Series<String, Number> army2UnitsSeries;
+
+    private XYChart.Series<String,Number> army1SumHealth;
+    private XYChart.Series<String,Number> army2SumHealth;
+
 
     /* Charts */
     @FXML
@@ -102,16 +166,21 @@ public class SimulationController implements Initializable {
     @FXML
     private AreaChart<String,Number> healthGraph;
 
+
+
+
+    /*
+
+    Attack Log Information tab label and fields
+
+
+     */
+
     /*Input fields */
     @FXML
     private TextArea battleLog;
 
-    /*Buttons */
-    @FXML
-    private Button buttonStart;
 
-    @FXML
-    private Button buttonPausePlay;
 
     /*Methods for simulation delay*/
 
@@ -162,6 +231,25 @@ public class SimulationController implements Initializable {
     }
 
     /**
+     * Updates all labels for Information tab.
+     * Sets the correct value of Units of each type
+     */
+
+    private void updateUnitCountTable(){
+        //Update Army info
+        txtTotalArmy1.setText(String.valueOf(army1.getAllUnits().size()));
+        txtTotalArmy2.setText(String.valueOf(army2.getAllUnits().size()));
+        txtCommanderArmy1.setText(String.valueOf(army1.getCommanderUnits().size()));
+        txtCommanderArmy2.setText(String.valueOf(army2.getCommanderUnits().size()));
+        txtCavalryArmy1.setText(String.valueOf(army1.getCavalryUnits().size()));
+        txtCavalryArmy2.setText(String.valueOf(army2.getCavalryUnits().size()));
+        txtInfantryArmy1.setText(String.valueOf(army1.getInfantryUnits().size()));
+        txtInfantryArmy2.setText(String.valueOf(army2.getInfantryUnits().size()));
+        txtRangedArmy1.setText(String.valueOf(army1.getRangedUnits().size()));
+        txtRangedArmy2.setText(String.valueOf(army2.getRangedUnits().size()));
+    }
+
+    /**
      * Method that is called for each attack in the simulation.
      * - Add attack to the battle log.
      * - Calls the attack method and remove the units.
@@ -175,16 +263,23 @@ public class SimulationController implements Initializable {
     private void simStep(ActionEvent event){
         String textLog = "";
         if (this.army1.hasUnits() && this.army2.hasUnits()){
+            //Add temp winneer
             txtWinner.setText("......");
+
+            //Add to log
             textLog += battle.simulateStep() +"\n";
-            unitCountArmy1.setText(String.valueOf(army1.getAllUnits().size()));
-            unitCountArmy2.setText(String.valueOf(army2.getAllUnits().size()));
+            battleLog.setText(battleLog.getText()+ textLog);
+
+            //Update table
+            updateUnitCountTable();
+
+            //Update Graphs
             army1UnitsSeries.getData().add(new XYChart.Data<>(String.valueOf(simulationStep),this.army1.getAllUnits().size()));
             army2UnitsSeries.getData().add(new XYChart.Data<>(String.valueOf(simulationStep),this.army2.getAllUnits().size()));
 
             army1SumHealth.getData().add(new XYChart.Data<>(String.valueOf(simulationStep),this.army1.getAllUnitHealthSum()));
             army2SumHealth.getData().add(new XYChart.Data<>(String.valueOf(simulationStep),this.army2.getAllUnitHealthSum()));
-            battleLog.setText(battleLog.getText()+ textLog);
+
             simulationStep++;
             canvasDrawUtility.drawRandomAttackFrame(this.unitCanvas,this.army1,this.army2);
         }else{
@@ -194,6 +289,7 @@ public class SimulationController implements Initializable {
                 txtWinner.setText(this.army2.getName());
             }
             timeline.stop();
+            buttonPausePlay.setDisable(true);
         }
 
     }
@@ -214,9 +310,13 @@ public class SimulationController implements Initializable {
         txtNameArmyTwo.setText(this.army2.getName());
         txtTerrain.setText(this.army1.getAllUnits().get(0).getTerrain());
 
+
         //Button setup
         buttonIconPause.setImage(PAUSE);
         buttonPausePlay.setDisable(true);
+
+        // Update table
+        updateUnitCountTable();
 
         //Counter
         this.simulationStep = 0;
@@ -295,6 +395,7 @@ public class SimulationController implements Initializable {
         setupGraphsBeforeSim();
         buttonStart.setDisable(false);
         buttonPausePlay.setDisable(true);
+        battleLog.setText("");
 
     }
 

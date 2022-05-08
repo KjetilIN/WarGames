@@ -3,23 +3,16 @@ package no.ntnu.wargames.frontend.gui.dialog;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import no.ntnu.wargames.backend.units.Army;
 import no.ntnu.wargames.backend.units.UnitFactory;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 public class AddArmyDialog extends Dialog<Army>{
 
     /*Unit types*/
     private static final List<String> UNIT_TYPES = List.of("Ranged","Infantry","Commander","Cavalry");
-    private List<Spinner<Integer>> unitSpinners;
+    private final List<Spinner<Integer>> unitSpinners;
 
     public AddArmyDialog(){
         super();

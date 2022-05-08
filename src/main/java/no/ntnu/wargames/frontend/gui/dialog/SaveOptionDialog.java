@@ -1,14 +1,11 @@
 package no.ntnu.wargames.frontend.gui.dialog;
 
 import javafx.geometry.Insets;
-import javafx.scene.Group;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-
-import java.nio.file.Path;
 
 public class SaveOptionDialog extends Dialog<Integer> {
 
