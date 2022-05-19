@@ -1,4 +1,6 @@
-package no.ntnu.wargames.backend.units;
+package no.ntnu.wargames.backend.designPattern;
+
+import no.ntnu.wargames.backend.units.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +28,7 @@ public class UnitFactory {
      * @param unitHealth health as integer
      * @return returns a new unit based on the input, else return null
      */
-    public static Unit createUnit(String unitType,String unitName, int unitHealth){
+    public static Unit createUnit(String unitType, String unitName, int unitHealth){
         if(unitHealth <= 0 || unitName.isEmpty()){return null;}
         Unit returnUnit;
         switch (unitType) {

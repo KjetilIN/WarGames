@@ -1,6 +1,7 @@
 package no.ntnu.wargames.backend.file;
 
 import javafx.stage.FileChooser;
+import no.ntnu.wargames.backend.designPattern.UnitFactory;
 import no.ntnu.wargames.backend.units.*;
 
 import java.io.*;

@@ -35,8 +35,6 @@ public class Battle {
         this.armyTwo = armyTwo;
         this.random = RandomSingleton.getInstance().getRandom(); //Get random object from singleton
 
-        // TODO: 08.05.2022 Refactor feilds or just get instance
-
     }
 
 

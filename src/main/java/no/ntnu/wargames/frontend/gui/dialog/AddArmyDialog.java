@@ -4,7 +4,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import no.ntnu.wargames.backend.units.Army;
-import no.ntnu.wargames.backend.units.UnitFactory;
+import no.ntnu.wargames.backend.designPattern.UnitFactory;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -119,4 +119,37 @@ class BattleTest {
 
     }
 
+    @Test
+    @DisplayName("Test simulate battle")
+    void testSimulateBattle(){
+        //Arrange
+        Battle battle = new Battle(armyOne,armyTwo);
+        assertEquals(armyOne,battle.simulateBattle());
+    }
+
+    @Test
+    @DisplayName("Test simulate step method")
+    void testSimStep(){
+        try{
+            Battle battle = new Battle(armyOne,armyTwo);
+            int totalHealthBeforeAttack = armyOne.getAllUnitHealthSum() + armyTwo.getAllUnitHealthSum();
+            battle.simulateStep();
+            assertTrue(totalHealthBeforeAttack > armyOne.getAllUnitHealthSum() + armyTwo.getAllUnitHealthSum());
+        }catch (Exception e){
+            fail();
+        }
+    }
+
+
+    @Test
+    @DisplayName("Test toString() method for Battle class")
+    void testToString(){
+        //Arrange
+        Battle battle = new Battle(armyOne,armyTwo);
+        String expectedString = "Battle{armyOne=Army{name='ArmyOne', units size =5}, armyTwo=Army{name='ArmyTwo', units size =5}}";
+
+        //Assert
+        assertEquals(expectedString,battle.toString());
+    }
+
 }

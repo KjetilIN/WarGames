@@ -1,6 +1,7 @@
 package no.ntnu.wargames.backend.units;
 
 import no.ntnu.wargames.backend.designPattern.RandomSingleton;
+import no.ntnu.wargames.backend.designPattern.UnitFactory;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -5,7 +5,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import no.ntnu.wargames.backend.units.Unit;
-import no.ntnu.wargames.backend.units.UnitFactory;
+import no.ntnu.wargames.backend.designPattern.UnitFactory;
 
 // TODO: 30.03.2022 Refactor and clean up
 
