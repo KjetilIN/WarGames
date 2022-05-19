@@ -107,7 +107,24 @@ class ArmyTest {
     }
 
     @Test
-    @DisplayName("Test getName() for ArmyClass.")
+    @DisplayName("Test Copy-Constructor for Army Class")
+    void testCopyConstrucktor(){
+        //Arrange
+        Army army = new Army("Cool");
+        assertEquals("Cool", army.getName());
+
+        //Act
+        army = new Army(armyWithFiveEach);
+
+        //Assert
+        assertEquals(5*4, army.getAllUnits().size());
+        assertEquals(3,army.getRandomUnit().getHealth());
+        assertEquals("Name",army.getRandomUnit().getName());
+
+    }
+
+    @Test
+    @DisplayName("Test getName() for Army Class.")
     void testGetName() {
 
         //Assert positive for both constructors
@@ -311,6 +328,13 @@ class ArmyTest {
         assertEquals(0, emptyArmy.getCommanderUnits().size());
         assertEquals(5, armyWithFiveEach.getCommanderUnits().size());
 
+    }
+
+    @Test
+    @DisplayName("Test getHealthSum")
+    void testHealthsum(){
+        //Assert
+        assertEquals(3*armyWithFiveEach.getAllUnits().size(),armyWithFiveEach.getAllUnitHealthSum());
     }
 
 

@@ -161,6 +161,37 @@ class UnitTest{
     }
 
     /**
+     * Test set name.
+     */
+    @Test
+    @DisplayName("Test SetName used correctly")
+    void testSetNamePositive(){
+        //Arrange
+        assertEquals("name",unit.getName());
+
+        //Act
+        unit.setName("CoolNewName");
+
+        //Assert
+        assertEquals("CoolNewName",unit.getName());
+    }
+
+    @Test
+    @DisplayName("Test SetName used incorrectly")
+    void testSetNameNegative(){
+        //Arrange
+        assertEquals("name",unit.getName());
+
+        //Act
+        unit.setName("");
+
+        //Assert
+        assertEquals("name",unit.getName()); //Name should not be changed
+    }
+
+
+
+    /**
      * Testing if the getAttackCount method works.
      * Should increment by one after an attack.
      */

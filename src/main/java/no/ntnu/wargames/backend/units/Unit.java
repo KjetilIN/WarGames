@@ -48,27 +48,6 @@ public abstract class Unit {
 
     }
 
-    /**
-     * Copy Constructor for the unit class. 
-     * Takes unit info as primitive types and makes a copy of the object. 
-     * 
-     * NB! Terrain and attack count is reset
-     * @param unit takes a unit as a parameter 
-     */
-
-    // TODO: 08.05.2022  write copy test here
-    
-    protected Unit(Unit unit){
-        this.name = unit.name;
-        this.health = unit.health;
-        this.attack = unit.attack;
-        this.armor = unit.armor;
-        this.attackCount = 0;
-        this.isAlive = true;
-        this.terrain = Terrain.NONE;
-        
-    }
-
     public String getName(){
         return this.name;
     }
@@ -141,7 +120,6 @@ public abstract class Unit {
      * @param health the new health of the unit.
      */
 
-    // TODO: 08.05.2022 Check test coverage here
     public void setHealth(int health) {
         if(health <=0){
             //In case of death

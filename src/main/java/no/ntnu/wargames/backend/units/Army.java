@@ -188,7 +188,6 @@ public class Army {
     }
 
     public int getAllUnitHealthSum(){
-        // TODO: 07.05.2022 Make test 
         return this.units.stream().reduce(0,(subtotal,unit)->subtotal+unit.getHealth(),Integer::sum);
     }
 
