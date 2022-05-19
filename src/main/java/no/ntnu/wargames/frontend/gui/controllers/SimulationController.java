@@ -6,7 +6,6 @@ package no.ntnu.wargames.frontend.gui.controllers;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,7 +24,6 @@ import javafx.util.Duration;
 import no.ntnu.wargames.backend.Battle;
 import no.ntnu.wargames.backend.units.Army;
 import no.ntnu.wargames.backend.designPattern.Facade;
-import no.ntnu.wargames.backend.units.Unit;
 import no.ntnu.wargames.frontend.gui.canvasLogic.Painter;
 
 import java.io.IOException;
@@ -51,9 +49,6 @@ public class SimulationController implements Initializable {
     /*Static Fields*/
     private static final Image PAUSE = new Image(String.valueOf(SimulationController.class.getResource("/no/ntnu/wargames/icon/pause.png")));
     private static final Image PLAY = new Image(String.valueOf(SimulationController.class.getResource("/no/ntnu/wargames/icon/play-button.png")));
-
-
-
 
 
     /*
@@ -237,16 +232,22 @@ public class SimulationController implements Initializable {
 
     private void updateUnitCountTable(){
         //Update Army info
-        txtTotalArmy1.setText(String.valueOf(army1.getAllUnits().size()));
-        txtTotalArmy2.setText(String.valueOf(army2.getAllUnits().size()));
         txtCommanderArmy1.setText(String.valueOf(army1.getCommanderUnits().size()));
         txtCommanderArmy2.setText(String.valueOf(army2.getCommanderUnits().size()));
+
         txtCavalryArmy1.setText(String.valueOf(army1.getCavalryUnits().size()));
         txtCavalryArmy2.setText(String.valueOf(army2.getCavalryUnits().size()));
+
         txtInfantryArmy1.setText(String.valueOf(army1.getInfantryUnits().size()));
         txtInfantryArmy2.setText(String.valueOf(army2.getInfantryUnits().size()));
+
         txtRangedArmy1.setText(String.valueOf(army1.getRangedUnits().size()));
         txtRangedArmy2.setText(String.valueOf(army2.getRangedUnits().size()));
+
+        txtTotalArmy1.setText(String.valueOf(army1.getAllUnits().size()));
+        txtTotalArmy2.setText(String.valueOf(army2.getAllUnits().size()));
+
+        System.out.println(army1.getAllUnits().size() );
     }
 
     /**
@@ -263,10 +264,10 @@ public class SimulationController implements Initializable {
     private void simStep(ActionEvent event){
         String textLog = "";
         if (this.army1.hasUnits() && this.army2.hasUnits()){
-            //Add temp winneer
+            //Add temp winner
             txtWinner.setText("......");
 
-            //Add to log
+            //Call attack and add to log
             textLog += battle.simulateStep() +"\n";
             battleLog.setText(battleLog.getText()+ textLog);
 
@@ -280,8 +281,8 @@ public class SimulationController implements Initializable {
             army1SumHealth.getData().add(new XYChart.Data<>(String.valueOf(simulationStep),this.army1.getAllUnitHealthSum()));
             army2SumHealth.getData().add(new XYChart.Data<>(String.valueOf(simulationStep),this.army2.getAllUnitHealthSum()));
 
-            simulationStep++;
-            canvasDrawUtility.drawRandomAttackFrame(this.unitCanvas,this.army1,this.army2);
+            simulationStep++; // increment simulation step
+            canvasDrawUtility.drawRandomAttackFrame(this.unitCanvas,this.army1,this.army2); // redraw battle-field
         }else{
             if(army1.hasUnits()){
                 txtWinner.setText(this.army1.getName());
@@ -290,6 +291,18 @@ public class SimulationController implements Initializable {
             }
             timeline.stop();
             buttonPausePlay.setDisable(true);
+
+            // Show alert for winner
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            Image image = new Image(
+                    String.valueOf(getClass().getResource("/no/ntnu/wargames/icon/winner.png")));
+            ImageView imageView = new ImageView(image);
+            imageView.setPreserveRatio(true);
+            imageView.setFitHeight(50);
+            alert.setGraphic(imageView);
+            alert.setHeaderText("Winner!");
+            alert.setContentText("The winner is : " + txtWinner.getText() + "'s army!");
+            alert.show();
         }
 
     }
@@ -396,6 +409,7 @@ public class SimulationController implements Initializable {
         buttonStart.setDisable(false);
         buttonPausePlay.setDisable(true);
         battleLog.setText("");
+        txtWinner.setText("NONE");
 
     }
 
@@ -403,7 +417,7 @@ public class SimulationController implements Initializable {
     public void onGuide(){
         Alert guideInformation = new Alert(Alert.AlertType.INFORMATION);
         guideInformation.setHeaderText("GUIDE");
-        guideInformation.setContentText("You are now on the simulation page! Somewhere we can:\n" +
+        guideInformation.setContentText("You are now on the simulation page! Somewhere you can:\n" +
                 "- Start a simulation by press START SIMULATION in the bottom right corner.\n" +
                 "- Pause/Play the simulation\n" +
                 "- Re-Run a simulation by picking File -> Refresh\n"+

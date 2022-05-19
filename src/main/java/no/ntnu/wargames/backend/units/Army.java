@@ -140,7 +140,7 @@ public class Army {
      * @return returns a list of unit that is in the army.
      */
     public List<Unit> getAllUnits(){
-        return units;
+        return this.units;
     }
 
     /**
@@ -154,11 +154,15 @@ public class Army {
 
     /**
      * A method that gets all the CavalryUnit.
+     * Since the cavalry unit is a super class of Commander unit,
+     * we have to remove all instances of Commander Unit.
      *
      * @return returns a list of Cavalry-units.
      */
     public List<Unit> getCavalryUnits(){
-        return this.units.stream().filter(CavalryUnit.class::isInstance).collect(Collectors.toList());
+        List<Unit> units = this.units.stream().filter(CavalryUnit.class::isInstance).collect(Collectors.toList());
+        units.removeIf(unit -> unit instanceof CommanderUnit);
+        return units;
     }
 
     /**

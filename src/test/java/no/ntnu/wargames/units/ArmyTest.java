@@ -310,7 +310,7 @@ class ArmyTest {
     void testGetCavalryUnit() {
         assertEquals(0, emptyArmy.getCavalryUnits().size());
         /* Should get all 5 cavalry units and 5 commander units, because of inheritance*/
-        assertEquals(10, armyWithFiveEach.getCavalryUnits().size());
+        assertEquals(5, armyWithFiveEach.getCavalryUnits().size());
 
     }
 
