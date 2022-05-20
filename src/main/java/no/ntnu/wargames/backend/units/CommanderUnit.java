@@ -4,12 +4,12 @@ package no.ntnu.wargames.backend.units;
  * The commander unit that extends the CavalryUnit.
  *
  * @author Kjetil Indrehus
- * @version 1.0-SNAPSHOT 07.02.22
+ * @version 1.0-SNAPSHOT
  */
 public class CommanderUnit extends CavalryUnit {
 
 
-    private static final String TYPE = "Commander";
+    private static final String UNIT_TYPE = "Commander";
 
     /**
      * This is the commander unit constructor with all the fields.
@@ -34,11 +34,15 @@ public class CommanderUnit extends CavalryUnit {
         super(name, health);
     }
 
+    /**
+     * Override the unit class to return the type of the unit.
+     * In this case: Commander as string.
+     * @return returns the unit type of the unit; Commander.
+     */
+
     @Override
     public String getUnitType(){
-        return TYPE;
+        return UNIT_TYPE;
     }
-
-    
 
 }

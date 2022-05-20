@@ -4,9 +4,11 @@ import javafx.util.Pair;
 
 /**
  * This class represents a unit.
+ * Superclass for other unit types.
+ * Can be extended to create new unit types.
  *
  * @author Kjetil Indrehus
- * @version 1.0-SNAPSHOT 15.02.22
+ * @version 1.0-SNAPSHOT
  */
 public abstract class Unit {
 
@@ -19,6 +21,7 @@ public abstract class Unit {
     private boolean isAlive;
     private Terrain terrain;
 
+    //Terrain types as Enum.
     private enum Terrain{
         NONE,HILL,PLAINS,FOREST
     }
@@ -48,6 +51,9 @@ public abstract class Unit {
 
     }
 
+
+    //Getters for basic information.
+
     public String getName(){
         return this.name;
     }
@@ -75,8 +81,14 @@ public abstract class Unit {
         return isAlive;
     }
 
+    /**
+     * Method that changes the name of the unit with the given name.
+     * Name is not changed if an empty string is given.
+     *
+     * @param newName new name to be given.
+     */
     public void setName(String newName){
-        if(!newName.isEmpty() && newName != null){
+        if(!newName.isEmpty()){
             this.name = newName;
         }
     }
@@ -93,6 +105,7 @@ public abstract class Unit {
 
     /**
      * Method that sets the terrain of the unit.
+     * Ignores uppercase. Sets terrain to NONE, if unknown terrain given.
      *
      * @param terrain terrain type as string.
      */
@@ -201,7 +214,7 @@ public abstract class Unit {
     public void attack(Unit unit){
         if((this.attack + this.getAttackBonus()) > (unit.armor+unit.getResistBonus())){ // attack only if the damage is higher than the armor.
             unit.setHealth(unit.getHealth()-(this.attack + this.getAttackBonus())+(unit.getArmor()+unit.getResistBonus()));
-            unit.attackCount += 1; //Attacking count is upped by one.
+            unit.attackCount += 1; //Attack-count is incremented by one.
         }
     }
 }

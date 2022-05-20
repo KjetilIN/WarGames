@@ -10,7 +10,7 @@ import java.util.List;
  * This class uses the "factory" design pattern.
  *
  * @author Kjetil Indrehus
- * @version 1.0-SNAPSHOT 31.03.22
+ * @version 1.0-SNAPSHOT
  */
 
 public class UnitFactory {
@@ -18,7 +18,15 @@ public class UnitFactory {
     /*Unit types*/
     private static final List<String> UNIT_TYPES = List.of("Ranged","Infantry","Commander","Cavalry");
 
-    private UnitFactory(){};
+    /**
+     * Private constructor that is never used.
+     * This class contains purely static methods.
+     * Should never be used.
+     * @throws IllegalArgumentException Throws exception if used.
+     */
+    private UnitFactory(){
+        throw new IllegalArgumentException("UnitFactory");
+    }
 
     /**
      * Factory method that returns a new unit.

@@ -4,8 +4,9 @@ import javafx.util.Pair;
 
 /**
  * Class to represent the infantry unit. Inference from the unit class.
+ *
  * @author Kjetil Indrehus
- * @version 1.0-SNAPSHOT 07.02.22
+ * @version 1.0-SNAPSHOT
  */
 public class InfantryUnit extends Unit {
     /**
@@ -13,7 +14,7 @@ public class InfantryUnit extends Unit {
      */
     private static final int ATTACK = 12;
     private static final int ARMOR = 10;
-    private String unitType = "Infantry";
+    private static final String UNIT_TYPE = "Infantry";
 
     /**
      * This is the infantry unit constructor all fields.
@@ -62,7 +63,7 @@ public class InfantryUnit extends Unit {
 
     @Override
     public String getUnitType() {
-        return this.unitType;
+        return UNIT_TYPE;
     }
 
     /**

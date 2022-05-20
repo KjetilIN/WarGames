@@ -204,11 +204,11 @@ public class SetUpPageController implements Initializable {
      * @param observableList the observable list of the army
      */
 
-    public void addUnitToTable(TableView<Unit> tableView,ObservableList observableList){
+    public void addUnitToTable(TableView<Unit> tableView,ObservableList<Unit> observableList){
         CreateUnitDialog dialog = new CreateUnitDialog();
         Optional<Unit> unit = dialog.showAndWait();
 
-        if(unit.isPresent() && unit != null){
+        if(unit.isPresent()){ //Check if we got
             Unit newUnit = unit.get();
             observableList.add(newUnit);
             tableView.refresh();
@@ -253,8 +253,6 @@ public class SetUpPageController implements Initializable {
                 && tableViewArmy2.getSelectionModel().isEmpty()){
             result = tableViewArmy1.getSelectionModel().getSelectedItem();
         }
-
-        // TODO: 03.04.2022 error if both are selected.
 
         /*Clear selection history*/
         tableViewArmy1.getSelectionModel().clearSelection();
@@ -500,5 +498,24 @@ public class SetUpPageController implements Initializable {
                 healthColumnArmy2);
 
 
+        /*Table view listener
+        *
+        * Whenever a new selection is done in either table, the other selection is removed.
+        * This is done in two methods. Both clearSelection() from the other table, when selected.
+        *
+        *
+        */
+
+        tableViewArmy1.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                tableViewArmy2.getSelectionModel().clearSelection();
+            }
+        });
+
+        tableViewArmy2.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                tableViewArmy1.getSelectionModel().clearSelection();
+            }
+        });
     }
 }

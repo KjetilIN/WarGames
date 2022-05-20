@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 public class Army {
     private String name;
-    private List<Unit> units;
+    private final List<Unit> units;
     private Random random;
 
     /**
@@ -33,12 +33,8 @@ public class Army {
     public Army(String name) throws IllegalArgumentException, NullPointerException{
         if(name.isEmpty()){
             throw new IllegalArgumentException("No name given");
-        }else if(name == null){
-            throw new NullPointerException("Value given was null");
-        }else{
-            this.name = name;
         }
-        
+        this.name = name;
         this.units = new ArrayList<>();
         this.random = RandomSingleton.getInstance().getRandom();
     }
@@ -55,6 +51,10 @@ public class Army {
         this.units = new ArrayList<>();
         for(Unit unit : army.getAllUnits()){
             Unit newUnit = UnitFactory.createUnit(unit.getUnitType(),unit.getName(),unit.getHealth());
+
+            //This should always be true, else the for loop should not be started (Debugging purposes).
+            assert newUnit != null : "Not Empty Army";
+
             newUnit.setTerrain(army.getAllUnits().get(0).getTerrain());
             this.units.add(newUnit);
         }
@@ -68,15 +68,12 @@ public class Army {
      * @param units a list of units that is the total amount of units.
      */
     public Army(String name, List<Unit> units) throws IllegalArgumentException{
-        if(name.isEmpty() || (name == null && units != null)){
+        if(name.isEmpty()){
             throw new IllegalArgumentException("No name given");
         }else if(units == null){
-            throw new IllegalArgumentException("Units was empty object");
-        }else{
-            this.name = name;
+            throw new IllegalArgumentException("Units was null object");
         }
-
-
+        this.name = name;
         this.units = units;
     }
 
@@ -160,9 +157,9 @@ public class Army {
      * @return returns a list of Cavalry-units.
      */
     public List<Unit> getCavalryUnits(){
-        List<Unit> units = this.units.stream().filter(CavalryUnit.class::isInstance).collect(Collectors.toList());
-        units.removeIf(unit -> unit instanceof CommanderUnit);
-        return units;
+        List<Unit> cavalryUnitsList = this.units.stream().filter(CavalryUnit.class::isInstance).collect(Collectors.toList());
+        cavalryUnitsList.removeIf(CommanderUnit.class::isInstance);
+        return cavalryUnitsList;
     }
 
     /**

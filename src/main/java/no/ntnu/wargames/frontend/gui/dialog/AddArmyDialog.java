@@ -8,24 +8,37 @@ import no.ntnu.wargames.backend.designPattern.UnitFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Dialog for adding an army to a chosen table.
+ * Has the Army class as return object.
+ *
+ * @author Kjetil Indrehus
+ * @version 1.0-SNAPSHOT
+ */
+
 public class AddArmyDialog extends Dialog<Army>{
 
     /*Unit types*/
     private static final List<String> UNIT_TYPES = List.of("Ranged","Infantry","Commander","Cavalry");
     private final List<Spinner<Integer>> unitSpinners;
 
+    /**
+     * Constructor that uses the SuperClass Dialog.
+     * Also uses the private method to add content to dialog.
+     */
     public AddArmyDialog(){
         super();
         unitSpinners = new ArrayList<>();
         createContent();
     }
 
+    /**
+     * Method that adds content to the dialog.
+     * Also add result listener
+     */
     private void createContent() {
-        //Header text
+        /*Header text */
         getDialogPane().setHeaderText("Add army!");
-
-        //Margin
-
 
         /*Name of the army*/
         TextField armyName = new TextField();
@@ -39,10 +52,10 @@ public class AddArmyDialog extends Dialog<Army>{
 
 
         /*Spinner for unit count*/
-        Spinner<Integer> rangedSpinner = new Spinner(0,50,0);
-        Spinner<Integer> commanderSpinner = new Spinner(0,50,0);
-        Spinner<Integer> infantrySpinner = new Spinner(0,50,0);
-        Spinner<Integer> cavalrySpinner = new Spinner(0,50,0);
+        Spinner<Integer> rangedSpinner = new Spinner<>(0,50,0);
+        Spinner<Integer> commanderSpinner = new Spinner<>(0,50,0);
+        Spinner<Integer> infantrySpinner = new Spinner<>(0,50,0);
+        Spinner<Integer> cavalrySpinner = new Spinner<>(0,50,0);
 
         /* Field for a unit*/
         TextField unitNames = new TextField();

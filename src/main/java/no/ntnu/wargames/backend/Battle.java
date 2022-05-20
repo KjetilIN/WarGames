@@ -10,7 +10,7 @@ import java.util.Random;
  * Takes to army and has the simulation class.
  *
  * @author Kjetil Indrehus
- * @version 1.0-SNAPSHOT 18.02.2022
+ * @version 1.0-SNAPSHOT
  */
 
 public class Battle {

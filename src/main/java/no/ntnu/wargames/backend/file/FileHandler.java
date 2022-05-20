@@ -19,6 +19,16 @@ import java.util.ArrayList;
 public class FileHandler {
 
     /**
+     * Private Hidden FileHandler Constructor.
+     * Should never be used.
+     * @throws IllegalArgumentException Throws exception if used.
+     */
+    private FileHandler(){
+        throw new IllegalArgumentException("FileHandler");
+    }
+
+
+    /**
      * Method that returns the army from the .csv file.
      *
      * @param path path of the file as Path object.

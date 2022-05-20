@@ -260,4 +260,18 @@ class UnitTest{
         assertNotEquals(100,weakUnit.getHealth());
         assertNotEquals(287,armorUnit.getHealth());
     }
+
+    @Test
+    @DisplayName("Test setAlive method()")
+    void testSetAlive(){
+        //Arrange
+        Unit unit = new CommanderUnit("Commander",29);
+        assertTrue(unit.isAlive());
+
+        //Act
+        unit.setAlive(false);
+
+        //Assert
+        assertFalse(unit.isAlive());
+    }
 }

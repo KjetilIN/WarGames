@@ -11,6 +11,9 @@ import no.ntnu.wargames.backend.units.Army;
  *
  * For more information on the design pattern:
  * @see <a href="https://refactoring.guru/design-patterns/facade">Facade Design Pattern Theory</a>
+ *
+ * @author Kjetil Indrehus
+ * @version 1.0-SNAPSHOT
  */
 public class Facade {
 
@@ -19,6 +22,10 @@ public class Facade {
     private Army armyOne;
     private Army armyTwo;
 
+    /**
+     * Private constructor for the Facade class.
+     * Initialize both armies with empty army, and create battle object.
+     */
     private Facade(){
         armyOne = new Army("NONE");
         armyTwo = new Army("NONE");

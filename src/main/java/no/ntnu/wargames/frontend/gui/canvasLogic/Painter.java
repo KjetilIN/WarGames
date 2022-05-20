@@ -11,6 +11,11 @@ import java.util.Random;
 
 /**
  * Painter class that paints content on given canvas.
+ * Used to draw background and foreground of 2D display of Units.
+ * (Manipulates the graphic context of a canvas, see Canvas Docs).
+ *
+ * @author Kjetil Indrehus
+ * @version 1.0-SNAPSHOT
  */
 
 public class Painter {
@@ -28,9 +33,9 @@ public class Painter {
 
 
     /*Map Images*/
-    private final static Image HILL = new Image(String.valueOf(Painter.class.getResource("/no/ntnu/wargames/fxpixelart/world/HILL.png")));
-    private final static Image PLAINS = new Image(String.valueOf(Painter.class.getResource("/no/ntnu/wargames/fxpixelart/world/PLAINS.png")));
-    private final static Image FOREST = new Image(String.valueOf(Painter.class.getResource("/no/ntnu/wargames/fxpixelart/world/FOREST.png")));
+    private static final Image HILL = new Image(String.valueOf(Painter.class.getResource("/no/ntnu/wargames/fxpixelart/world/HILL.png")));
+    private static final Image PLAINS = new Image(String.valueOf(Painter.class.getResource("/no/ntnu/wargames/fxpixelart/world/PLAINS.png")));
+    private static final Image FOREST = new Image(String.valueOf(Painter.class.getResource("/no/ntnu/wargames/fxpixelart/world/FOREST.png")));
 
     /**
      * Constructor for the Painter class.
@@ -57,6 +62,14 @@ public class Painter {
     private Image getCharacter(String color, String direction,String unitType){
         return new Image(String.valueOf(Painter.class.getResource("/no/ntnu/wargames/fxpixelart/character/"+color+"/"+direction+"/"+unitType+".png")));
     }
+
+    /**
+     * Draws a background based on terrain given.
+     * If Terrain.NONE is given, then no background is drawn.
+     *
+     * @param background Canvas to be painted.
+     * @param terrain terrain to be painted on given canvas.
+     */
     public void drawBackground(Canvas background, String terrain){
         GraphicsContext graphicsContext = background.getGraphicsContext2D();
         switch (terrain.toUpperCase()){

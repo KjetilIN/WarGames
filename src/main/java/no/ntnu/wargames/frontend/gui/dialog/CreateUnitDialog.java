@@ -7,37 +7,56 @@ import javafx.scene.layout.GridPane;
 import no.ntnu.wargames.backend.units.Unit;
 import no.ntnu.wargames.backend.designPattern.UnitFactory;
 
-// TODO: 30.03.2022 Refactor and clean up
 
+/**
+ * Dialog for creating a new Unit.
+ * Has the Unit class as return object.
+ *
+ * @author Kjetil Indrehus
+ * @version 1.0-SNAPSHOT
+ */
 
 public class CreateUnitDialog extends Dialog<Unit> {
 
-
-
-    private Mode mode;
+    private final Mode mode;
     private Unit unit;
 
+    /*Enum of the mode. Either Edit a unit or create a new unit*/
     private enum Mode{
         EDIT,NEW
     }
 
-    public  CreateUnitDialog(){
+    /**
+     * Constructor for the Unit Dialog.
+     * Used if the Mode.NEW (new unit to edit).
+     */
+    public CreateUnitDialog(){
         super();
-        this.mode = Mode.NEW; //Set mode to new player
+        this.mode = Mode.NEW; //Set mode to new Unit
         createContent();
     }
 
+    /**
+     * Constructor for the Unit Dialog used for editing the unit.
+     *
+     * @param unit the given unit to be edited.
+     */
     public CreateUnitDialog(Unit unit){
         /* Set up constructor for edit*/
+        super();
         this.unit = unit;
-        this.mode = Mode.EDIT;
+        this.mode = Mode.EDIT; // Edit mode
         if(unit != null){
             createContent();
         }
 
     }
 
-    public void createContent(){
+    /**
+     * Method that adds content to the dialog.
+     * Also add result listener
+     */
+    private void createContent(){
 
         //Input prompt
         TextField name = new TextField();
@@ -130,28 +149,25 @@ public class CreateUnitDialog extends Dialog<Unit> {
                     }
 
                 }
-
-                // TODO: 30.03.2022 find best way to not have duplicated code 
                 if(this.mode == Mode.NEW){
                     //Opens waring dialog based on missing input
+                    //Only opened if the mode is new and to return statement previous has been reached.
+                    String endString = "\n" + "Therefore no unit was added!";
                     if(!nameGiven && checkboxSelected && healthGiven){
                         DialogWindow.openWarningDialog("No name was given"
-                                + "\n" + "Therefore now unit was added!");
+                                + endString);
                     }else if(!checkboxSelected && nameGiven && healthGiven){
                         DialogWindow.openWarningDialog("No unit choice was made" +
-                                "\n" + "Therefore now unit was added!");
+                                endString);
                     }else if (!healthGiven && checkboxSelected && nameGiven){
                         DialogWindow.openWarningDialog("No health was given."
-                                + "\n" + "Therefore now unit was added!");
+                                + endString);
 
                     }else {
                         DialogWindow.openWarningDialog("Please enter name and unit type...");
                     }
                 }
-
-
             }
-            
             return null;
         });
 

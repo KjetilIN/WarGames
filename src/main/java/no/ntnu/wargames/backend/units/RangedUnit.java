@@ -6,7 +6,7 @@ import javafx.util.Pair;
  * The ranged unit class. A sub-class of unit.
  *
  * @author Kjetil Indrehus
- * @version 1.0-SNAPSHOT 07.02.22
+ * @version 1.0-SNAPSHOT
  */
 public class RangedUnit extends Unit{
 
@@ -15,7 +15,7 @@ public class RangedUnit extends Unit{
      */
     private static final int ATTACK = 15;
     private static final int ARMOR = 8;
-    private String unitType = "Ranged";
+    private static final String UNIT_TYPE = "Ranged";
 
     /**
      * The ranged unit constructor with all of UNit fields as arguments.
@@ -72,7 +72,7 @@ public class RangedUnit extends Unit{
 
     @Override
     public String getUnitType() {
-        return this.unitType;
+        return UNIT_TYPE;
     }
 
     /**

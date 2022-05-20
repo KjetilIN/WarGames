@@ -7,14 +7,29 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
+/**
+ * Dialog for choosing what army to save.
+ * Has the Integer class as return object.
+ *
+ * @author Kjetil Indrehus
+ * @version 1.0-SNAPSHOT
+ */
+
 public class SaveOptionDialog extends Dialog<Integer> {
 
+
+    /**
+     * Constructor that opens the dialog and adds content.
+     */
     public SaveOptionDialog(){
         super();
         createContent();
     }
 
-    public void createContent(){
+    /**
+     * Add content to the dialog.
+     */
+    private void createContent(){
         // Header
         getDialogPane().setHeaderText("Save options");
 

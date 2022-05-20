@@ -7,7 +7,7 @@ import javafx.util.Pair;
  * Extends the unit class.
  *
  * @author Kjetil Indrehus
- * @version 1.0-SNAPSHOT 07.02.22
+ * @version 1.0-SNAPSHOT
  */
 
 public class CavalryUnit extends Unit {
@@ -56,10 +56,9 @@ public class CavalryUnit extends Unit {
         int attackBonus = getAttackCount() == 0 ? 6 : 4;
         try{
             attackBonus += getTerrainBonusAttackDefence().getKey();
-        }catch (IllegalArgumentException ignored){}
+        }catch (IllegalArgumentException ignored){ /* Ignored */ }
 
         return attackBonus;
-
     }
 
     /**
@@ -101,14 +100,12 @@ public class CavalryUnit extends Unit {
     @Override
     public Pair<Integer,Integer> getTerrainBonusAttackDefence() throws IllegalArgumentException{
         int attack = 0;
-        int defence = 0;
         if(getTerrain().equalsIgnoreCase("Plains")){
             attack = 3;
         }else if(getTerrain().equalsIgnoreCase("Forest")){
             /*Unit looses all defence bonus*/
             throw new IllegalArgumentException("defence");
         }
-
-        return new Pair<>(attack,defence);
+        return new Pair<>(attack,0);
     }
 }
