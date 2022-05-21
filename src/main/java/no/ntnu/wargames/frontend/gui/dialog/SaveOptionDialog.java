@@ -6,6 +6,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import no.ntnu.wargames.backend.designPattern.Facade;
 
 /**
  * Dialog for choosing what army to save.
@@ -33,11 +34,7 @@ public class SaveOptionDialog extends Dialog<Integer> {
         // Header
         getDialogPane().setHeaderText("Save options");
 
-        ChoiceBox<String> choiceBox = new ChoiceBox<>();
-        choiceBox.getItems().add("Army1");
-        choiceBox.getItems().add("Army2");
-        choiceBox.getItems().add("Both");
-
+        ChoiceBox<String> choiceBox = DialogUtility.getArmyChoiceBox();
 
         GridPane grid = new GridPane();
         grid.setHgap(10);

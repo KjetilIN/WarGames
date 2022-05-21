@@ -3,6 +3,7 @@ package no.ntnu.wargames.frontend.gui.dialog;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import no.ntnu.wargames.backend.designPattern.Facade;
 import no.ntnu.wargames.backend.units.Army;
 import no.ntnu.wargames.backend.designPattern.UnitFactory;
 import java.util.ArrayList;
@@ -45,17 +46,14 @@ public class AddArmyDialog extends Dialog<Army>{
         armyName.setPromptText("Enter army name...");
 
         /*Checkbox for choosing what army to add to*/
-        ChoiceBox<String> pickArmy = new ChoiceBox<>();
-        pickArmy.getItems().add("Army 1");
-        pickArmy.getItems().add("Army 2");
-        pickArmy.getItems().add("Both");
-
+        ChoiceBox<String> pickArmy = DialogUtility.getArmyChoiceBox();
 
         /*Spinner for unit count*/
         Spinner<Integer> rangedSpinner = new Spinner<>(0,50,0);
         Spinner<Integer> commanderSpinner = new Spinner<>(0,50,0);
         Spinner<Integer> infantrySpinner = new Spinner<>(0,50,0);
         Spinner<Integer> cavalrySpinner = new Spinner<>(0,50,0);
+
 
         /* Field for a unit*/
         TextField unitNames = new TextField();
@@ -64,12 +62,7 @@ public class AddArmyDialog extends Dialog<Army>{
         TextField health = new TextField();
         health.setPromptText("Unit(s) health...");
 
-        health.textProperty().addListener((observable, oldValue, newValue) -> {
-            // force the field to be numeric only
-            if (!newValue.matches("\\d*")) {
-                health.setText(newValue.replaceAll("[^\\d]", ""));
-            }
-        });
+        DialogUtility.setTextFieldNumeric(health); // makes the text field numeric only
 
         /*Painter*/
         GridPane grid = new GridPane();
@@ -103,10 +96,14 @@ public class AddArmyDialog extends Dialog<Army>{
         unitSpinners.add(commanderSpinner);
         unitSpinners.add(cavalrySpinner);
 
+        for (Spinner<Integer> spinner:unitSpinners) {
+            spinner.setEditable(true); // All spinner can be edited by typing
+            DialogUtility.setTextFieldNumeric(spinner.getEditor()); // Make text field numeric only
+
+        }
+
         /*Buttons*/
         getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-
-
 
         /*Result converter*/
         setResultConverter((ButtonType buttonType)->{
@@ -142,22 +139,24 @@ public class AddArmyDialog extends Dialog<Army>{
                     result.setName(pickArmy.getSelectionModel().getSelectedIndex()+armyName.getText());
 
                 }else{
-                    String errorMessage = "Wrong format: \n";
+                    //Use String builder to make error message
+                    StringBuilder messageBuilder = new StringBuilder();
+                    messageBuilder.append("Wrong format: \n");
                     if(armyName.getText().length() == 0){
-                        errorMessage += "- No army name given. \n";
+                        messageBuilder.append("- No army name given. \n");
                     }
                     if(pickArmy.getSelectionModel().isEmpty()){
-                        errorMessage+= "- No selection for were the army is set. \n";
+                        messageBuilder.append("- No selection for were the army is set. \n");
                     }
                     if(unitNames.getText().length() == 0){
-                        errorMessage += "- No unit name given. \n";
+                        messageBuilder.append("- No unit name given. \n");
                     }
                     if( health.getText().length() == 0){
-                        errorMessage += "- Health was not given.";
-                    }else if(Integer.parseInt(health.getText()) == 0){
-                        errorMessage += "- Health was 0!";
+                        messageBuilder.append("- Health was not given.");
+                    }else if(Integer.parseInt(health.getText()) <= 0){
+                        messageBuilder.append("- Health was 0 or lower!");
                     }
-                    DialogWindow.openWarningDialog(errorMessage);
+                    DialogWindow.openWarningDialog(messageBuilder.toString());
 
                 }
                 return result;

@@ -37,35 +37,14 @@ class ArmyTest {
         unitToAdd = new RangedUnit("ranged",19);
         armyWithFiveEach = new Army("ArmyWithFive");
 
-        // TODO: 20.03.2022 Ask to put this in a for-loop (?)
 
-        /* 5 infantry units */
-        armyWithFiveEach.add(new InfantryUnit("Name",3));
-        armyWithFiveEach.add(new InfantryUnit("Name",3));
-        armyWithFiveEach.add(new InfantryUnit("Name",3));
-        armyWithFiveEach.add(new InfantryUnit("Name",3));
-        armyWithFiveEach.add(new InfantryUnit("Name",3));
+        for(int i = 0; i<5;i++){
+            armyWithFiveEach.add(new InfantryUnit("Name",3));
+            armyWithFiveEach.add(new CavalryUnit("Name",3));
+            armyWithFiveEach.add(new RangedUnit("Name",3));
+            armyWithFiveEach.add(new CommanderUnit("Name",3));
 
-        /* 5 cavalry units */
-        armyWithFiveEach.add(new CavalryUnit("Name",3));
-        armyWithFiveEach.add(new CavalryUnit("Name",3));
-        armyWithFiveEach.add(new CavalryUnit("Name",3));
-        armyWithFiveEach.add(new CavalryUnit("Name",3));
-        armyWithFiveEach.add(new CavalryUnit("Name",3));
-
-        /* 5 ranged units */
-        armyWithFiveEach.add(new RangedUnit("Name",3));
-        armyWithFiveEach.add(new RangedUnit("Name",3));
-        armyWithFiveEach.add(new RangedUnit("Name",3));
-        armyWithFiveEach.add(new RangedUnit("Name",3));
-        armyWithFiveEach.add(new RangedUnit("Name",3));
-
-        /* 5 commander units */
-        armyWithFiveEach.add(new CommanderUnit("Name",3));
-        armyWithFiveEach.add(new CommanderUnit("Name",3));
-        armyWithFiveEach.add(new CommanderUnit("Name",3));
-        armyWithFiveEach.add(new CommanderUnit("Name",3));
-        armyWithFiveEach.add(new CommanderUnit("Name",3));
+        }
 
     }
 

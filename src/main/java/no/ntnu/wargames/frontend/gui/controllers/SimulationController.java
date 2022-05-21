@@ -1,8 +1,6 @@
 package no.ntnu.wargames.frontend.gui.controllers;
 
 
-
-
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -25,12 +23,22 @@ import no.ntnu.wargames.backend.Battle;
 import no.ntnu.wargames.backend.units.Army;
 import no.ntnu.wargames.backend.designPattern.Facade;
 import no.ntnu.wargames.frontend.gui.canvasLogic.Painter;
+import no.ntnu.wargames.frontend.gui.dialog.DialogWindow;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+
+/**
+ * Simulation Page Controller.
+ * Controls all content on simulation page.
+ *
+ * @author Kjetil Indrehus
+ * @version 1.0-SNAPSHOT
+ */
 
 public class SimulationController implements Initializable {
 
@@ -51,13 +59,8 @@ public class SimulationController implements Initializable {
     private static final Image PLAY = new Image(String.valueOf(SimulationController.class.getResource("/no/ntnu/wargames/icon/play-button.png")));
 
 
-    /*
 
-    Main Page Info
-
-
-     */
-
+    //Main page nodes.
 
 
     /* Pane */
@@ -101,7 +104,6 @@ public class SimulationController implements Initializable {
     Army-Information-tab labels and information
         - Below are labels for the Army Info tab.
 
-
      */
 
     @FXML
@@ -139,17 +141,17 @@ public class SimulationController implements Initializable {
 
 
     /*
-
     Graphs-Information-tab label and fields.
         - Next section contains fields and labels for the graph information tab.
-
 
      */
 
 
+    // Data for each army unit count.
     private XYChart.Series<String , Number> army1UnitsSeries;
     private XYChart.Series<String, Number> army2UnitsSeries;
 
+    // Data for each army total health.
     private XYChart.Series<String,Number> army1SumHealth;
     private XYChart.Series<String,Number> army2SumHealth;
 
@@ -205,15 +207,16 @@ public class SimulationController implements Initializable {
         healthGraph.getData().clear();
 
         //defining units in each army s
+        String endNotation = "'s army";
         army1UnitsSeries = new XYChart.Series<>();
         army2UnitsSeries = new XYChart.Series<>();
-        army1UnitsSeries.setName("Unit in " + this.army1.getName()+"'s army");
-        army2UnitsSeries.setName("Units in " + this.army2.getName()+"'s army");
+        army1UnitsSeries.setName("Unit in " + this.army1.getName()+endNotation);
+        army2UnitsSeries.setName("Units in " + this.army2.getName()+endNotation);
 
         army1SumHealth = new XYChart.Series<>();
         army2SumHealth = new XYChart.Series<>();
-        army1SumHealth.setName("HP sum of " + this.army1.getName()+"'s army");
-        army2SumHealth.setName("HP sum of " + this.army2.getName()+"'s army");
+        army1SumHealth.setName("HP sum of " + this.army1.getName()+endNotation);
+        army2SumHealth.setName("HP sum of " + this.army2.getName()+endNotation);
 
         //Set information of the chart
         this.unitGraph.getData().addAll(army1UnitsSeries,army2UnitsSeries);
@@ -246,8 +249,6 @@ public class SimulationController implements Initializable {
 
         txtTotalArmy1.setText(String.valueOf(army1.getAllUnits().size()));
         txtTotalArmy2.setText(String.valueOf(army2.getAllUnits().size()));
-
-        System.out.println(army1.getAllUnits().size() );
     }
 
     /**
@@ -293,19 +294,16 @@ public class SimulationController implements Initializable {
             buttonPausePlay.setDisable(true);
 
             // Show alert for winner
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            Image image = new Image(
-                    String.valueOf(getClass().getResource("/no/ntnu/wargames/icon/winner.png")));
-            ImageView imageView = new ImageView(image);
-            imageView.setPreserveRatio(true);
-            imageView.setFitHeight(50);
-            alert.setGraphic(imageView);
-            alert.setHeaderText("Winner!");
-            alert.setContentText("The winner is : " + txtWinner.getText() + "'s army!");
-            alert.show();
+            DialogWindow.showWinnerDialog(txtWinner);
         }
 
     }
+
+    /**
+     * Method that sets the battle up for simulation.
+     * Adds unit and background to canvas.
+     * Sets the simStep Counter to 0.
+     */
 
     private void initBattle(){
         //Init the fields from facade
@@ -330,6 +328,7 @@ public class SimulationController implements Initializable {
 
         // Update table
         updateUnitCountTable();
+
 
         //Counter
         this.simulationStep = 0;
@@ -379,7 +378,10 @@ public class SimulationController implements Initializable {
     }
 
     @FXML
-    public void onBackToSetUp(ActionEvent event) throws IOException {
+    public void onBackToSetUp() throws IOException {
+        //End any ongoing simulations
+        timeline.stop();
+
         Stage prevStage = (Stage)mainPage.getScene().getWindow();
         prevStage.close();
 
@@ -391,7 +393,9 @@ public class SimulationController implements Initializable {
         //New style for the new stage
         stage.setTitle("WarGames");
         stage.initStyle(StageStyle.UNDECORATED);
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/no/ntnu/wargames/icon/logoIcon.PNG")));
+        stage.getIcons().add(new Image(
+                Objects.requireNonNull(getClass().getResourceAsStream(
+                        "/no/ntnu/wargames/icon/logoIcon.PNG"))));
         stage.setScene(scene);
         stage.show();
 
@@ -428,13 +432,8 @@ public class SimulationController implements Initializable {
 
     @FXML
     public void onClose(){
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setHeaderText("Exit");
-        alert.setContentText("You are about to close the app.\n" +
-                "Are you sure?");
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if(result.get() == ButtonType.OK){
+        Optional<ButtonType> result = DialogWindow.openExitDialog();
+        if(result.isPresent() && result.get() == ButtonType.OK){
             System.exit(0);
         }
     }

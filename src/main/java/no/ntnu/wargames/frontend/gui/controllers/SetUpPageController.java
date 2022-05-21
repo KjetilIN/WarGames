@@ -1,7 +1,6 @@
 package no.ntnu.wargames.frontend.gui.controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -22,16 +21,40 @@ import no.ntnu.wargames.frontend.gui.dialog.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+
+/**
+ * SetUp Page Controller.
+ * Controls all content on setup page.
+ *
+ * @author Kjetil Indrehus
+ * @version 1.0-SNAPSHOT
+ */
 
 public class SetUpPageController implements Initializable {
     /* Common fields */
     private Army army1;
     private Army army2;
 
-    private static final String VERSION = "1.0-SNAPSHOT 16.04.2022";
+    //Version of the software.
+    private static final String VERSION = "1.0-SNAPSHOT";
 
+    //Icons for correct and incorrect files.
+    private static final Image CORRECT_FILE_ICON = new Image(
+            Objects.requireNonNull(
+                    SetUpPageController.class.getResourceAsStream(
+                    "/no/ntnu/wargames/icon/check.png")));
+
+    private static final Image INCORRECT_FILE_ICON = new Image(
+            Objects.requireNonNull(
+                    SetUpPageController.class.getResourceAsStream(
+                            "/no/ntnu/wargames/icon/wrong.png")));
+
+
+    //Main Page
     @FXML
     private BorderPane mainPage;
 
@@ -63,6 +86,7 @@ public class SetUpPageController implements Initializable {
     @FXML
     private TableColumn<Unit,String> healthColumnArmy1;
 
+    //Add army from file
     @FXML
     public void onAddArmy1(){
         File file = FileHandler.getFile();
@@ -76,17 +100,20 @@ public class SetUpPageController implements Initializable {
         }
     }
 
+    //Edit army 1 name
     @FXML
     public void onEditNameArmy1(){
         String result = DialogWindow.openEditNameDialog();
         if(result != null){
             txtArmy1Name.setText(result);
             this.army1.setName(result);
+            Facade.getInstance().getArmyOne().setName(txtArmy1Name.getText());
         }else{
             DialogWindow.openWarningDialog("NO NAME FOUND");
         }
     }
 
+    //Add a unit to army 1
     @FXML
     public void onAddUnitArmy1(){
         addUnitToTable(tableViewArmy1,observableListArmy1);
@@ -118,6 +145,7 @@ public class SetUpPageController implements Initializable {
     @FXML
     private ImageView iconCheckArmy2;
 
+    //Add army from file
     @FXML
     public void onAddArmy2(){
         File file = FileHandler.getFile();
@@ -131,26 +159,24 @@ public class SetUpPageController implements Initializable {
         }
     }
 
+    //Edit name of army 2
     @FXML
     public void onEditNameArmy2(){
         String result = DialogWindow.openEditNameDialog();
         if(result != null){
             txtArmy2Name.setText(result);
             this.army2.setName(result);
+            Facade.getInstance().getArmyTwo().setName(txtArmy2Name.getText());
         }else{
             DialogWindow.openWarningDialog("NO NAME FOUND");
         }
     }
 
+    //Add unit in army 2
     @FXML
     public void onAddUnitArmy2(){
         addUnitToTable(tableViewArmy2,observableListArmy2);
     }
-
-
-
-
-
 
 
     /*
@@ -185,10 +211,14 @@ public class SetUpPageController implements Initializable {
             army = FileHandler.getArmyFromFileCSV(file.toPath());
             txtArmyName.setText(army.getName().replace(",",""));
             observableList.setAll(army.getAllUnits());
+            icon.setImage(CORRECT_FILE_ICON);
+            icon.setVisible(true);
         }catch (Exception e){
             DialogWindow.openExceptionDialog(e);
+            icon.setImage(INCORRECT_FILE_ICON);
+            observableList.clear();
+
         }
-        icon.setVisible(true);
         table.refresh();
 
     }
@@ -215,6 +245,11 @@ public class SetUpPageController implements Initializable {
         }
     }
 
+    /**
+     * Method that switch the scene back to the setup page.
+     *
+     * @throws IOException throws exception if the page was not able to load.
+     */
     @FXML
     public void onBack() throws IOException{
         /* Go back to load screen page (switching scene) */
@@ -231,7 +266,7 @@ public class SetUpPageController implements Initializable {
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         stage.centerOnScreen(); // Loads the stage in the middle
-        Image icon = new Image(getClass().getResourceAsStream("/no/ntnu/wargames/icon/logoIcon.PNG"));
+        Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/no/ntnu/wargames/icon/logoIcon.PNG")));
         stage.getIcons().add(icon);
         stage.show();
 
@@ -262,11 +297,18 @@ public class SetUpPageController implements Initializable {
         return result;
     }
 
+    /**
+     * Edit the selected unit.
+     * If no unit is selected, then error dialog is shown.
+     * Else it opens new edit dialog.
+     */
+
     @FXML
-    private void editUnit(ActionEvent actionEvent) {
+    private void editUnit() {
         Unit selectedUnit = getSelectedUnit();
 
         if(selectedUnit != null){
+            //Opens create dialog unit
             CreateUnitDialog createUnitDialog = new CreateUnitDialog(selectedUnit);
             createUnitDialog.showAndWait();
 
@@ -276,10 +318,13 @@ public class SetUpPageController implements Initializable {
         }else{
             DialogWindow.openWarningDialog("No unit was selected!");
         }
-
-
-
     }
+
+    /**
+     * Method that saves army('s).
+     * Asks user what army to save (both is also an options).
+     * Creates an army file and saves it to the chosen path.
+     */
     @FXML
     public void onSave(){
         SaveOptionDialog saveOptionDialog = new SaveOptionDialog();
@@ -287,33 +332,59 @@ public class SetUpPageController implements Initializable {
         if(optionalInteger.isPresent()){
             int option = optionalInteger.get();
             String pathSavedTo = "The army(s) was saved here : \n \n";
-
-
-            switch (option){
+            boolean correctFormat = true;
+            switch (option) {
                 case 0:
-                    pathSavedTo += String.valueOf(FileHandler.saveArmyToFile(this.army1));
+                    if (this.army1.hasUnits()) {
+                        pathSavedTo += String.valueOf(FileHandler.saveArmyToFile(this.army1));
+                    } else{
+                        correctFormat = false;
+                        DialogWindow.openWarningDialog(
+                                "No Units in "+this.army1.getName()+"'s army");
+                    }
+
                     break;
                 case 1:
-                    pathSavedTo += String.valueOf(FileHandler.saveArmyToFile(this.army2));
+                    if (this.army2.hasUnits()) {
+                        pathSavedTo += String.valueOf(FileHandler.saveArmyToFile(this.army2));
+                    } else{
+                        correctFormat = false;
+                        DialogWindow.openWarningDialog(
+                                "No Units in "+this.army1.getName()+"'s army");
+                    }
                     break;
                 case 2:
-                    pathSavedTo += FileHandler.saveArmyToFile(this.army1) +"\n";
-                    pathSavedTo += FileHandler.saveArmyToFile(this.army2);
+                    try{
+                        pathSavedTo += FileHandler.saveArmyToFile(this.army1) +"\n";
+                        pathSavedTo += FileHandler.saveArmyToFile(this.army2);
+                    }catch (IllegalArgumentException e){
+                        correctFormat = false;
+                        DialogWindow.openExceptionDialog(e);
+                    }
+
                     break;
                 default:
+                    correctFormat = false;
                     DialogWindow.openWarningDialog("Save option is not added!");
             }
 
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText("Saved!");
-            alert.setContentText(pathSavedTo);
-            alert.setWidth(70); // Wide width to get more space
-            alert.showAndWait();
+            if(correctFormat){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText("Saved!");
+                alert.setContentText(pathSavedTo);
+                alert.setWidth(70); // Wide width to get more space
+                alert.showAndWait();
+            }
+
         }
 
         
     }
+
+    /**
+     * Deletes selected unit.
+     */
 
     @FXML
     public void onDelete(){
@@ -344,6 +415,12 @@ public class SetUpPageController implements Initializable {
 
     }
 
+    /**
+     * Saves both armies to Facade and then switch to simulation scene.
+     *
+     * @throws IOException throws exception if page not fond.
+     */
+
     @FXML
     public void onGoToSimulationPane() throws IOException {
         if(this.army1.getAllUnits().size() < 2 || this.army2.getAllUnits().size() < 2){
@@ -355,7 +432,7 @@ public class SetUpPageController implements Initializable {
         }else{
             SimulationSettingsDialog settingsDialog = new SimulationSettingsDialog();
             Optional<Integer> result = settingsDialog.showAndWait();
-            if(result != null && result.isPresent()){
+            if(result.isPresent()){
                 // Set name of the army
                 Facade.getInstance().getArmyOne().setName(txtArmy1Name.getText());
                 Facade.getInstance().getArmyTwo().setName(txtArmy2Name.getText());
@@ -373,8 +450,9 @@ public class SetUpPageController implements Initializable {
                 //New style for the new stage
                 stage.setTitle("WarGames");
                 stage.initStyle(StageStyle.DECORATED);
-                Image icon = new Image(getClass().getResourceAsStream("/no/ntnu/wargames/icon/logoIcon.PNG"));
+                Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/no/ntnu/wargames/icon/logoIcon.PNG")));
                 stage.getIcons().add(icon);
+                stage.setResizable(false); //change for resizable
                 stage.setScene(scene);
                 stage.setFullScreen(false); //change value for fullscreen
                 stage.show();
@@ -384,6 +462,9 @@ public class SetUpPageController implements Initializable {
 
     }
 
+    /**
+     * Opens dialog window to display current version.
+     */
     @FXML
     public void onVersion(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -392,34 +473,45 @@ public class SetUpPageController implements Initializable {
         alert.showAndWait();
     }
 
+    /**
+     * Asks the user to exit the app.
+     * Exit based on user response.
+     */
     @FXML
     public void onClose(){
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setHeaderText("Exit");
-        alert.setContentText("You are about to close the app.\n" +
-                "Are you sure?");
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if(result.get() == ButtonType.OK){
+        Optional<ButtonType> result = DialogWindow.openExitDialog();
+        if(result.isPresent() && result.get() == ButtonType.OK){
             System.exit(0);
         }
     }
 
+    /**
+     * Method that set up the Table view.
+     *
+     * @param path path of the file as a text field.
+     * @param icon imageview of the icon to validate correct file
+     * @param observableList the tableviews list of units.
+     * @param tableView table itself.
+     * @param nameColumn column of the unit names.
+     * @param typeColumn column of the unit types.
+     * @param healthColumn column of unit healths (HP).
+     */
+
     private void initTableview(TextField path,
                                ImageView icon,
-                               ObservableList observableList,
+                               ObservableList<Unit> observableList,
                                TableView<Unit> tableView,
-                               TableColumn<Unit,String> namecolumn,
-                               TableColumn<Unit,String> typecolumn,
-                               TableColumn<Unit,String> healthcolumn
+                               TableColumn<Unit,String> nameColumn,
+                               TableColumn<Unit,String> typeColumn,
+                               TableColumn<Unit,String> healthColumn
 
     ) {
         path.setText("NONE");
         icon.setVisible(false);
         tableView.setItems(observableList);
-        namecolumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        typecolumn.setCellValueFactory(new PropertyValueFactory<>("unitType"));
-        healthcolumn.setCellValueFactory(new PropertyValueFactory<>("health"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        typeColumn.setCellValueFactory(new PropertyValueFactory<>("unitType"));
+        healthColumn.setCellValueFactory(new PropertyValueFactory<>("health"));
 
         tableView.refresh();
     }
@@ -429,7 +521,7 @@ public class SetUpPageController implements Initializable {
         AddArmyDialog addArmyDialog = new AddArmyDialog();
         Optional<Army> result = addArmyDialog.showAndWait();
 
-        if(result.isPresent() && result != null){
+        if(result.isPresent()){
             Army army = result.get();
 
             //FIRST NUMBER IS OPTION
@@ -502,8 +594,6 @@ public class SetUpPageController implements Initializable {
         *
         * Whenever a new selection is done in either table, the other selection is removed.
         * This is done in two methods. Both clearSelection() from the other table, when selected.
-        *
-        *
         */
 
         tableViewArmy1.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {

@@ -15,6 +15,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -45,35 +46,55 @@
       </MenuBar>
    </top>
    <center>
-      <TabPane prefHeight="534.0" prefWidth="886.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+      <TabPane prefHeight="539.0" prefWidth="877.0" side="LEFT" style="-fx-border-color: black; -fx-background-color: #6f8b9a;" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin>
          <tabs>
             <Tab text="Battle field">
                <content>
-                  <AnchorPane prefHeight="576.0" prefWidth="936.0">
+                  <AnchorPane prefHeight="536.0" prefWidth="865.0">
                      <children>
-                        <Canvas fx:id="backgroundCanvas" height="416.0" layoutX="211.0" layoutY="50.0" width="496.0" />
-                        <Canvas fx:id="unitCanvas" height="416.0" layoutX="211.0" layoutY="50.0" width="496.0" />
-                        <Label layoutX="239.0" layoutY="10.0" text="Terrain:">
+                        <Canvas fx:id="backgroundCanvas" height="416.0" layoutX="189.0" layoutY="91.0" width="496.0" />
+                        <Canvas fx:id="unitCanvas" height="416.0" layoutX="189.0" layoutY="91.0" width="496.0" />
+                        <Label layoutX="262.0" layoutY="36.0" text="Terrain:">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="txtTerrain" layoutX="324.0" layoutY="11.0" text="NONE">
+                        <Label fx:id="txtTerrain" layoutX="343.0" layoutY="36.0" text="NONE">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Line endX="393.3333740234375" layoutX="342.0" layoutY="40.0" startX="-138.22222900390625" />
-                        <Line endX="-100.0" endY="38.5" layoutX="552.0" layoutY="1.0" startX="-100.0" />
-                        <Label layoutX="478.0" layoutY="11.0" text="Winner:">
+                        <Line endX="374.0" endY="1.52587890625E-5" layoutX="317.0" layoutY="67.0" startX="-138.22222900390625" />
+                        <Line endX="-100.0" endY="38.5" layoutX="527.0" layoutY="28.0" startX="-100.0" />
+                        <Label layoutX="453.0" layoutY="38.0" text="Winner:">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="txtWinner" layoutX="563.0" layoutY="10.0" text="NONE">
+                        <Label fx:id="txtWinner" layoutX="538.0" layoutY="38.0" text="NONE">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="63.0" fitWidth="91.0" layoutX="740.0" layoutY="323.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@fxpixelart/character/blue/left/ranged.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="63.0" fitWidth="91.0" layoutX="80.0" layoutY="323.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@fxpixelart/character/red/right/ranged.png" />
+                           </image>
+                        </ImageView>
+                        <Label layoutX="63.0" layoutY="271.0" text="Army 1 Name" textFill="#c71c1c">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="735.0" layoutY="271.0" text="Army 2 Name" textFill="#2c10dd">
                            <font>
                               <Font size="16.0" />
                            </font>
@@ -216,7 +237,6 @@
                               <Font name="System Bold Italic" size="20.0" />
                            </font>
                         </Label>
-                        <Label layoutX="250.0" layoutY="361.0" text="Here can you see the correlation between Unit Count and health. " />
                         <Label layoutX="303.0" layoutY="398.0" prefHeight="17.0" prefWidth="253.0" text="Notable observations to use for analysis:">
                            <font>
                               <Font name="System Bold" size="12.0" />
@@ -260,7 +280,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="buttonStart" layoutX="250.0" layoutY="12.0" mnemonicParsing="false" onAction="#onSimulate" prefHeight="34.0" prefWidth="127.0" text="Start Simulation">
+            <Button fx:id="buttonStart" layoutX="280.0" layoutY="12.0" mnemonicParsing="false" onAction="#onSimulate" prefHeight="34.0" prefWidth="127.0" text="Start Simulation">
                <font>
                   <Font name="System Italic" size="15.0" />
                </font></Button>

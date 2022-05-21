@@ -1,6 +1,9 @@
 package no.ntnu.wargames.frontend.gui.dialog;
 
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.stage.StageStyle;
 import java.util.Optional;
 
@@ -65,6 +68,38 @@ public class DialogWindow {
         alert.setContentText(e.getMessage());
         alert.initStyle(StageStyle.DECORATED);
         alert.showAndWait();
+    }
+
+    /**
+     * Method that opens an exit dialog.
+     *
+     * @return returns the result as a button-type.
+     */
+
+    public static Optional<ButtonType> openExitDialog(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("Exit");
+        alert.setContentText("You are about to close the app.\n" +
+                "Are you sure?");
+        return alert.showAndWait();
+    }
+
+    /**
+     * Shows the winner in a dialog.
+     *
+     * @param txtWinner the label of the winner.
+     */
+    public static void showWinnerDialog(Label txtWinner){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Image image = new Image(
+                String.valueOf(DialogWindow.class.getResource("/no/ntnu/wargames/icon/winner.png")));
+        ImageView imageView = new ImageView(image);
+        imageView.setPreserveRatio(true);
+        imageView.setFitHeight(50);
+        alert.setGraphic(imageView);
+        alert.setHeaderText("Winner!");
+        alert.setContentText("The winner is : " + txtWinner.getText() + "'s army!");
+        alert.show();
     }
 
 }

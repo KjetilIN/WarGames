@@ -119,7 +119,7 @@
                     <vendor>no.ntnu</vendor>
                     <destination>target/dist</destination>
                     <module>no.ntnu.wargames/no.ntnu.wargames.setupLoadMain</module>
-                    <runtimeImage>target/LiteratureApp</runtimeImage>
+                    <runtimeImage>target/WarGames</runtimeImage>
                     <linuxShortcut>true</linuxShortcut>
                     <linuxPackageName>treefx</linuxPackageName>
                     <linuxAppCategory>Utilities</linuxAppCategory>

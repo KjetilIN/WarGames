@@ -72,11 +72,7 @@ public class CreateUnitDialog extends Dialog<Unit> {
         healthTextField.setPromptText("Enter health...");
 
         // force the field to be numeric only
-        healthTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                healthTextField.setText(newValue.replaceAll("[^\\d]", ""));
-            }
-        });
+        DialogUtility.setTextFieldNumeric(healthTextField);
 
         if((mode == Mode.EDIT)) {
             name.setText(this.unit.getName());
