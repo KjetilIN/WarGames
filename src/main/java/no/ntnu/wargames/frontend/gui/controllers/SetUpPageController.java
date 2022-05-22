@@ -21,6 +21,8 @@ import no.ntnu.wargames.frontend.gui.dialog.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -301,6 +303,56 @@ public class SetUpPageController implements Initializable {
     }
 
     /**
+     * Method used to save given armies by given options.
+     * Option as integer.
+     *  - 0 : Save army 1.
+     *  - 1 : Save army 2.
+     *  - 2 : Save both armies.
+     * Adds the path of the files to the list of paths.
+     *
+     * @param option option received as integer
+     * @param paths list of saved army files as path
+     * @return returns true if successful
+     */
+
+    private Boolean saveByOption(int option, ArrayList<Path> paths){
+        switch (option) {
+            case 0:
+                if (this.army1.hasUnits()) {
+                    paths.add(FileHandler.saveArmyToFile(this.army1));
+                    return true;
+                } else{
+                    DialogWindow.openWarningDialog(
+                            "No Units in "+this.army1.getName()+"'s army");
+
+                    return false;
+                }
+            case 1:
+                if (this.army2.hasUnits()) {
+                    paths.add(FileHandler.saveArmyToFile(this.army2));
+                    return true;
+                } else{
+                    DialogWindow.openWarningDialog(
+                            "No Units in "+this.army1.getName()+"'s army");
+                    return false;
+                }
+
+            case 2:
+                try{
+                    paths.add(FileHandler.saveArmyToFile(this.army1));
+                    paths.add(FileHandler.saveArmyToFile(this.army2));
+                    return true;
+                }catch (IllegalArgumentException e){
+                    DialogWindow.openExceptionDialog(e);
+                    return false;
+                }
+            default:
+                DialogWindow.openWarningDialog("Save option is not added!");
+                return false;
+        }
+    }
+
+    /**
      * Edit the selected unit.
      * If no unit is selected, then error dialog is shown.
      * Else it opens new edit dialog.
@@ -323,6 +375,7 @@ public class SetUpPageController implements Initializable {
         }
     }
 
+
     /**
      * Method that saves army('s).
      * Asks user what army to save (both is also an options).
@@ -334,50 +387,12 @@ public class SetUpPageController implements Initializable {
         Optional<Integer> optionalInteger = saveOptionDialog.showAndWait();
         if(optionalInteger.isPresent()){
             int option = optionalInteger.get();
-            String pathSavedTo = "The army(s) was saved here : \n \n";
-            boolean correctFormat = true;
-            switch (option) {
-                case 0:
-                    if (this.army1.hasUnits()) {
-                        pathSavedTo += String.valueOf(FileHandler.saveArmyToFile(this.army1));
-                    } else{
-                        correctFormat = false;
-                        DialogWindow.openWarningDialog(
-                                "No Units in "+this.army1.getName()+"'s army");
-                    }
 
-                    break;
-                case 1:
-                    if (this.army2.hasUnits()) {
-                        pathSavedTo += String.valueOf(FileHandler.saveArmyToFile(this.army2));
-                    } else{
-                        correctFormat = false;
-                        DialogWindow.openWarningDialog(
-                                "No Units in "+this.army1.getName()+"'s army");
-                    }
-                    break;
-                case 2:
-                    try{
-                        pathSavedTo += FileHandler.saveArmyToFile(this.army1) +"\n";
-                        pathSavedTo += FileHandler.saveArmyToFile(this.army2);
-                    }catch (IllegalArgumentException e){
-                        correctFormat = false;
-                        DialogWindow.openExceptionDialog(e);
-                    }
-
-                    break;
-                default:
-                    correctFormat = false;
-                    DialogWindow.openWarningDialog("Save option is not added!");
-            }
-
-
+            ArrayList<Path> paths = new ArrayList<>();
+            boolean correctFormat = saveByOption(option,paths);
             if(correctFormat){
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setHeaderText("Saved!");
-                alert.setContentText(pathSavedTo);
-                alert.setWidth(70); // Wide width to get more space
-                alert.showAndWait();
+                SavedArmyDialog dialog = new SavedArmyDialog(paths);
+                dialog.showAndWait();
             }
 
         }
