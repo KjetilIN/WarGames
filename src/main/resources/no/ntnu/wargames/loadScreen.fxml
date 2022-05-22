@@ -7,7 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #6f8b9a; -fx-border-color: black; -fx-border-width: 5;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.wargames.frontend.gui.controllers.LoadScreen">
+<AnchorPane fx:id="mainPage" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #6f8b9a; -fx-border-color: black; -fx-border-width: 5;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.wargames.frontend.gui.controllers.LoadScreen">
    <children>
       <ImageView fitHeight="192.0" fitWidth="360.0" layoutX="120.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -19,9 +19,17 @@
             <Cursor fx:constant="HAND" />
          </cursor></Button>
       <Label layoutX="24.0" layoutY="369.0" style="-fx-text-fill: white;" text="Copyright © - Developed by Kjetil Indrehus" />
-      <ImageView fitHeight="28.0" fitWidth="29.0" layoutX="557.0" layoutY="14.0" onMouseClicked="#onExit" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="557.0" layoutY="14.0" onMouseClicked="#onExit" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@icon/logout.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fitHeight="17.0" fitWidth="17.0" layoutX="16.0" layoutY="14.0" onMouseClicked="#onMinimize" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@icon/minus-sign.png" />
          </image>
          <cursor>
             <Cursor fx:constant="HAND" />

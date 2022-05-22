@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import no.ntnu.wargames.frontend.gui.dialog.DialogWindow;
 
@@ -28,10 +29,9 @@ import java.util.ResourceBundle;
  */
 public class LoadScreen implements Initializable {
 
-    //Window variables
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
+    // Load screen
+    @FXML
+    private AnchorPane mainPage;
 
     //defining the new window offset positions
     private double xOffset = 0;
@@ -66,9 +66,9 @@ public class LoadScreen implements Initializable {
     public void onStart(ActionEvent event) throws IOException {
         /* Load the setup page (switching scene) */
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/no/ntnu/wargames/setUpPage.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        root = loader.load();
-        scene = new Scene(root);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.centerOnScreen(); // Loads the stage in the middle
         Image icon = new Image(
@@ -78,16 +78,25 @@ public class LoadScreen implements Initializable {
         stage.show();
 
         /* Lambda methods so that the undecorated screen is movable*/
-        root.setOnMousePressed(mousePressedEvent -> {
+        scene.setOnMousePressed(mousePressedEvent -> {
             /* When pressed we change the mouse position*/
             xOffset = mousePressedEvent.getSceneX();
             yOffset = mousePressedEvent.getSceneY();
         });
-        root.setOnMouseDragged(dragEvent -> {
+        scene.setOnMouseDragged(dragEvent -> {
             /* Change the window position when the user drag the window*/
             stage.setX(dragEvent.getScreenX() - xOffset);
             stage.setY(dragEvent.getScreenY() - yOffset);
         });
+    }
+
+    /**
+     * Method that minimizes the window.
+     * Called when user clicks top left icon of load screen.
+     */
+    @FXML
+    public void onMinimize(){
+        ((Stage) mainPage.getScene().getWindow()).setIconified(true);
     }
 
 
@@ -95,6 +104,6 @@ public class LoadScreen implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //As of now, nothing happens
-        // Has to be implemented because of "Initializable".
+        //Has to be implemented because of "Initializable".
     }
 }

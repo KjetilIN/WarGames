@@ -10,6 +10,10 @@ import javafx.stage.StageStyle;
 
 public class setupLoadMain extends Application {
 
+    //Window positions
+    double xOffset;
+    double yOffset;
+
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -22,6 +26,18 @@ public class setupLoadMain extends Application {
         stage.getIcons().add(icon);
         stage.setScene(scene);
         stage.show();
+
+        /* Lambda methods so that the undecorated screen is movable*/
+        scene.setOnMousePressed(mousePressedEvent -> {
+            /* When pressed we change the mouse position*/
+            xOffset = mousePressedEvent.getSceneX();
+            yOffset = mousePressedEvent.getSceneY();
+        });
+        scene.setOnMouseDragged(dragEvent -> {
+            /* Change the window position when the user drag the window*/
+            stage.setX(dragEvent.getScreenX() - xOffset);
+            stage.setY(dragEvent.getScreenY() - yOffset);
+        });
     }
 
     public static void main(String[] args) {
