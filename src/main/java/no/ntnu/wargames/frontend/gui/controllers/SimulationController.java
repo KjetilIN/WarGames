@@ -52,14 +52,19 @@ public class SimulationController implements Initializable {
     private Army army2;
     private Timeline timeline;
     private int simulationStep;
-    private int delay;
-    private boolean isPlaying;
+    private int delay; // Delay between attacks
+    private boolean isPlaying; // Boolean for if the simulation is going
     private Painter canvasDrawUtility;
 
 
     /*Static Fields*/
-    private static final Image PAUSE = new Image(String.valueOf(SimulationController.class.getResource("/no/ntnu/wargames/icon/pause.png")));
-    private static final Image PLAY = new Image(String.valueOf(SimulationController.class.getResource("/no/ntnu/wargames/icon/play-button.png")));
+    private static final Image PAUSE = new Image(
+            String.valueOf(
+                    SimulationController.class.getResource("/no/ntnu/wargames/icon/pause.png")));
+
+    private static final Image PLAY = new Image(
+            String.valueOf(
+                    SimulationController.class.getResource("/no/ntnu/wargames/icon/play-button.png")));
 
 
 
@@ -176,14 +181,7 @@ public class SimulationController implements Initializable {
     private AreaChart<String,Number> healthGraph;
 
 
-
-
-    /*
-
-    Attack Log Information tab label and fields
-
-
-     */
+    /* Attack Log Information tab label and fields */
 
     /*Input fields */
     @FXML
@@ -211,10 +209,12 @@ public class SimulationController implements Initializable {
      * Then defining a new XY Dataset for all the graphs.
      * At last, it sets graph text.
      * Method is called once on start.
+     * Suppress warning on unchecked generics, because method is safe.
      *
      */
+    @SuppressWarnings("unchecked")
     private void setupGraphsBeforeSim(){
-
+        //Clear all previous data
         unitGraph.getData().clear();
         healthGraph.getData().clear();
 
@@ -230,13 +230,26 @@ public class SimulationController implements Initializable {
         army1SumHealth.setName("HP sum of " + this.army1.getName()+endNotation);
         army2SumHealth.setName("HP sum of " + this.army2.getName()+endNotation);
 
-        //Set information of the chart
+        //These next two lines are unchecked generics
         this.unitGraph.getData().addAll(army1UnitsSeries,army2UnitsSeries);
-        this.unitGraph.setCreateSymbols(false);
         this.healthGraph.getData().addAll(army1SumHealth,army2SumHealth);
+
+        //Fix symbols on each graph
+        this.unitGraph.setCreateSymbols(false);
         this.healthGraph.setCreateSymbols(false);
 
+    }
 
+    /**
+     * Update all graphs with new relevant data.
+     */
+    private void updateGraphData(){
+        //Update Graphs
+        army1UnitsSeries.getData().add(new XYChart.Data<>(String.valueOf(simulationStep),this.army1.getAllUnits().size()));
+        army2UnitsSeries.getData().add(new XYChart.Data<>(String.valueOf(simulationStep),this.army2.getAllUnits().size()));
+
+        army1SumHealth.getData().add(new XYChart.Data<>(String.valueOf(simulationStep),this.army1.getAllUnitHealthSum()));
+        army2SumHealth.getData().add(new XYChart.Data<>(String.valueOf(simulationStep),this.army2.getAllUnitHealthSum()));
 
     }
 
@@ -288,8 +301,6 @@ public class SimulationController implements Initializable {
     private void simStep(ActionEvent event){
         String textLog = "";
         if (this.army1.hasUnits() && this.army2.hasUnits()){
-            //Add temp winner
-            txtWinner.setText("......");
 
             //Call attack and add to log
             textLog += battle.simulateStep() +"\n";
@@ -298,12 +309,9 @@ public class SimulationController implements Initializable {
             //Update table
             updateUnitCountTable();
 
-            //Update Graphs
-            army1UnitsSeries.getData().add(new XYChart.Data<>(String.valueOf(simulationStep),this.army1.getAllUnits().size()));
-            army2UnitsSeries.getData().add(new XYChart.Data<>(String.valueOf(simulationStep),this.army2.getAllUnits().size()));
+            //Update new graph data
+            updateGraphData();
 
-            army1SumHealth.getData().add(new XYChart.Data<>(String.valueOf(simulationStep),this.army1.getAllUnitHealthSum()));
-            army2SumHealth.getData().add(new XYChart.Data<>(String.valueOf(simulationStep),this.army2.getAllUnitHealthSum()));
 
             simulationStep++; // increment simulation step
             canvasDrawUtility.drawRandomAttackFrame(this.unitCanvas,this.army1,this.army2); // redraw battle-field
@@ -373,26 +381,36 @@ public class SimulationController implements Initializable {
 
     @FXML
     public void onSimulate(){
+        //Add temp winner
+        txtWinner.setText("......");
 
+        //Sets up the graph
         setupGraphsBeforeSim();
+
+        //Sets new status for the buttons
         buttonPausePlay.setDisable(false);
         buttonStart.setDisable(true);
+
+        //Init the timeline (Calls on simStep method)
         timeline = new Timeline(new KeyFrame(Duration.millis(getDelay()),this::simStep));
         timeline.setCycleCount(Animation.INDEFINITE);
+
+        //Start timeline
         timeline.play();
         isPlaying = true;
-
 
     }
 
     @FXML
     public void onPause(){
         if(isPlaying){
+            /* Pause the simulation */
             timeline.pause();
             isPlaying = false;
             buttonIconPause.setImage(PLAY);
             buttonPausePlay.setText("Pause");
         }else{
+            /* Start the simulation */
             timeline.play();
             isPlaying = true;
             buttonIconPause.setImage(PAUSE);
@@ -406,8 +424,9 @@ public class SimulationController implements Initializable {
         //End any ongoing simulations
         timeline.stop();
 
-        Stage prevStage = (Stage)mainPage.getScene().getWindow();
-        prevStage.close();
+        //Close current page
+        Stage currentPage = (Stage)mainPage.getScene().getWindow();
+        currentPage.close();
 
         //New scene opener
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/no/ntnu/wargames/setUpPage.fxml"));
@@ -417,9 +436,12 @@ public class SimulationController implements Initializable {
         //New style for the new stage
         stage.setTitle("WarGames");
         stage.initStyle(StageStyle.UNDECORATED);
-        stage.getIcons().add(new Image(
-                Objects.requireNonNull(getClass().getResourceAsStream(
-                        "/no/ntnu/wargames/icon/logoIcon.PNG"))));
+        try{
+            //Icon should be added correctly
+            stage.getIcons().add(new Image(
+                    Objects.requireNonNull(getClass().getResourceAsStream(
+                            "/no/ntnu/wargames/icon/logoIcon.PNG"))));
+        }catch (NullPointerException ignored){ /* Program does not crash if icon not found */ }
         stage.setScene(scene);
         stage.show();
 
@@ -460,6 +482,10 @@ public class SimulationController implements Initializable {
         guideInformation.showAndWait();
     }
 
+    /**
+     * Button method that asks the user if the page should be closed.
+     */
+
     @FXML
     public void onClose(){
         Optional<ButtonType> result = DialogWindow.openExitDialog();
@@ -469,6 +495,13 @@ public class SimulationController implements Initializable {
     }
 
 
+    /**
+     * Initialize method.
+     * Sets up the page and adds key binds.
+     *
+     * @param url the given URL.
+     * @param resourceBundle the given resource bundle.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initBattle();

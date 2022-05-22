@@ -96,7 +96,7 @@ public class SetUpPageController implements Initializable {
             pathArmy1.setText("NONE");
             iconCheckArmy1.setVisible(false);
         }else{
-            setArmyFromFile(file,this.army1,pathArmy1,txtArmy1Name,observableListArmy1,iconCheckArmy1,tableViewArmy1);
+            setArmyFromFile(file,pathArmy1,txtArmy1Name,observableListArmy1,iconCheckArmy1,tableViewArmy1);
         }
     }
 
@@ -155,7 +155,7 @@ public class SetUpPageController implements Initializable {
             pathArmy2.setText("NONE");
             iconCheckArmy2.setVisible(false);
         }else{
-            setArmyFromFile(file,this.army2,pathArmy2,txtArmy2Name,observableListArmy2,iconCheckArmy2,tableViewArmy2);
+            setArmyFromFile(file,pathArmy2,txtArmy2Name,observableListArmy2,iconCheckArmy2,tableViewArmy2);
         }
     }
 
@@ -200,7 +200,6 @@ public class SetUpPageController implements Initializable {
      */
 
     public void setArmyFromFile(File file,
-                                Army army,
                                 TextField pathArmy,
                                 Label txtArmyName,
                                 ObservableList<Unit> observableList,
@@ -208,7 +207,7 @@ public class SetUpPageController implements Initializable {
                                 TableView<Unit> table){
         pathArmy.setText(file.getName());
         try{
-            army = FileHandler.getArmyFromFileCSV(file.toPath());
+            Army army = FileHandler.getArmyFromFileCSV(file.toPath());
             txtArmyName.setText(army.getName().replace(",",""));
             observableList.setAll(army.getAllUnits());
             icon.setImage(CORRECT_FILE_ICON);
@@ -266,10 +265,15 @@ public class SetUpPageController implements Initializable {
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         stage.centerOnScreen(); // Loads the stage in the middle
-        Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/no/ntnu/wargames/icon/logoIcon.PNG")));
-        stage.getIcons().add(icon);
-        stage.show();
 
+        try{
+            //Icon should be added correctly (Defencive programming)
+            stage.getIcons().add(new Image(
+                    Objects.requireNonNull(getClass().getResourceAsStream(
+                            "/no/ntnu/wargames/icon/logoIcon.PNG"))));
+        }catch (NullPointerException ignored){ /* Program does not crash if icon not found */ }
+
+        stage.show();
     }
 
     /**
@@ -292,7 +296,6 @@ public class SetUpPageController implements Initializable {
         /*Clear selection history*/
         tableViewArmy1.getSelectionModel().clearSelection();
         tableViewArmy2.getSelectionModel().clearSelection();
-
 
         return result;
     }
@@ -516,6 +519,11 @@ public class SetUpPageController implements Initializable {
         tableView.refresh();
     }
 
+    /**
+     * Methods that gets called when the user clicks on add army.
+     * The user gets the option to save both armies.
+     */
+
     @FXML
     public void onAddRandomArmy(){
         AddArmyDialog addArmyDialog = new AddArmyDialog();
@@ -524,10 +532,17 @@ public class SetUpPageController implements Initializable {
         if(result.isPresent()){
             Army army = result.get();
 
-            //FIRST NUMBER IS OPTION
             try{
+                /*
+                 * To make sure that the correct option is added.
+                 * We make the first char of the army name be the option.
+                 * We make sure to remove this later, so that the name does not start with integer.
+                 * This is done because alerts does not allow returning multiple values.
+                 * Could be refactored to use Pair Class.
+                 */
+
                 int option = Integer.parseInt(army.getName().substring(0,1));
-                army.setName(army.getName().substring(1));
+                army.setName(army.getName().substring(1)); //set the correct name to the army
 
                 switch (option){
                     case 0:
