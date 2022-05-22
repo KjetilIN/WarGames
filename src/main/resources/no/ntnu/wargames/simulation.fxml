@@ -28,13 +28,13 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-                  <CheckMenuItem mnemonicParsing="false" onAction="#onRefresh" selected="true" text="Refresh" />
+                  <CheckMenuItem fx:id="menuItemRefresh" mnemonicParsing="false" onAction="#onRefresh" selected="true" text="Refresh" />
               <MenuItem mnemonicParsing="false" onAction="#onClose" text="Close" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#onBackToSetUp" text="Edit army(s)" />
+              <MenuItem fx:id="menuItemEditArmy" mnemonicParsing="false" onAction="#onBackToSetUp" text="Edit army(s)" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
@@ -89,12 +89,12 @@
                               <Image url="@fxpixelart/character/red/right/ranged.png" />
                            </image>
                         </ImageView>
-                        <Label layoutX="63.0" layoutY="271.0" text="Army 1 Name" textFill="#c71c1c">
+                        <Label fx:id="txtArmyName1" layoutX="63.0" layoutY="271.0" text="Army 1 Name" textFill="#c71c1c">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label layoutX="735.0" layoutY="271.0" text="Army 2 Name" textFill="#2c10dd">
+                        <Label fx:id="txtArmyName2" layoutX="735.0" layoutY="271.0" text="Army 2 Name" textFill="#2c10dd">
                            <font>
                               <Font size="16.0" />
                            </font>

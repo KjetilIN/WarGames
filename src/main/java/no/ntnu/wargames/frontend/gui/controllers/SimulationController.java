@@ -15,6 +15,9 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -83,6 +86,11 @@ public class SimulationController implements Initializable {
     @FXML
     private Label txtTerrain;
 
+    @FXML
+    private Label txtArmyName1;
+
+    @FXML
+    private Label txtArmyName2;
     /*Canvas*/
     @FXML
     private Canvas backgroundCanvas;
@@ -97,6 +105,13 @@ public class SimulationController implements Initializable {
     @FXML
     private Button buttonPausePlay;
 
+
+    /*Menu Items*/
+    @FXML
+    private MenuItem menuItemRefresh;
+
+    @FXML
+    private MenuItem menuItemEditArmy;
 
 
     /*
@@ -135,9 +150,6 @@ public class SimulationController implements Initializable {
 
     @FXML
     private Label txtRangedArmy2;
-
-
-
 
 
     /*
@@ -252,6 +264,17 @@ public class SimulationController implements Initializable {
     }
 
     /**
+     * Method that sets listeners for keyboard events.
+     *
+     */
+    private void setKeyEvents(){
+        //Set Menu Item Key Combination
+        menuItemRefresh.setAccelerator(new KeyCodeCombination(KeyCode.R, KeyCombination.CONTROL_DOWN));
+        menuItemEditArmy.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN));
+
+    }
+
+    /**
      * Method that is called for each attack in the simulation.
      * - Add attack to the battle log.
      * - Calls the attack method and remove the units.
@@ -326,8 +349,9 @@ public class SimulationController implements Initializable {
         buttonIconPause.setImage(PAUSE);
         buttonPausePlay.setDisable(true);
 
-        // Update table
-        updateUnitCountTable();
+        /* Set Name of Army*/
+        txtArmyName1.setText(Facade.getInstance().getArmyOne().getName()+"'s \n Army");
+        txtArmyName2.setText(Facade.getInstance().getArmyTwo().getName()+"'s \n Army");
 
 
         //Counter
@@ -404,12 +428,18 @@ public class SimulationController implements Initializable {
     @FXML
     public void onRefresh(){
         //Stops a ongoing simulation
-        this.timeline.stop();
+        try{
+            this.timeline.stop();
+        }catch (NullPointerException ignored){
+            //Exception is thrown if the simulation never started
+        }
+
 
         //Reset for new battle
         this.canvasDrawUtility.clearCanvas(this.unitCanvas);
         initBattle();
         setupGraphsBeforeSim();
+        updateUnitCountTable();
         buttonStart.setDisable(false);
         buttonPausePlay.setDisable(true);
         battleLog.setText("");
@@ -442,5 +472,10 @@ public class SimulationController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initBattle();
+        // Update table
+        updateUnitCountTable();
+        setKeyEvents();
+
+
     }
 }

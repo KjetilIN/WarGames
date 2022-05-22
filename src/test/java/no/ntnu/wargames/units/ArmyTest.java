@@ -311,7 +311,7 @@ class ArmyTest {
 
     @Test
     @DisplayName("Test getHealthSum")
-    void testHealthsum(){
+    void testHealthSum(){
         //Assert
         assertEquals(3*armyWithFiveEach.getAllUnits().size(),armyWithFiveEach.getAllUnitHealthSum());
     }

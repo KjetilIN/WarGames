@@ -11,6 +11,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -18,7 +19,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainPage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="593.0" prefWidth="794.0" style="-fx-background-color: #6f8b9a;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.wargames.frontend.gui.controllers.SetUpPageController">
+<BorderPane fx:id="mainPage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="593.0" prefWidth="794.0" style="-fx-background-color: #6f8b9a; -fx-border-color: black;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.wargames.frontend.gui.controllers.SetUpPageController">
    <top>
       <MenuBar prefHeight="21.0" prefWidth="600.0" BorderPane.alignment="CENTER">
         <menus>
@@ -47,18 +48,18 @@
                <children>
                   <TableView fx:id="tableViewArmy1" layoutX="129.0" layoutY="131.0" prefHeight="278.0" prefWidth="227.0" style="-fx-border-color: black;">
                     <columns>
-                      <TableColumn fx:id="nameColumnArmy1" prefWidth="75.0" resizable="false" text="Name" />
-                      <TableColumn fx:id="typeColumnArmy1" prefWidth="75.0" resizable="false" text="Unit-Type" />
-                        <TableColumn fx:id="healthColumnArmy1" prefWidth="75.0" resizable="false" text="Health" />
+                      <TableColumn fx:id="nameColumnArmy1" editable="false" prefWidth="75.0" resizable="false" text="Name" />
+                      <TableColumn fx:id="typeColumnArmy1" editable="false" prefWidth="75.0" resizable="false" text="Unit-Type" />
+                        <TableColumn fx:id="healthColumnArmy1" editable="false" prefWidth="75.0" resizable="false" text="Health" />
                     </columns>
                   </TableView>
                   <Label layoutX="128.0" layoutY="418.0" text="File Path" />
                   <Label layoutX="455.0" layoutY="418.0" text="File Path" />
                   <TableView fx:id="tableViewArmy2" layoutX="455.0" layoutY="131.0" prefHeight="278.0" prefWidth="227.0" style="-fx-border-color: black;">
                      <columns>
-                        <TableColumn fx:id="nameColumnArmy2" prefWidth="75.0" resizable="false" text="Name" />
+                        <TableColumn fx:id="nameColumnArmy2" editable="false" prefWidth="75.0" resizable="false" text="Name" />
                         <TableColumn fx:id="typeColumnArmy2" prefWidth="75.0" resizable="false" text="Unit-Type" />
-                        <TableColumn fx:id="healthColumnArmy2" prefWidth="75.0" resizable="false" text="Health" />
+                        <TableColumn fx:id="healthColumnArmy2" editable="false" prefWidth="75.0" resizable="false" text="Health" />
                      </columns>
                   </TableView>
                   <Label layoutX="186.0" layoutY="104.0" prefHeight="17.0" prefWidth="81.0" text="Army 1: ">
@@ -78,17 +79,32 @@
                   </Label>
                   <TextField fx:id="pathArmy1" editable="false" layoutX="179.0" layoutY="414.0" style="-fx-border-color: black;" />
                   <TextField fx:id="pathArmy2" layoutX="508.0" layoutY="414.0" style="-fx-border-color: black;" />
-                  <Button layoutX="231.0" layoutY="447.0" mnemonicParsing="false" onAction="#onAddArmy1" prefHeight="25.0" prefWidth="119.0" text="Get Army From File" />
-                  <Button layoutX="557.0" layoutY="447.0" mnemonicParsing="false" onAction="#onAddArmy2" prefHeight="25.0" prefWidth="119.0" text="Get Army From File" />
-                  <Button layoutX="129.0" layoutY="447.0" mnemonicParsing="false" onAction="#onAddUnitArmy1" prefHeight="25.0" prefWidth="93.0" text="Add Unit" />
-                  <Button layoutX="455.0" layoutY="447.0" mnemonicParsing="false" onAction="#onAddUnitArmy2" prefHeight="25.0" prefWidth="93.0" text="Add Unit" />
+                  <Button layoutX="231.0" layoutY="447.0" mnemonicParsing="false" onAction="#onAddArmy1" prefHeight="25.0" prefWidth="119.0" text="Get Army From File">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+                  <Button layoutX="557.0" layoutY="447.0" mnemonicParsing="false" onAction="#onAddArmy2" prefHeight="25.0" prefWidth="119.0" text="Get Army From File">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+                  <Button layoutX="129.0" layoutY="447.0" mnemonicParsing="false" onAction="#onAddUnitArmy1" prefHeight="25.0" prefWidth="93.0" text="Add Unit">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+                  <Button layoutX="455.0" layoutY="447.0" mnemonicParsing="false" onAction="#onAddUnitArmy2" prefHeight="25.0" prefWidth="93.0" text="Add Unit">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
                   <Line endX="9.999969482421875" endY="19.0" layoutX="398.0" layoutY="114.0" startX="10.0" startY="348.5555419921875" strokeWidth="2.0" />
                   <ImageView fx:id="iconCheckArmy1" fitHeight="23.0" fitWidth="24.0" layoutX="335.0" layoutY="415.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@icon/check.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="txtArmy1Name" layoutX="251.0" layoutY="106.0" text="None" />
+                  <Label fx:id="txtArmy1Name" layoutX="251.0" layoutY="106.0" text="None">
+                     <tooltip>
+                        <Tooltip text="Name of army 1 " />
+                     </tooltip></Label>
                   <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="156.0" layoutY="105.0" onMouseClicked="#onEditNameArmy1" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@icon/editIcon.png" />
@@ -97,7 +113,10 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label fx:id="txtArmy2Name" layoutX="577.0" layoutY="106.0" text="None" />
+                  <Label fx:id="txtArmy2Name" layoutX="577.0" layoutY="106.0" text="None">
+                     <tooltip>
+                        <Tooltip text="Name of army 2" />
+                     </tooltip></Label>
                   <ImageView fx:id="iconCheckArmy2" fitHeight="23.0" fitWidth="24.0" layoutX="665.0" layoutY="415.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@icon/check.png" />
@@ -120,6 +139,12 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <tooltip>
+                        <Tooltip text="Configure a units property" />
+                     </tooltip>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                   <Button layoutX="415.0" layoutY="510.0" mnemonicParsing="false" onAction="#onDelete" prefHeight="35.0" prefWidth="115.0" text="Delete Unit">
                      <graphic>
@@ -129,6 +154,12 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <tooltip>
+                        <Tooltip text="Delete selected Unit from Table" />
+                     </tooltip>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                   <Button layoutX="540.0" layoutY="510.0" mnemonicParsing="false" onAction="#onGoToSimulationPane" prefHeight="35.0" prefWidth="176.0" text="Start simulation">
                      <graphic>
@@ -138,6 +169,12 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <tooltip>
+                        <Tooltip text="Start the simulation with the to armies" />
+                     </tooltip>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                   <Button layoutX="201.0" layoutY="510.0" mnemonicParsing="false" onAction="#onAddRandomArmy" prefHeight="35.0" text="Add Army">
                      <graphic>
@@ -147,6 +184,12 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <tooltip>
+                        <Tooltip text="Build a whole army!" />
+                     </tooltip>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                   <Button layoutX="90.0" layoutY="510.0" mnemonicParsing="false" onAction="#onSave" prefHeight="35.0" text="Save army">
                      <graphic>
@@ -156,6 +199,12 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <tooltip>
+                        <Tooltip text="Save an army as .csv file" />
+                     </tooltip>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                   <ImageView fitHeight="22.0" fitWidth="22.0" layoutX="740.0" layoutY="30.0" onMouseClicked="#onBack" pickOnBounds="true" preserveRatio="true">
                      <image>
