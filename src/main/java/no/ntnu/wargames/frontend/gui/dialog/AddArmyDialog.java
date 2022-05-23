@@ -2,12 +2,14 @@ package no.ntnu.wargames.frontend.gui.dialog;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
-import no.ntnu.wargames.backend.designPattern.Facade;
+import javafx.stage.Stage;
 import no.ntnu.wargames.backend.units.Army;
 import no.ntnu.wargames.backend.designPattern.UnitFactory;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Dialog for adding an army to a chosen table.
@@ -64,7 +66,7 @@ public class AddArmyDialog extends Dialog<Army>{
 
         DialogUtility.setTextFieldNumeric(health); // makes the text field numeric only
 
-        /*Painter*/
+        /*Grid*/
         GridPane grid = new GridPane();
         /*Set spacing between elements*/
         grid.setHgap(10);
@@ -104,6 +106,11 @@ public class AddArmyDialog extends Dialog<Army>{
 
         /*Buttons*/
         getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+
+        //Add Icon
+        ((Stage) getDialogPane().getScene().getWindow()).getIcons().add(new Image(
+                Objects.requireNonNull(getClass().getResourceAsStream(
+                        "/no/ntnu/wargames/icon/logoIcon.PNG"))));
 
         /*Result converter*/
         setResultConverter((ButtonType buttonType)->{

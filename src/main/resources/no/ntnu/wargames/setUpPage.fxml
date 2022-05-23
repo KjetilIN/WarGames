@@ -25,7 +25,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="App">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#onAbout" text="About" />
+                  <MenuItem mnemonicParsing="false" onAction="#onGuide" text="Guide" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#onVersion" text="Version" />
             </items>

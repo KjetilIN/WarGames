@@ -26,6 +26,7 @@ import no.ntnu.wargames.backend.Battle;
 import no.ntnu.wargames.backend.units.Army;
 import no.ntnu.wargames.backend.designPattern.Facade;
 import no.ntnu.wargames.frontend.gui.canvasLogic.Painter;
+import no.ntnu.wargames.frontend.gui.dialog.AboutDialog;
 import no.ntnu.wargames.frontend.gui.dialog.DialogWindow;
 
 import java.io.IOException;
@@ -509,15 +510,15 @@ public class SimulationController implements Initializable {
      */
     @FXML
     public void onGuide(){
-        Alert guideInformation = new Alert(Alert.AlertType.INFORMATION);
-        guideInformation.setHeaderText("GUIDE");
-        guideInformation.setContentText("You are now on the simulation page! Somewhere you can:\n" +
+        AboutDialog dialog = new AboutDialog("Simulation Guide!",
+                "You are now on the simulation page! Somewhere you can:\n" +
                 "- Start a simulation by press START SIMULATION in the bottom right corner.\n" +
                 "- Pause/Play the simulation\n" +
                 "- Re-Run a simulation by picking File -> Refresh\n"+
                 "- Go back to editing a army by pressing Edit -> Edit army(s)\n"+
                 "- Use the Menu-Bar above for extra options.\n");
-        guideInformation.showAndWait();
+
+        dialog.showAndWait();
     }
 
     /**

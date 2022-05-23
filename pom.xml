@@ -56,7 +56,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>${javafx-maven-plugin.version}</version>
                 <configuration>
-                    <mainClass>no.ntnu.wargames/no.ntnu.wargames.setupLoadMain</mainClass>
+                    <mainClass>no.ntnu.wargames/no.ntnu.wargames.AppMain</mainClass>
                     <!--
                     Tillegg for JLink
                     -->

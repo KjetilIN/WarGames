@@ -58,8 +58,7 @@ public class SetUpPageController implements Initializable {
 
 
     //Main Page
-    @FXML
-    private BorderPane mainPage;
+    @FXML private BorderPane mainPage;
 
 
     /*
@@ -71,16 +70,14 @@ public class SetUpPageController implements Initializable {
     *
     */
     @FXML private TextField pathArmy1;
-
     @FXML private Label txtArmy1Name;
-
-    private ObservableList<Unit> observableListArmy1;
     @FXML private ImageView iconCheckArmy1;
-
     @FXML private TableView<Unit> tableViewArmy1;
     @FXML private TableColumn<Unit,String> nameColumnArmy1;
     @FXML private TableColumn<Unit,String> typeColumnArmy1;
     @FXML private TableColumn<Unit,String> healthColumnArmy1;
+
+    private ObservableList<Unit> observableListArmy1;
 
     /**
      * Add from army 1 from file.
@@ -526,6 +523,34 @@ public class SetUpPageController implements Initializable {
         }
 
 
+    }
+
+    @FXML
+    public void onGuide(){
+
+        StringBuilder builder = new StringBuilder();
+        String longLine = "-----------------------------------------------------";
+        String newLine = "\n";
+
+        //Build chain for message
+        String message =  builder.append(longLine).append(newLine)
+                .append("           How Does The setup work!").append(newLine)
+                .append(longLine).append(newLine).append(newLine)
+                .append("Here you can setup each army for simulation!").append(newLine)
+                .append("You need at least two units in each army").append(newLine)
+                .append("The next thing you will asked to input is Delay").append(newLine)
+                .append("Delay is the time between each attack.").append(newLine)
+                .append("You will also be asked to enter a Terrain").append(newLine).append(newLine)
+                .append(longLine).append(newLine)
+                .append("           Terrain").append(newLine)
+                .append(longLine).append(newLine).append(newLine)
+                .append("Terrain affects how a unit are able to defend itself").append(newLine)
+                .append("For example will a Ranged Unit struggle to fight in a forest").append(newLine)
+                .append("However, a Infantry Unit has a lot of cover in a forest").append(newLine)
+                .append("Therefore it is stronger in a forest").toString();
+
+        AboutDialog dialog = new AboutDialog("Setup Information!", message);
+        dialog.showAndWait();
     }
 
     /**

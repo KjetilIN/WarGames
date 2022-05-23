@@ -5,8 +5,12 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import no.ntnu.wargames.backend.designPattern.Facade;
+
+import java.util.Objects;
 
 /**
  * Dialog for choosing what army to save.
@@ -44,7 +48,9 @@ public class SaveOptionDialog extends Dialog<Integer> {
         grid.add(choiceBox, 1, 0);
         getDialogPane().setContent(grid);
 
-
+        ((Stage) getDialogPane().getScene().getWindow()).getIcons().add(new Image(
+                Objects.requireNonNull(getClass().getResourceAsStream(
+                        "/no/ntnu/wargames/icon/logoIcon.PNG"))));
         getDialogPane().getButtonTypes().addAll(ButtonType.OK,ButtonType.CANCEL);
 
         setResultConverter((ButtonType type) ->{

@@ -3,9 +3,13 @@ package no.ntnu.wargames.frontend.gui.dialog;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import no.ntnu.wargames.backend.units.Unit;
 import no.ntnu.wargames.backend.designPattern.UnitFactory;
+
+import java.util.Objects;
 
 
 /**
@@ -112,6 +116,10 @@ public class CreateUnitDialog extends Dialog<Unit> {
             setTitle("Unit Edit");
             setHeaderText("Edit unit");
         }
+
+        ((Stage) getDialogPane().getScene().getWindow()).getIcons().add(new Image(
+                Objects.requireNonNull(getClass().getResourceAsStream(
+                        "/no/ntnu/wargames/icon/logoIcon.PNG"))));
 
 
         setResultConverter((ButtonType type)->{

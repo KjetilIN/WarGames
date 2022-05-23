@@ -2,8 +2,12 @@ package no.ntnu.wargames.frontend.gui.dialog;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import no.ntnu.wargames.backend.designPattern.Facade;
+
+import java.util.Objects;
 
 /**
  * Dialog class for choosing settings for the simulation.
@@ -71,6 +75,9 @@ public class SimulationSettingsDialog extends Dialog<Integer> {
         grid.add(buttonShowDelayInfo,1,3,2,2);
         getDialogPane().setContent(grid);
 
+        ((Stage) getDialogPane().getScene().getWindow()).getIcons().add(new Image(
+                Objects.requireNonNull(getClass().getResourceAsStream(
+                        "/no/ntnu/wargames/icon/logoIcon.PNG"))));
 
         getDialogPane().getButtonTypes().addAll(ButtonType.OK,ButtonType.CANCEL);
 

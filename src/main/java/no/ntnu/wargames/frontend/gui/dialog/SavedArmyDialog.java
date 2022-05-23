@@ -2,11 +2,15 @@ package no.ntnu.wargames.frontend.gui.dialog;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -81,6 +85,9 @@ public class SavedArmyDialog extends Dialog<String> {
         getDialogPane().setContent(grid);
         getDialogPane().setHeaderText("Army'(s) Successfully Saved!");
         getDialogPane().getButtonTypes().add(ButtonType.OK);
+        ((Stage) getDialogPane().getScene().getWindow()).getIcons().add(new Image(
+                Objects.requireNonNull(getClass().getResourceAsStream(
+                        "/no/ntnu/wargames/icon/logoIcon.PNG"))));
 
     }
 }
