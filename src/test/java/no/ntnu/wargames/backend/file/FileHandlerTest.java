@@ -1,4 +1,4 @@
-package no.ntnu.wargames.File;
+package no.ntnu.wargames.backend.file;
 
 
 import no.ntnu.wargames.backend.file.FileHandler;
@@ -70,7 +70,7 @@ class FileHandlerTest {
         //Testing Negative, therefore no arrange or act needed.
         try{
             Army army = FileHandler.getArmyFromFileCSV(
-                    Path.of("src\\test\\java\\no\\ntnu\\wargames\\File\\TEST_FILES\\correctFile.csv")
+                    Path.of("src\\test\\java\\no\\ntnu\\wargames\\backend\\file\\TEST_FILES\\correctFile.csv")
             );
 
             //Assert
@@ -104,7 +104,7 @@ class FileHandlerTest {
     void testMissingInformation(){
         try{
             Army army = FileHandler.getArmyFromFileCSV(
-                    Path.of("src\\test\\java\\no\\ntnu\\wargames\\File\\TEST_FILES\\missingInfoFile.csv"));
+                    Path.of("src\\test\\java\\no\\ntnu\\wargames\\backend\\file\\TEST_FILES\\missingInfoFile.csv"));
             fail();
         }catch (Exception ex){
             assertEquals("Wrong file Format!",ex.getMessage());
@@ -117,7 +117,7 @@ class FileHandlerTest {
     void testUnknownUnit(){
         try{
             Army army = FileHandler.getArmyFromFileCSV(
-                    Path.of("src\\test\\java\\no\\ntnu\\wargames\\File\\TEST_FILES\\unknownUnit.csv"));
+                    Path.of("src\\test\\java\\no\\ntnu\\wargames\\backend\\file\\TEST_FILES\\unknownUnit.csv"));
             fail();
         }catch (Exception ex){
             assertEquals("Unit type was not found!",ex.getMessage());

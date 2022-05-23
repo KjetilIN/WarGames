@@ -1,4 +1,4 @@
-package no.ntnu.wargames.units;
+package no.ntnu.wargames.backend.units;
 
 import no.ntnu.wargames.backend.Battle;
 import no.ntnu.wargames.backend.units.Army;

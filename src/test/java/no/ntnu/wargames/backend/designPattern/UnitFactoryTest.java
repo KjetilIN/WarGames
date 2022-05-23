@@ -1,4 +1,4 @@
-package no.ntnu.wargames.designPattern;
+package no.ntnu.wargames.backend.designPattern;
 
 import no.ntnu.wargames.backend.units.Unit;
 import no.ntnu.wargames.backend.designPattern.UnitFactory;

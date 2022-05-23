@@ -1,4 +1,4 @@
-package no.ntnu.wargames.units;
+package no.ntnu.wargames.backend.units;
 
 import no.ntnu.wargames.backend.units.CavalryUnit;
 import no.ntnu.wargames.backend.units.Unit;
