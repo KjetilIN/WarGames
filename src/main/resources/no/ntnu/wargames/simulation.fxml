@@ -79,26 +79,28 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <ImageView fitHeight="63.0" fitWidth="91.0" layoutX="740.0" layoutY="323.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="91.0" fitWidth="91.0" layoutX="730.0" layoutY="311.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@fxpixelart/character/blue/left/ranged.png" />
+                              <Image url="@fxpixelart/character/displayUnits/blueDiaplayUnit.PNG" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="63.0" fitWidth="91.0" layoutX="80.0" layoutY="323.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="91.0" fitWidth="91.0" layoutX="68.0" layoutY="311.0" pickOnBounds="true" preserveRatio="true" smooth="false">
                            <image>
-                              <Image url="@fxpixelart/character/red/right/ranged.png" />
+                              <Image url="@fxpixelart/character/displayUnits/redDisplayUnit.PNG" />
                            </image>
                         </ImageView>
-                        <Label fx:id="txtArmyName1" layoutX="63.0" layoutY="271.0" text="Army 1 Name" textFill="#c71c1c">
+                        <Label fx:id="txtArmyName1" layoutX="63.0" layoutY="260.0" text="Army 1 Name" textFill="#c71c1c">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="txtArmyName2" layoutX="735.0" layoutY="271.0" text="Army 2 Name" textFill="#2c10dd">
+                        <Label fx:id="txtArmyName2" layoutX="730.0" layoutY="260.0" text="Army 2 Name" textFill="#2c10dd">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
+                        <Line endX="-100.0" endY="432.0" layoutX="279.0" layoutY="80.0" startX="-100.0" />
+                        <Line endX="-100.0" endY="432.0" layoutX="791.0" layoutY="80.0" startX="-100.0" />
                      </children>
                   </AnchorPane>
                </content>
@@ -123,11 +125,11 @@
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <Label fx:id="txtNameArmyOne" contentDisplay="RIGHT" layoutX="351.0" layoutY="99.0" prefHeight="21.0" prefWidth="126.0" text="NAME">
+                        <Label fx:id="txtNameArmyOne" alignment="CENTER" contentDisplay="RIGHT" layoutX="351.0" layoutY="99.0" prefHeight="21.0" prefWidth="126.0" text="NAME">
                            <font>
                               <Font size="15.0" />
                            </font></Label>
-                        <Label fx:id="txtNameArmyTwo" contentDisplay="RIGHT" layoutX="560.0" layoutY="99.0" prefHeight="21.0" prefWidth="136.0" text="NAME">
+                        <Label fx:id="txtNameArmyTwo" alignment="CENTER" contentDisplay="RIGHT" layoutX="560.0" layoutY="99.0" prefHeight="21.0" prefWidth="136.0" text="NAME">
                            <font>
                               <Font size="15.0" />
                            </font></Label>
