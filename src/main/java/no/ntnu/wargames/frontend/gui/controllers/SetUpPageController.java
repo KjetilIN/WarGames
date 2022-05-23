@@ -58,18 +58,12 @@ public class SetUpPageController implements Initializable {
                             "/no/ntnu/wargames/icon/wrong.png")));
 
 
-    //Main Page
+
     @FXML private BorderPane mainPage;
 
+    /* All FXML fields for each army */
 
-    /*
-    *
-    *  ARMY ONE:
-    *  - FXML Fields
-    *  - Methods only used to change army one values
-    *  - Uses the Common method Below!
-    *
-    */
+    //Army 1
     @FXML private TextField pathArmy1;
     @FXML private Label txtArmy1Name;
     @FXML private ImageView iconCheckArmy1;
@@ -80,59 +74,8 @@ public class SetUpPageController implements Initializable {
 
     private ObservableList<Unit> observableListArmy1;
 
-    /**
-     * Add from army 1 from file.
-     * Button method.
-     */
 
-    @FXML
-    public void onAddArmy1(){
-        File file = getFile();
-        if(file == null){
-            /* Prompt user with Error alert. No feedback needed.*/
-            DialogWindow.openWarningDialog("No file was found!");
-            pathArmy1.setText("NONE");
-            iconCheckArmy1.setVisible(false);
-        }else{
-            setArmyFromFile(file,pathArmy1,txtArmy1Name,observableListArmy1,iconCheckArmy1,tableViewArmy1);
-            Facade.getInstance().getArmyOne().setName(txtArmy1Name.getText());
-        }
-    }
-
-    /**
-     * Edit army 1 name
-     * Button method.
-     */
-    @FXML
-    public void onEditNameArmy1(){
-        String result = DialogWindow.openEditNameDialog();
-        if(result != null){
-            txtArmy1Name.setText(result);
-            this.army1.setName(result);
-            Facade.getInstance().getArmyOne().setName(txtArmy1Name.getText());
-        }else{
-            DialogWindow.openWarningDialog("NO NAME FOUND");
-        }
-    }
-
-    /**
-     * Add Unit to army 1
-     * Button method.
-     */
-    @FXML
-    public void onAddUnitArmy1(){
-        addUnitToTable(tableViewArmy1,observableListArmy1);
-    }
-
-    /*
-     *
-     *  ARMY TWO:
-     *  - FXML Fields
-     *  - Methods only used to change army two values
-     *  - Uses the Common method Below!
-     *
-     */
-
+    //Army 2
     @FXML private TextField pathArmy2;
     @FXML private Label txtArmy2Name;
     @FXML private ImageView iconCheckArmy2;
@@ -143,59 +86,14 @@ public class SetUpPageController implements Initializable {
 
     private ObservableList<Unit> observableListArmy2;
 
-    /**
-     * Add army 2 from file.
-     * Button method.
-     */
-
-    @FXML
-    public void onAddArmy2(){
-        File file = getFile();
-        if(file == null){
-            /* Prompt user with Error alert. No feedback needed.*/
-            DialogWindow.openWarningDialog("No file was found!");
-            pathArmy2.setText("NONE");
-            iconCheckArmy2.setVisible(false);
-        }else{
-            setArmyFromFile(file,pathArmy2,txtArmy2Name,observableListArmy2,iconCheckArmy2,tableViewArmy2);
-            Facade.getInstance().getArmyOne().setName(txtArmy2Name.getText());
-        }
-    }
-
-    /**
-     * Edit name of army 2.
-     * Button method.
-     */
-    @FXML
-    public void onEditNameArmy2(){
-        String result = DialogWindow.openEditNameDialog();
-        if(result != null){
-            txtArmy2Name.setText(result);
-            this.army2.setName(result);
-            Facade.getInstance().getArmyTwo().setName(txtArmy2Name.getText());
-        }else{
-            DialogWindow.openWarningDialog("NO NAME FOUND");
-        }
-    }
-
-    /**
-     * Add unit in army 2.
-     * Button method.
-     */
-
-    @FXML
-    public void onAddUnitArmy2(){
-        addUnitToTable(tableViewArmy2,observableListArmy2);
-    }
-
 
     /*
-    * COMMON METHODS FOR SETUP CONTROLLER
-    *
-    * Next section has common methods for both tableviews.
-    * The method takes parameter from the javafx components and file.
-    *
-    */
+     * COMMON METHODS FOR SETUP CONTROLLER
+     *
+     * Next section has common methods for both tableviews.
+     * The method takes parameter from the javafx components and file.
+     *
+     */
 
     /**
      * Opens a window to open the file.
@@ -238,7 +136,7 @@ public class SetUpPageController implements Initializable {
      * @param table the table of the army
      */
 
-    public void setArmyFromFile(File file,
+    private void setArmyFromFile(File file,
                                 TextField pathArmy,
                                 Label txtArmyName,
                                 ObservableList<Unit> observableList,
@@ -273,7 +171,7 @@ public class SetUpPageController implements Initializable {
      * @param observableList the observable list of the army
      */
 
-    public void addUnitToTable(TableView<Unit> tableView,ObservableList<Unit> observableList){
+    private void addUnitToTable(TableView<Unit> tableView,ObservableList<Unit> observableList){
         CreateUnitDialog dialog = new CreateUnitDialog();
         Optional<Unit> unit = dialog.showAndWait();
 
@@ -283,6 +181,236 @@ public class SetUpPageController implements Initializable {
             tableView.refresh();
         }
     }
+
+    /**
+     * Method that asks the user for an army file.
+     * If no file was selected, we pass on the file.
+     *
+     * @param pathArmy2 text field of the given army.
+     * @param iconCheckArmy2 icon to validate correct format.
+     * @return returns a file if given
+     */
+
+    private File getArmyFile(TextField pathArmy2, ImageView iconCheckArmy2) {
+        File file = getFile();
+        if(file == null){
+            /* Prompt user with Error alert. No feedback needed.*/
+            DialogWindow.openWarningDialog("No file was found!");
+            pathArmy2.setText("NONE");
+            iconCheckArmy2.setVisible(false);
+            return null;
+        }
+        return file;
+
+    }
+
+    /**
+     * Gets the selected unit from the tables.
+     * Goes through the list of table views.
+     *
+     * @return returns the selected unit, or null if no unit has been selected.
+     */
+
+    private Unit getSelectedUnit(){
+        Unit result = null;
+        if(tableViewArmy1.getSelectionModel().isEmpty()
+                && !tableViewArmy2.getSelectionModel().isEmpty()){
+            result = tableViewArmy2.getSelectionModel().getSelectedItem();
+        }else if(!tableViewArmy1.getSelectionModel().isEmpty()
+                && tableViewArmy2.getSelectionModel().isEmpty()){
+            result = tableViewArmy1.getSelectionModel().getSelectedItem();
+        }
+
+        /*Clear selection history*/
+        tableViewArmy1.getSelectionModel().clearSelection();
+        tableViewArmy2.getSelectionModel().clearSelection();
+
+        return result;
+    }
+
+    /**
+     * Method used to save given armies by given options.
+     * Option as integer.
+     *  - 0 : Save army 1.
+     *  - 1 : Save army 2.
+     *  - 2 : Save both armies.
+     * Adds the path of the files to the list of paths.
+     *
+     * @param option option received as integer
+     * @param paths list of saved army files as path
+     * @return returns true if successful
+     */
+
+    private Boolean saveByOption(int option, ArrayList<Path> paths){
+        switch (option) {
+            case 0:
+                //Only save army 1
+                if (this.army1.hasUnits()) {
+                    paths.add(FileHandler.saveArmyToFile(this.army1, selectFile()));
+                    return true;
+                } else{
+                    DialogWindow.openWarningDialog(
+                            "No Units in "+this.army1.getName()+"'s army");
+
+                    return false;
+                }
+            case 1:
+                //Only save army 2
+                if (this.army2.hasUnits()) {
+                    paths.add(FileHandler.saveArmyToFile(this.army2,selectFile()));
+                    return true;
+                } else{
+                    DialogWindow.openWarningDialog(
+                            "No Units in "+this.army1.getName()+"'s army");
+                    return false;
+                }
+
+            case 2:
+                //Save both
+                try{
+                    paths.add(FileHandler.saveArmyToFile(this.army1,selectFile()));
+                    paths.add(FileHandler.saveArmyToFile(this.army2,selectFile()));
+                    return true;
+                }catch (IllegalArgumentException e){
+                    DialogWindow.openExceptionDialog(e);
+                    return false;
+                }
+            default:
+                //Option integer not added or wrong.
+                DialogWindow.openWarningDialog("Save option is not added!");
+                return false;
+        }
+    }
+
+
+    /**
+     * Method that set up the Table view.
+     *
+     * @param path path of the file as a text field.
+     * @param icon imageview of the icon to validate correct file
+     * @param observableList the tableviews list of units.
+     * @param tableView table itself.
+     * @param nameColumn column of the unit names.
+     * @param typeColumn column of the unit types.
+     * @param healthColumn column of unit healths (HP).
+     */
+
+    private void initTableview(TextField path,
+                               ImageView icon,
+                               ObservableList<Unit> observableList,
+                               TableView<Unit> tableView,
+                               TableColumn<Unit,String> nameColumn,
+                               TableColumn<Unit,String> typeColumn,
+                               TableColumn<Unit,String> healthColumn
+
+    ) {
+        path.setText("NONE");
+        icon.setVisible(false);
+        tableView.setItems(observableList);
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        typeColumn.setCellValueFactory(new PropertyValueFactory<>("unitType"));
+        healthColumn.setCellValueFactory(new PropertyValueFactory<>("health"));
+
+        tableView.refresh();
+    }
+
+
+
+
+
+    /* Army 1 Button methods */
+
+
+    /**
+     * Add from army 1 from file.
+     * Button method.
+     */
+
+    @FXML
+    public void onAddArmy1(){
+        File file = getArmyFile(pathArmy1, iconCheckArmy1);
+        if(file != null){
+            setArmyFromFile(file, pathArmy1, txtArmy1Name, observableListArmy1, iconCheckArmy1, tableViewArmy1);
+            Facade.getInstance().getArmyOne().setName(txtArmy1Name.getText());
+        }
+    }
+
+    /**
+     * Edit army 1 name
+     * Button method.
+     */
+    @FXML
+    public void onEditNameArmy1(){
+        String result = DialogWindow.openEditNameDialog();
+        if(result != null){
+            txtArmy1Name.setText(result);
+            this.army1.setName(result);
+            Facade.getInstance().getArmyOne().setName(txtArmy1Name.getText());
+        }else{
+            DialogWindow.openWarningDialog("NO NAME FOUND");
+        }
+    }
+
+    /**
+     * Add Unit to army 1
+     * Button method.
+     */
+    @FXML
+    public void onAddUnitArmy1(){
+        addUnitToTable(tableViewArmy1,observableListArmy1);
+    }
+
+    // Army 2 Button Methods
+
+    /**
+     * Add army 2 from file.
+     * Button method.
+     */
+
+    @FXML
+    public void onAddArmy2(){
+        File file = getArmyFile(pathArmy2, iconCheckArmy2);
+        if(file != null){
+            setArmyFromFile(file, pathArmy2, txtArmy2Name, observableListArmy2, iconCheckArmy2, tableViewArmy2);
+            Facade.getInstance().getArmyTwo().setName(txtArmy2Name.getText());
+        }
+    }
+
+
+
+    /**
+     * Edit name of army 2.
+     * Button method.
+     */
+    @FXML
+    public void onEditNameArmy2(){
+        String result = DialogWindow.openEditNameDialog();
+        if(result != null){
+            txtArmy2Name.setText(result);
+            this.army2.setName(result);
+            Facade.getInstance().getArmyTwo().setName(txtArmy2Name.getText());
+        }else{
+            DialogWindow.openWarningDialog("NO NAME FOUND");
+        }
+    }
+
+    /**
+     * Add unit in army 2.
+     * Button method.
+     */
+
+    @FXML
+    public void onAddUnitArmy2(){
+        addUnitToTable(tableViewArmy2,observableListArmy2);
+    }
+
+
+   /*
+
+   Common BUTTON METHODS
+
+    */
+
 
     /**
      * Method that switch the scene back to the setup page.
@@ -316,79 +444,7 @@ public class SetUpPageController implements Initializable {
         stage.show();
     }
 
-    /**
-     * Gets the selected unit from the tables.
-     * Goes through the list of table views.
-     *
-     * @return returns the selected unit, or null if no unit has been selected.
-     */
 
-    public Unit getSelectedUnit(){
-        Unit result = null;
-        if(tableViewArmy1.getSelectionModel().isEmpty()
-                && !tableViewArmy2.getSelectionModel().isEmpty()){
-            result = tableViewArmy2.getSelectionModel().getSelectedItem();
-        }else if(!tableViewArmy1.getSelectionModel().isEmpty()
-                && tableViewArmy2.getSelectionModel().isEmpty()){
-            result = tableViewArmy1.getSelectionModel().getSelectedItem();
-        }
-
-        /*Clear selection history*/
-        tableViewArmy1.getSelectionModel().clearSelection();
-        tableViewArmy2.getSelectionModel().clearSelection();
-
-        return result;
-    }
-
-    /**
-     * Method used to save given armies by given options.
-     * Option as integer.
-     *  - 0 : Save army 1.
-     *  - 1 : Save army 2.
-     *  - 2 : Save both armies.
-     * Adds the path of the files to the list of paths.
-     *
-     * @param option option received as integer
-     * @param paths list of saved army files as path
-     * @return returns true if successful
-     */
-
-    private Boolean saveByOption(int option, ArrayList<Path> paths){
-        switch (option) {
-            case 0:
-                if (this.army1.hasUnits()) {
-                    paths.add(FileHandler.saveArmyToFile(this.army1, selectFile()));
-                    return true;
-                } else{
-                    DialogWindow.openWarningDialog(
-                            "No Units in "+this.army1.getName()+"'s army");
-
-                    return false;
-                }
-            case 1:
-                if (this.army2.hasUnits()) {
-                    paths.add(FileHandler.saveArmyToFile(this.army2,selectFile()));
-                    return true;
-                } else{
-                    DialogWindow.openWarningDialog(
-                            "No Units in "+this.army1.getName()+"'s army");
-                    return false;
-                }
-
-            case 2:
-                try{
-                    paths.add(FileHandler.saveArmyToFile(this.army1,selectFile()));
-                    paths.add(FileHandler.saveArmyToFile(this.army2,selectFile()));
-                    return true;
-                }catch (IllegalArgumentException e){
-                    DialogWindow.openExceptionDialog(e);
-                    return false;
-                }
-            default:
-                DialogWindow.openWarningDialog("Save option is not added!");
-                return false;
-        }
-    }
 
     /**
      * Edit the selected unit.
@@ -397,7 +453,7 @@ public class SetUpPageController implements Initializable {
      */
 
     @FXML
-    private void editUnit() {
+    public void editUnit() {
         Unit selectedUnit = getSelectedUnit();
 
         if(selectedUnit != null){
@@ -575,36 +631,7 @@ public class SetUpPageController implements Initializable {
         }
     }
 
-    /**
-     * Method that set up the Table view.
-     *
-     * @param path path of the file as a text field.
-     * @param icon imageview of the icon to validate correct file
-     * @param observableList the tableviews list of units.
-     * @param tableView table itself.
-     * @param nameColumn column of the unit names.
-     * @param typeColumn column of the unit types.
-     * @param healthColumn column of unit healths (HP).
-     */
 
-    private void initTableview(TextField path,
-                               ImageView icon,
-                               ObservableList<Unit> observableList,
-                               TableView<Unit> tableView,
-                               TableColumn<Unit,String> nameColumn,
-                               TableColumn<Unit,String> typeColumn,
-                               TableColumn<Unit,String> healthColumn
-
-    ) {
-        path.setText("NONE");
-        icon.setVisible(false);
-        tableView.setItems(observableList);
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        typeColumn.setCellValueFactory(new PropertyValueFactory<>("unitType"));
-        healthColumn.setCellValueFactory(new PropertyValueFactory<>("health"));
-
-        tableView.refresh();
-    }
 
     /**
      * Methods that gets called when the user clicks on add army.

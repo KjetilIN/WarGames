@@ -207,6 +207,10 @@ public class SimulationController implements Initializable {
         this.unitGraph.setCreateSymbols(false);
         this.healthGraph.setCreateSymbols(false);
 
+        //Make X-axis not have tic mark symbols
+        this.unitGraph.getXAxis().setTickMarkVisible(false);
+        this.healthGraph.getXAxis().setTickMarkVisible(false);
+
     }
 
     /**
@@ -500,7 +504,6 @@ public class SimulationController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initBattle();
-        // Update table
         updateUnitCountTable();
         setKeyEvents();
 
