@@ -115,7 +115,7 @@
                               <Font name="System Bold Italic" size="20.0" />
                            </font>
                         </Label>
-                        <Line endX="516.0" layoutX="237.0" layoutY="127.0" startX="-100.0" />
+                        <Line endX="530.0" layoutX="172.0" layoutY="127.0" />
                         <Line endX="-100.0" endY="395.0" layoutX="430.0" layoutY="81.0" startX="-100.0" />
                         <Line endX="-100.0" endY="395.0" layoutX="624.0" layoutY="81.0" startX="-100.0" />
                         <Label layoutX="184.0" layoutY="99.0" text="Unit Count Type">
@@ -123,11 +123,11 @@
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <Label fx:id="txtNameArmyOne" layoutX="409.0" layoutY="99.0" text="NAME">
+                        <Label fx:id="txtNameArmyOne" contentDisplay="RIGHT" layoutX="351.0" layoutY="99.0" prefHeight="21.0" prefWidth="126.0" text="NAME">
                            <font>
                               <Font size="15.0" />
                            </font></Label>
-                        <Label fx:id="txtNameArmyTwo" layoutX="600.0" layoutY="99.0" prefHeight="17.0" prefWidth="42.0" text="NAME">
+                        <Label fx:id="txtNameArmyTwo" contentDisplay="RIGHT" layoutX="560.0" layoutY="99.0" prefHeight="21.0" prefWidth="136.0" text="NAME">
                            <font>
                               <Font size="15.0" />
                            </font></Label>
@@ -151,59 +151,59 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <Line endX="516.0" layoutX="245.0" layoutY="317.0" opacity="0.34" startX="-100.0" />
-                        <Line endX="516.0" layoutX="245.0" layoutY="386.0" opacity="0.34" startX="-100.0" />
+                        <Line endX="530.0" layoutX="176.0" layoutY="317.0" opacity="0.34" />
+                        <Line endX="530.0" layoutX="176.0" layoutY="375.0" opacity="0.34" />
                         <Label layoutX="213.0" layoutY="277.0" text="Cavalry">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <Line endX="516.0" layoutX="245.0" layoutY="250.0" opacity="0.34" startX="-100.0" />
-                        <Line endX="516.0" layoutX="245.0" layoutY="188.0" opacity="0.34" startX="-100.0" />
-                        <Label fx:id="txtTotalArmy2" alignment="BOTTOM_RIGHT" layoutX="615.0" layoutY="417.0" text="0">
+                        <Line endX="530.0" layoutX="180.0" layoutY="250.0" opacity="0.34" />
+                        <Line endX="530.0" layoutX="180.0" layoutY="188.0" opacity="0.34" />
+                        <Label fx:id="txtTotalArmy2" alignment="BOTTOM_RIGHT" layoutX="550.0" layoutY="422.0" prefHeight="30.0" prefWidth="90.0" text="0">
                            <font>
                               <Font size="20.0" />
                            </font></Label>
-                        <Label fx:id="txtTotalArmy1" alignment="BOTTOM_RIGHT" layoutX="424.0" layoutY="417.0" text="0">
+                        <Label fx:id="txtTotalArmy1" alignment="BOTTOM_RIGHT" layoutX="340.0" layoutY="422.0" prefHeight="30.0" prefWidth="90.0" text="0">
                            <font>
                               <Font size="20.0" />
                            </font></Label>
-                        <Label fx:id="txtCommanderArmy1" alignment="BOTTOM_RIGHT" layoutX="424.0" layoutY="341.0" text="0">
+                        <Label fx:id="txtCommanderArmy1" alignment="BOTTOM_RIGHT" layoutX="340.0" layoutY="332.0" prefHeight="30.0" prefWidth="90.0" text="0">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <Label fx:id="txtCommanderArmy2" alignment="BOTTOM_RIGHT" layoutX="615.0" layoutY="341.0" text="0">
+                        <Label fx:id="txtCommanderArmy2" alignment="BOTTOM_RIGHT" layoutX="550.0" layoutY="332.0" prefHeight="30.0" prefWidth="90.0" text="0">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <Label fx:id="txtCavalryArmy1" alignment="BOTTOM_RIGHT" layoutX="424.0" layoutY="273.0" text="0">
+                        <Label fx:id="txtCavalryArmy1" alignment="BOTTOM_RIGHT" layoutX="340.0" layoutY="271.0" prefHeight="30.0" prefWidth="90.0" text="0">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <Label fx:id="txtCavalryArmy2" alignment="BOTTOM_RIGHT" layoutX="615.0" layoutY="273.0" text="0">
+                        <Label fx:id="txtCavalryArmy2" alignment="BOTTOM_RIGHT" layoutX="550.0" layoutY="271.0" prefHeight="30.0" prefWidth="90.0" text="0">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <Label fx:id="txtInfantryArmy1" alignment="BOTTOM_RIGHT" layoutX="424.0" layoutY="216.0" text="0">
+                        <Label fx:id="txtInfantryArmy1" alignment="BOTTOM_RIGHT" layoutX="340.0" layoutY="210.0" prefHeight="30.0" prefWidth="90.0" text="0">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <Label fx:id="txtInfantryArmy2" alignment="BOTTOM_RIGHT" layoutX="615.0" layoutY="216.0" text="0">
+                        <Label fx:id="txtInfantryArmy2" alignment="BOTTOM_RIGHT" layoutX="550.0" layoutY="210.0" prefHeight="30.0" prefWidth="90.0" text="0">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <Label fx:id="txtRangedArmy1" alignment="BOTTOM_RIGHT" layoutX="420.0" layoutY="149.0" prefHeight="30.0" prefWidth="15.0" text="0">
+                        <Label fx:id="txtRangedArmy1" alignment="BOTTOM_RIGHT" layoutX="340.0" layoutY="149.0" prefHeight="30.0" prefWidth="90.0" text="0">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <Label fx:id="txtRangedArmy2" alignment="BOTTOM_RIGHT" layoutX="615.0" layoutY="149.0" text="0">
+                        <Label fx:id="txtRangedArmy2" alignment="BOTTOM_RIGHT" layoutX="550.0" layoutY="149.0" prefHeight="30.0" prefWidth="90.0" text="0">
                            <font>
                               <Font size="20.0" />
                            </font>
