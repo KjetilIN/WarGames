@@ -1,13 +1,9 @@
-package no.ntnu.wargames.frontend.gui.dialog;
+package no.ntnu.wargames.frontend.gui.dialog.complexDialog;
 
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 import no.ntnu.wargames.backend.designPattern.Facade;
-
-import java.util.Objects;
+import no.ntnu.wargames.frontend.gui.dialog.WarGamesDialog;
 
 /**
  * Dialog class for choosing settings for the simulation.
@@ -18,7 +14,7 @@ import java.util.Objects;
  * @version 1.0-SNAPSHOT
  */
 
-public class SimulationSettingsDialog extends Dialog<Integer> {
+public class SimulationSettingsDialog extends WarGamesDialog<Integer> {
 
     /**
      * Creates the window and adds the content for the window.
@@ -32,8 +28,8 @@ public class SimulationSettingsDialog extends Dialog<Integer> {
      * Add nodes to the window.
      * Also sets result converter.
      */
-
-    private void createContent() {
+    @Override
+    public void createContent() {
         getDialogPane().setHeaderText("Set Terrain and Attack-Delay");
 
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
@@ -62,12 +58,9 @@ public class SimulationSettingsDialog extends Dialog<Integer> {
         });
 
         // force the field to be numeric only
-        DialogUtility.setTextFieldNumeric(txtDelay);
+        setTextFieldNumeric(txtDelay);
 
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(20, 20, 10, 10));
+        GridPane grid = getGrid();
         grid.add(new Label("Terrain:"), 0, 0);
         grid.add(choiceBox, 1, 0);
         grid.add(new Label("Delay(milliseconds):"),0,2);
@@ -75,9 +68,8 @@ public class SimulationSettingsDialog extends Dialog<Integer> {
         grid.add(buttonShowDelayInfo,1,3,2,2);
         getDialogPane().setContent(grid);
 
-        ((Stage) getDialogPane().getScene().getWindow()).getIcons().add(new Image(
-                Objects.requireNonNull(getClass().getResourceAsStream(
-                        "/no/ntnu/wargames/icon/logoIcon.PNG"))));
+        //Add icon to the page
+        updateIcon();
 
         getDialogPane().getButtonTypes().addAll(ButtonType.OK,ButtonType.CANCEL);
 

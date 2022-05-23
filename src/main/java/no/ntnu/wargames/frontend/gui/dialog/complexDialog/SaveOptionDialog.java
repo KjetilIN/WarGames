@@ -1,16 +1,11 @@
-package no.ntnu.wargames.frontend.gui.dialog;
+package no.ntnu.wargames.frontend.gui.dialog.complexDialog;
 
-import javafx.geometry.Insets;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
-import no.ntnu.wargames.backend.designPattern.Facade;
-
-import java.util.Objects;
+import no.ntnu.wargames.frontend.gui.dialog.simpleDialog.DialogWindow;
+import no.ntnu.wargames.frontend.gui.dialog.WarGamesDialog;
 
 /**
  * Dialog for choosing what army to save.
@@ -20,7 +15,7 @@ import java.util.Objects;
  * @version 1.0-SNAPSHOT
  */
 
-public class SaveOptionDialog extends Dialog<Integer> {
+public class SaveOptionDialog extends WarGamesDialog<Integer> {
 
 
     /**
@@ -34,23 +29,21 @@ public class SaveOptionDialog extends Dialog<Integer> {
     /**
      * Add content to the dialog.
      */
-    private void createContent(){
+    @Override
+    public void createContent(){
         // Header
         getDialogPane().setHeaderText("Save options");
 
-        ChoiceBox<String> choiceBox = DialogUtility.getArmyChoiceBox();
+        ChoiceBox<String> choiceBox = getArmyChoiceBox();
 
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(20, 20, 10, 10));
+        GridPane grid = getGrid();
         grid.add(new Label("Army to save:"), 0, 0);
         grid.add(choiceBox, 1, 0);
         getDialogPane().setContent(grid);
 
-        ((Stage) getDialogPane().getScene().getWindow()).getIcons().add(new Image(
-                Objects.requireNonNull(getClass().getResourceAsStream(
-                        "/no/ntnu/wargames/icon/logoIcon.PNG"))));
+        //Add icon
+        updateIcon();
+
         getDialogPane().getButtonTypes().addAll(ButtonType.OK,ButtonType.CANCEL);
 
         setResultConverter((ButtonType type) ->{

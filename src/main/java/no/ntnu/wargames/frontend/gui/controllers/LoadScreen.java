@@ -11,7 +11,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import no.ntnu.wargames.frontend.gui.dialog.DialogWindow;
+import no.ntnu.wargames.frontend.gui.dialog.simpleDialog.DialogWindow;
 
 import java.io.IOException;
 import java.net.URL;

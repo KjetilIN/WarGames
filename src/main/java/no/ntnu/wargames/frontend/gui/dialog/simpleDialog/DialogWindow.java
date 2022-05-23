@@ -1,9 +1,8 @@
-package no.ntnu.wargames.frontend.gui.dialog;
+package no.ntnu.wargames.frontend.gui.dialog.simpleDialog;
 
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 import javafx.stage.StageStyle;
 import java.util.Optional;
 
@@ -86,18 +85,16 @@ public class DialogWindow {
 
 
     /**
-     * Method that opens an exit dialog.
+     * Method that opens a Confirmation Dialog.
      *
      * @param header header text
      * @param context alert context
-     * @return returns the alert
      */
 
-    public static Alert openInformationDialog(String header, String context){
+    public static void openInformationDialog(String header, String context){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(header);
         alert.setContentText(context);
-        return alert;
     }
 
     /**

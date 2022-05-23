@@ -14,5 +14,12 @@ module no.ntnu.wargames{
     opens no.ntnu.wargames.backend.designPattern to javafx.controls, javafx.fxml;
     opens no.ntnu.wargames.backend.file;
     exports no.ntnu.wargames.backend.file;
+    opens no.ntnu.wargames.frontend.gui.dialog.complexDialog;
+    opens no.ntnu.wargames.frontend.gui.dialog.simpleDialog;
+    opens no.ntnu.wargames.frontend.gui.dialog;
+
+    exports no.ntnu.wargames.frontend.gui.dialog.complexDialog;
+    exports no.ntnu.wargames.frontend.gui.dialog.simpleDialog;
+    exports no.ntnu.wargames.frontend.gui.dialog;
 
 }

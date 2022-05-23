@@ -1,27 +1,31 @@
-package no.ntnu.wargames.frontend.gui.dialog;
+package no.ntnu.wargames.frontend.gui.dialog.complexDialog;
 
 
-import javafx.geometry.Insets;
-import javafx.scene.control.*;
-import javafx.scene.image.Image;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
-import no.ntnu.wargames.backend.units.Unit;
 import no.ntnu.wargames.backend.designPattern.UnitFactory;
+import no.ntnu.wargames.backend.units.Unit;
+import no.ntnu.wargames.frontend.gui.dialog.simpleDialog.DialogWindow;
+import no.ntnu.wargames.frontend.gui.dialog.WarGamesDialog;
 
-import java.util.Objects;
+import java.util.List;
 
 
 /**
  * Dialog for creating a new Unit.
+ * Extend WarGamesDialog.
  * Has the Unit class as return object.
  *
  * @author Kjetil Indrehus
  * @version 1.0-SNAPSHOT
  */
 
-public class CreateUnitDialog extends Dialog<Unit> {
+public class CreateUnitDialog extends WarGamesDialog<Unit> {
 
+    //Fields
     private final Mode mode;
     private Unit unit;
 
@@ -60,23 +64,22 @@ public class CreateUnitDialog extends Dialog<Unit> {
      * Method that adds content to the dialog.
      * Also add result listener
      */
-    private void createContent(){
+    @Override
+    public void createContent(){
 
         //Input prompt
         TextField name = new TextField();
         name.setPromptText("Enter unit name...");
 
-        ChoiceBox<String> choiceBox = new ChoiceBox<>();
-        choiceBox.getItems().add("Infantry");
-        choiceBox.getItems().add("Ranged");
-        choiceBox.getItems().add("Commander");
-        choiceBox.getItems().add("Cavalry");
+        ChoiceBox<String> choiceBox = getChoiceBox(
+                List.of("Infantry","Ranged","Commander","Cavalry")
+        );
 
         TextField healthTextField = new TextField();
         healthTextField.setPromptText("Enter health...");
 
         // force the field to be numeric only
-        DialogUtility.setTextFieldNumeric(healthTextField);
+        setTextFieldNumeric(healthTextField);
 
         if((mode == Mode.EDIT)) {
             name.setText(this.unit.getName());
@@ -87,10 +90,7 @@ public class CreateUnitDialog extends Dialog<Unit> {
 
 
         //Pane
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(20, 20, 10, 10));
+        GridPane grid = getGrid();
         grid.add(new Label("Name:"), 0, 0);
         grid.add(name, 1, 0);
         grid.add(new Label("Type:"), 0, 1);
@@ -117,10 +117,8 @@ public class CreateUnitDialog extends Dialog<Unit> {
             setHeaderText("Edit unit");
         }
 
-        ((Stage) getDialogPane().getScene().getWindow()).getIcons().add(new Image(
-                Objects.requireNonNull(getClass().getResourceAsStream(
-                        "/no/ntnu/wargames/icon/logoIcon.PNG"))));
-
+        //Update icon
+        updateIcon();
 
         setResultConverter((ButtonType type)->{
             if(type == ButtonType.OK){

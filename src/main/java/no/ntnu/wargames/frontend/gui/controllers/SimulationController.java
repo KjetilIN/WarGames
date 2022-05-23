@@ -26,8 +26,8 @@ import no.ntnu.wargames.backend.Battle;
 import no.ntnu.wargames.backend.units.Army;
 import no.ntnu.wargames.backend.designPattern.Facade;
 import no.ntnu.wargames.frontend.gui.canvasLogic.Painter;
-import no.ntnu.wargames.frontend.gui.dialog.AboutDialog;
-import no.ntnu.wargames.frontend.gui.dialog.DialogWindow;
+import no.ntnu.wargames.frontend.gui.dialog.complexDialog.AboutDialog;
+import no.ntnu.wargames.frontend.gui.dialog.simpleDialog.DialogWindow;
 
 import java.io.IOException;
 import java.net.URL;
@@ -127,35 +127,16 @@ public class SimulationController implements Initializable {
 
      */
 
-    @FXML
-    private Label txtTotalArmy1;
-
-    @FXML
-    private Label txtTotalArmy2;
-
-    @FXML
-    private Label txtCommanderArmy1;
-
-    @FXML
-    private Label txtCommanderArmy2;
-
-    @FXML
-    private Label txtCavalryArmy1;
-
-    @FXML
-    private Label txtCavalryArmy2;
-
-    @FXML
-    private Label txtInfantryArmy1;
-
-    @FXML
-    private Label txtInfantryArmy2;
-
-    @FXML
-    private Label txtRangedArmy1;
-
-    @FXML
-    private Label txtRangedArmy2;
+    @FXML private Label txtTotalArmy1;
+    @FXML private Label txtTotalArmy2;
+    @FXML private Label txtCommanderArmy1;
+    @FXML private Label txtCommanderArmy2;
+    @FXML private Label txtCavalryArmy1;
+    @FXML private Label txtCavalryArmy2;
+    @FXML private Label txtInfantryArmy1;
+    @FXML private Label txtInfantryArmy2;
+    @FXML private Label txtRangedArmy1;
+    @FXML private Label txtRangedArmy2;
 
 
     /*
@@ -175,11 +156,8 @@ public class SimulationController implements Initializable {
 
 
     /* Charts */
-    @FXML
-    private AreaChart<String,Number> unitGraph;
-
-    @FXML
-    private AreaChart<String,Number> healthGraph;
+    @FXML private AreaChart<String,Number> unitGraph;
+    @FXML private AreaChart<String,Number> healthGraph;
 
 
     /* Attack Log Information tab label and fields */

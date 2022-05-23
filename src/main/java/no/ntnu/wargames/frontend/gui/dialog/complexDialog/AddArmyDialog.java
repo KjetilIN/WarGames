@@ -1,15 +1,13 @@
-package no.ntnu.wargames.frontend.gui.dialog;
+package no.ntnu.wargames.frontend.gui.dialog.complexDialog;
 
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
-import no.ntnu.wargames.backend.units.Army;
 import no.ntnu.wargames.backend.designPattern.UnitFactory;
+import no.ntnu.wargames.backend.units.Army;
+import no.ntnu.wargames.frontend.gui.dialog.simpleDialog.DialogWindow;
+import no.ntnu.wargames.frontend.gui.dialog.WarGamesDialog;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Dialog for adding an army to a chosen table.
@@ -19,7 +17,7 @@ import java.util.Objects;
  * @version 1.0-SNAPSHOT
  */
 
-public class AddArmyDialog extends Dialog<Army>{
+public class AddArmyDialog extends WarGamesDialog<Army> {
 
     /*Unit types*/
     private static final List<String> UNIT_TYPES = List.of("Ranged","Infantry","Commander","Cavalry");
@@ -39,7 +37,8 @@ public class AddArmyDialog extends Dialog<Army>{
      * Method that adds content to the dialog.
      * Also add result listener
      */
-    private void createContent() {
+    @Override
+    public void createContent() {
         /*Header text */
         getDialogPane().setHeaderText("Add army!");
 
@@ -48,7 +47,7 @@ public class AddArmyDialog extends Dialog<Army>{
         armyName.setPromptText("Enter army name...");
 
         /*Checkbox for choosing what army to add to*/
-        ChoiceBox<String> pickArmy = DialogUtility.getArmyChoiceBox();
+        ChoiceBox<String> pickArmy = getArmyChoiceBox();
 
         /*Spinner for unit count*/
         Spinner<Integer> rangedSpinner = new Spinner<>(0,50,0);
@@ -64,14 +63,10 @@ public class AddArmyDialog extends Dialog<Army>{
         TextField health = new TextField();
         health.setPromptText("Unit(s) health...");
 
-        DialogUtility.setTextFieldNumeric(health); // makes the text field numeric only
+       setTextFieldNumeric(health); // makes the text field numeric only
 
         /*Grid*/
-        GridPane grid = new GridPane();
-        /*Set spacing between elements*/
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(20, 20, 10, 10));
+        GridPane grid = getGrid();
 
         grid.add(new Label("Army name:"), 0, 0);
         grid.add(armyName, 1, 0);
@@ -100,7 +95,7 @@ public class AddArmyDialog extends Dialog<Army>{
 
         for (Spinner<Integer> spinner:unitSpinners) {
             spinner.setEditable(true); // All spinner can be edited by typing
-            DialogUtility.setTextFieldNumeric(spinner.getEditor()); // Make text field numeric only
+            setTextFieldNumeric(spinner.getEditor()); // Make text field numeric only
 
         }
 
@@ -108,9 +103,7 @@ public class AddArmyDialog extends Dialog<Army>{
         getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
 
         //Add Icon
-        ((Stage) getDialogPane().getScene().getWindow()).getIcons().add(new Image(
-                Objects.requireNonNull(getClass().getResourceAsStream(
-                        "/no/ntnu/wargames/icon/logoIcon.PNG"))));
+        updateIcon();
 
         /*Result converter*/
         setResultConverter((ButtonType buttonType)->{
@@ -132,7 +125,8 @@ public class AddArmyDialog extends Dialog<Army>{
                                 hasUnitToAdd = true;
                                 result.addAll(UnitFactory.createListOfUnit(spinnerValue, UNIT_TYPES.get(i), unitNames.getText(), Integer.parseInt(health.getText())));
                             }
-                        } catch (NumberFormatException e) {DialogWindow.openWarningDialog(e.getMessage());}
+                        } catch (NumberFormatException e) {
+                            DialogWindow.openWarningDialog(e.getMessage());}
 
 
                     }

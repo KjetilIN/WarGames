@@ -17,7 +17,8 @@ import no.ntnu.wargames.backend.file.FileHandler;
 import no.ntnu.wargames.backend.units.Army;
 import no.ntnu.wargames.backend.units.Unit;
 import no.ntnu.wargames.backend.designPattern.Facade;
-import no.ntnu.wargames.frontend.gui.dialog.*;
+import no.ntnu.wargames.frontend.gui.dialog.simpleDialog.DialogWindow;
+import no.ntnu.wargames.frontend.gui.dialog.complexDialog.*;
 
 import java.io.File;
 import java.io.IOException;

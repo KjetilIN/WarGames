@@ -1,10 +1,12 @@
-package no.ntnu.wargames.frontend.gui.dialog;
+package no.ntnu.wargames.frontend.gui.dialog.complexDialog;
 
-import javafx.geometry.Insets;
+
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import no.ntnu.wargames.frontend.gui.dialog.simpleDialog.DialogWindow;
+import no.ntnu.wargames.frontend.gui.dialog.WarGamesDialog;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -15,13 +17,14 @@ import java.util.Objects;
 
 /**
  * Dialog class to show the locations of saved armies class.
+ * Extends the WarGamesDialog.
  * Shows both path and a button to take to location of the folder.
  *
  * @author Kjetil Indrehus
  * @version 1.0-SNAPSHOT
  */
 
-public class SavedArmyDialog extends Dialog<String> {
+public class SavedArmyDialog extends WarGamesDialog<String> {
 
     // List of paths
     private final ArrayList<Path> paths;
@@ -41,12 +44,10 @@ public class SavedArmyDialog extends Dialog<String> {
      * Method that adds the content of the display to the screen
      */
 
-    private void createContent() {
+    @Override
+    public void createContent() {
         //Pane
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(20, 20, 10, 10));
+        GridPane grid = getGrid();
 
         int rowNumber = 0; // init row count
 
