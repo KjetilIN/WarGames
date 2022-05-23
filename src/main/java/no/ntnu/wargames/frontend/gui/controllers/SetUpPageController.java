@@ -247,13 +247,14 @@ public class SetUpPageController implements Initializable {
             txtArmyName.setText(army.getName().replace(",",""));
             observableList.setAll(army.getAllUnits());
             icon.setImage(CORRECT_FILE_ICON);
-            icon.setVisible(true);
+
         }catch (Exception e){
             DialogWindow.openExceptionDialog(e);
             icon.setImage(INCORRECT_FILE_ICON);
             observableList.clear();
 
         }
+        icon.setVisible(true);
         table.refresh();
 
     }
@@ -435,18 +436,6 @@ public class SetUpPageController implements Initializable {
     }
 
     /**
-     * Opens an About Dialog to show user information about the page
-     */
-
-    @FXML
-    public void onAbout(){
-        String infoText = "Set Up Information: \n \n" +
-                "H";
-        // TODO: 23.05.2022 FIX 
-        DialogWindow.openInformationDialog("ok","ok");
-    }
-
-    /**
      * Deletes selected unit.
      */
 
@@ -525,6 +514,11 @@ public class SetUpPageController implements Initializable {
 
 
     }
+
+    /**
+     * Method that opens the guide for the application.
+     * Button method.
+     */
 
     @FXML
     public void onGuide(){
