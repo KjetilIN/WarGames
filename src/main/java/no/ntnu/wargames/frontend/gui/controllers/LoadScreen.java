@@ -30,8 +30,7 @@ import java.util.ResourceBundle;
 public class LoadScreen implements Initializable {
 
     // Load screen
-    @FXML
-    private AnchorPane mainPage;
+    @FXML private AnchorPane mainPage;
 
     //defining the new window offset positions
     private double xOffset = 0;

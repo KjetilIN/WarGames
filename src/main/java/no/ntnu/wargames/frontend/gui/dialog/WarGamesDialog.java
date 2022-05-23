@@ -30,7 +30,7 @@ public abstract class WarGamesDialog<T> extends Dialog<T> {
     protected abstract void createContent();
 
     /**
-     * Add icon to the dialog
+     * Add icon to the dialog.
      */
     public void updateIcon(){
         ((Stage) getDialogPane().getScene().getWindow()).getIcons().add(new Image(

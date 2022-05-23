@@ -56,7 +56,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>no.ntnu.wargames/no.ntnu.wargames.JarMain</mainClass>
+                            <mainClass>no.ntnu.wargames.JarMain</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -134,7 +134,7 @@
                     <appVersion>1.0.0</appVersion>
                     <vendor>no.ntnu</vendor>
                     <destination>target/dist</destination>
-                    <module>no.ntnu.wargames.MainJar</module>
+                    <module>no.ntnu.wargames.JarMain</module>
                     <runtimeImage>target</runtimeImage>
                     <linuxShortcut>true</linuxShortcut>
                     <linuxPackageName>treefx</linuxPackageName>

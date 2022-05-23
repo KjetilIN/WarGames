@@ -71,53 +71,31 @@ public class SimulationController implements Initializable {
 
     //Main page nodes.
 
-
     /* Pane */
-    @FXML
-    private BorderPane mainPage;
+    @FXML private BorderPane mainPage;
 
     /*Images */
-    @FXML
-    private ImageView buttonIconPause;
+    @FXML private ImageView buttonIconPause;
 
-    @FXML
-    private Label txtNameArmyOne;
+    /* Labels */
+    @FXML private Label txtNameArmyOne;
+    @FXML private Label txtNameArmyTwo;
+    @FXML private Label txtWinner;
+    @FXML private Label txtTerrain;
+    @FXML private Label txtArmyName1;
+    @FXML private Label txtArmyName2;
 
-    @FXML
-    private Label txtNameArmyTwo;
-
-    @FXML
-    private Label txtWinner;
-
-    @FXML
-    private Label txtTerrain;
-
-    @FXML
-    private Label txtArmyName1;
-
-    @FXML
-    private Label txtArmyName2;
     /*Canvas*/
-    @FXML
-    private Canvas backgroundCanvas;
-
-    @FXML
-    private Canvas unitCanvas;
+    @FXML private Canvas backgroundCanvas;
+    @FXML private Canvas unitCanvas;
 
     /*Buttons */
-    @FXML
-    private Button buttonStart;
-
-    @FXML
-    private Button buttonPausePlay;
-
+    @FXML private Button buttonStart;
+    @FXML private Button buttonPausePlay;
 
     /*Menu Items*/
-    @FXML
-    private MenuItem menuItemRefresh;
-
-    @FXML
-    private MenuItem menuItemEditArmy;
+    @FXML private MenuItem menuItemRefresh;
+    @FXML private MenuItem menuItemEditArmy;
 
 
     /*

@@ -95,6 +95,7 @@ public class SetUpPageController implements Initializable {
             iconCheckArmy1.setVisible(false);
         }else{
             setArmyFromFile(file,pathArmy1,txtArmy1Name,observableListArmy1,iconCheckArmy1,tableViewArmy1);
+            Facade.getInstance().getArmyOne().setName(txtArmy1Name.getText());
         }
     }
 
@@ -132,14 +133,15 @@ public class SetUpPageController implements Initializable {
      *
      */
 
+    @FXML private TextField pathArmy2;
+    @FXML private Label txtArmy2Name;
+    @FXML private ImageView iconCheckArmy2;
     @FXML private TableView<Unit> tableViewArmy2;
     @FXML private TableColumn<Unit,String> nameColumnArmy2;
     @FXML private TableColumn<Unit,String> typeColumnArmy2;
     @FXML private TableColumn<Unit,String> healthColumnArmy2;
-    @FXML private TextField pathArmy2;
-    @FXML private Label txtArmy2Name;
-    @FXML private ObservableList<Unit> observableListArmy2;
-    @FXML private ImageView iconCheckArmy2;
+
+    private ObservableList<Unit> observableListArmy2;
 
     /**
      * Add army 2 from file.
@@ -156,6 +158,7 @@ public class SetUpPageController implements Initializable {
             iconCheckArmy2.setVisible(false);
         }else{
             setArmyFromFile(file,pathArmy2,txtArmy2Name,observableListArmy2,iconCheckArmy2,tableViewArmy2);
+            Facade.getInstance().getArmyOne().setName(txtArmy2Name.getText());
         }
     }
 
@@ -523,6 +526,7 @@ public class SetUpPageController implements Initializable {
     @FXML
     public void onGuide(){
 
+        //Use Builder design pattern to build the message string.
         StringBuilder builder = new StringBuilder();
         String longLine = "-----------------------------------------------------";
         String newLine = "\n";

@@ -1,7 +1,8 @@
 package no.ntnu.wargames;
 
 /**
- * Main class that are used to run for Jar Files
+ * Main class that are used to run for Jar Files.
+ * Is supposed to fix the JAR problem.
  *
  *
  * @author Kjetil Indrehus
