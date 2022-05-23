@@ -7,7 +7,7 @@ package no.ntnu.wargames;
  * @author Kjetil Indrehus
  * @version 1.0-SNAPSHOT
  */
-public class MainJar {
+public class JarMain {
 
     /**
      * Main method that uses setUpMain
@@ -16,6 +16,6 @@ public class MainJar {
      */
 
     public static void main(String[] args) {
-        setupLoadMain.main(args);
+        AppMain.main(args);
     }
 }

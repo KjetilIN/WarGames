@@ -14,7 +14,7 @@ import javafx.stage.StageStyle;
  * @author Kjetil Indrehus
  * @version 1.0-SNAPSHOT
  */
-public class setupLoadMain extends Application {
+public class AppMain extends Application {
 
     //Window positions
     double xOffset;
