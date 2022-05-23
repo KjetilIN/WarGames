@@ -470,14 +470,33 @@ public class SimulationController implements Initializable {
      */
     @FXML
     public void onGuide(){
-        AboutDialog dialog = new AboutDialog("Simulation Guide!",
-                "You are now on the simulation page! Somewhere you can:\n" +
-                "- Start a simulation by press START SIMULATION in the bottom right corner.\n" +
-                "- Pause/Play the simulation\n" +
-                "- Re-Run a simulation by picking File -> Refresh\n"+
-                "- Go back to editing a army by pressing Edit -> Edit army(s)\n"+
-                "- Use the Menu-Bar above for extra options.\n");
 
+        String longLine = "-----------------------------------------------------";
+        String newLine = "\n";
+        String message = new StringBuilder().append(longLine).append(newLine)
+                .append("Features").append(newLine)
+                .append(longLine).append(newLine)
+                .append("- Start a simulation by pressing the button named:\n\n     START SIMULATION \n\n")
+                .append("- Pause/Play the simulation\n")
+                .append("- Re-Run a simulation by picking \n\n      File -> Refresh\n\n")
+                .append("- Go back to editing a army by pressing \n\n      Edit -> Edit army(s)\n\n")
+                .append("- Use the Menu-Bar above for extra options.\n\n")
+                .append(longLine).append(newLine)
+                .append("Where to see different information?").append(newLine)
+                .append(longLine).append(newLine)
+                .append("Use the tabs on the left side to see: \n")
+                .append("- Battle Field: 2D Graphic of Simulation \n")
+                .append("- Army Information: Unit Count in table \n")
+                .append("- Graphs: Total health and unit count as graphs\n")
+                .append("- Attack Log: List of all attacks, and the result\n\n")
+                .append(longLine).append(newLine)
+                .append("Key Binds").append(newLine)
+                .append(longLine).append(newLine)
+                .append("- CTRL + E : Edit armies    ").append(newLine)
+                .append("- CTRL + R : Reset simulation   ").append(newLine).toString();
+
+
+        AboutDialog dialog = new AboutDialog("Simulation Guide!", message);
         dialog.showAndWait();
     }
 
