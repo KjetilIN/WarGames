@@ -8,6 +8,12 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+/**
+ * Main class to load the first page
+ *
+ * @author Kjetil Indrehus
+ * @version 1.0-SNAPSHOT
+ */
 public class setupLoadMain extends Application {
 
     //Window positions
@@ -29,12 +35,12 @@ public class setupLoadMain extends Application {
 
         /* Lambda methods so that the undecorated screen is movable*/
         scene.setOnMousePressed(mousePressedEvent -> {
-            /* When pressed we change the mouse position*/
+            // When pressed we change the mouse position
             xOffset = mousePressedEvent.getSceneX();
             yOffset = mousePressedEvent.getSceneY();
         });
         scene.setOnMouseDragged(dragEvent -> {
-            /* Change the window position when the user drag the window*/
+            // Change the window position when the user drag the window
             stage.setX(dragEvent.getScreenX() - xOffset);
             stage.setY(dragEvent.getScreenY() - yOffset);
         });

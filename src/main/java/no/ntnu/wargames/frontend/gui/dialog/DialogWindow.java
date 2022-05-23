@@ -84,6 +84,22 @@ public class DialogWindow {
         return alert.showAndWait();
     }
 
+
+    /**
+     * Method that opens an exit dialog.
+     *
+     * @param header header text
+     * @param context alert context
+     * @return returns the alert
+     */
+
+    public static Alert openInformationDialog(String header, String context){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText(header);
+        alert.setContentText(context);
+        return alert;
+    }
+
     /**
      * Shows the winner in a dialog.
      *

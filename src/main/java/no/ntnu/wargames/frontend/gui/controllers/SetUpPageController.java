@@ -37,7 +37,7 @@ import java.util.ResourceBundle;
  */
 
 public class SetUpPageController implements Initializable {
-    /* Common fields */
+    // Common fields
     private Army army1;
     private Army army2;
 
@@ -69,26 +69,23 @@ public class SetUpPageController implements Initializable {
     *  - Uses the Common method Below!
     *
     */
-    @FXML
-    private TextField pathArmy1;
+    @FXML private TextField pathArmy1;
 
-    @FXML
-    private Label txtArmy1Name;
+    @FXML private Label txtArmy1Name;
 
     private ObservableList<Unit> observableListArmy1;
-    @FXML
-    private ImageView iconCheckArmy1;
+    @FXML private ImageView iconCheckArmy1;
 
-    @FXML
-    private TableView<Unit> tableViewArmy1;
-    @FXML
-    private TableColumn<Unit,String> nameColumnArmy1;
-    @FXML
-    private TableColumn<Unit,String> typeColumnArmy1;
-    @FXML
-    private TableColumn<Unit,String> healthColumnArmy1;
+    @FXML private TableView<Unit> tableViewArmy1;
+    @FXML private TableColumn<Unit,String> nameColumnArmy1;
+    @FXML private TableColumn<Unit,String> typeColumnArmy1;
+    @FXML private TableColumn<Unit,String> healthColumnArmy1;
 
-    //Add army from file
+    /**
+     * Add from army 1 from file.
+     * Button method.
+     */
+
     @FXML
     public void onAddArmy1(){
         File file = FileHandler.getFile();
@@ -102,7 +99,10 @@ public class SetUpPageController implements Initializable {
         }
     }
 
-    //Edit army 1 name
+    /**
+     * Edit army 1 name
+     * Button method.
+     */
     @FXML
     public void onEditNameArmy1(){
         String result = DialogWindow.openEditNameDialog();
@@ -115,7 +115,10 @@ public class SetUpPageController implements Initializable {
         }
     }
 
-    //Add a unit to army 1
+    /**
+     * Add Unit to army 1
+     * Button method.
+     */
     @FXML
     public void onAddUnitArmy1(){
         addUnitToTable(tableViewArmy1,observableListArmy1);
@@ -130,22 +133,14 @@ public class SetUpPageController implements Initializable {
      *
      */
 
-    @FXML
-    private TableView<Unit> tableViewArmy2;
-    @FXML
-    private TableColumn<Unit,String> nameColumnArmy2;
-    @FXML
-    private TableColumn<Unit,String> typeColumnArmy2;
-    @FXML
-    private TableColumn<Unit,String> healthColumnArmy2;
-    @FXML
-    private TextField pathArmy2;
-    @FXML
-    private Label txtArmy2Name;
-    @FXML
-    private ObservableList<Unit> observableListArmy2;
-    @FXML
-    private ImageView iconCheckArmy2;
+    @FXML private TableView<Unit> tableViewArmy2;
+    @FXML private TableColumn<Unit,String> nameColumnArmy2;
+    @FXML private TableColumn<Unit,String> typeColumnArmy2;
+    @FXML private TableColumn<Unit,String> healthColumnArmy2;
+    @FXML private TextField pathArmy2;
+    @FXML private Label txtArmy2Name;
+    @FXML private ObservableList<Unit> observableListArmy2;
+    @FXML private ImageView iconCheckArmy2;
 
     //Add army from file
     @FXML
@@ -161,7 +156,10 @@ public class SetUpPageController implements Initializable {
         }
     }
 
-    //Edit name of army 2
+    /**
+     * Edit name of army 2.
+     * Button method.
+     */
     @FXML
     public void onEditNameArmy2(){
         String result = DialogWindow.openEditNameDialog();
@@ -261,7 +259,7 @@ public class SetUpPageController implements Initializable {
         Facade.getInstance().resetAll();
 
         /* Load the setup page (switching scene) */
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/no/ntnu/wargames/LoadScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/no/ntnu/wargames/loadScreen.fxml"));
         Stage stage = new Stage();
         Scene scene = new Scene(loader.load());
         stage.initStyle(StageStyle.UNDECORATED);
@@ -398,6 +396,18 @@ public class SetUpPageController implements Initializable {
         }
 
         
+    }
+
+    /**
+     * Opens an About Dialog to show user information about the page
+     */
+
+    @FXML
+    public void onAbout(){
+        String infoText = "Set Up Information: \n \n" +
+                "H";
+        // TODO: 23.05.2022 FIX 
+        DialogWindow.openInformationDialog("ok","ok");
     }
 
     /**

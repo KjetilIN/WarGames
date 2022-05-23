@@ -77,6 +77,12 @@ public class Army {
         this.units = units;
     }
 
+    /**
+     * Method that sets the name of the Army
+     *
+     * @param name name of the army.
+     */
+
     public void setName(String name) {
         this.name = name;
     }
@@ -188,6 +194,12 @@ public class Army {
     public Unit getRandomUnit(){
         return this.units.get(this.random.nextInt(getAllUnits().size()));
     }
+
+    /**
+     * Gets the sum of health to all units.
+     *
+     * @return returns the sum of HP of all units
+     */
 
     public int getAllUnitHealthSum(){
         return this.units.stream().reduce(0,(subtotal,unit)->subtotal+unit.getHealth(),Integer::sum);

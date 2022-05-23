@@ -48,26 +48,54 @@ public class Facade {
         return instance;
     }
 
+    /**
+     * Method set the Facade battle
+     *
+     * @param battle battle given.
+     */
     public void setBattle(Battle battle) {
         this.battle = battle;
     }
 
+    /**
+     * Get Battle from Facade class
+     *
+     * @return returns the battle class.
+     */
     public Battle getBattle() {
         return battle;
     }
 
-    public Army getArmyOne() {
-        return this.armyOne;
-    }
+    /**
+     * Get the first army.
+     *
+     * @return returns the first army.
+     */
+    public Army getArmyOne() {return this.armyOne;}
 
+    /**
+     * Get the second army.
+     *
+     * @return returns the second army.
+     */
     public Army getArmyTwo() {
         return this.armyTwo;
     }
 
+    /**
+     * Set the first army of the facade class
+     *
+     * @param armyOne the given army to be set
+     */
     public void setArmyOne(Army armyOne) {
         this.armyOne = armyOne;
     }
 
+    /**
+     * Set the second army of the facade class
+     *
+     * @param armyTwo the given army to be set
+     */
     public void setArmyTwo(Army armyTwo) {
         this.armyTwo = armyTwo;
     }

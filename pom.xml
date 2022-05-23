@@ -97,7 +97,7 @@
                             <transformers>
                                 <transformer implementation=
                                                      "org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>no.ntnu.wargames/no.ntnu.wargames.setupLoadMain</mainClass>
+                                    <mainClass>no.ntnu.wargames.MainJar</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
@@ -118,7 +118,7 @@
                     <appVersion>1.0.0</appVersion>
                     <vendor>no.ntnu</vendor>
                     <destination>target/dist</destination>
-                    <module>no.ntnu.wargames/no.ntnu.wargames.setupLoadMain</module>
+                    <module>no.ntnu.wargames.MainJar</module>
                     <runtimeImage>target/WarGames</runtimeImage>
                     <linuxShortcut>true</linuxShortcut>
                     <linuxPackageName>treefx</linuxPackageName>

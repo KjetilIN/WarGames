@@ -401,6 +401,11 @@ public class SimulationController implements Initializable {
 
     }
 
+    /**
+     * Pause or play the simulation.
+     * Check if simulation.
+     *
+     */
     @FXML
     public void onPause(){
         if(isPlaying){
