@@ -1,20 +1,68 @@
 package no.ntnu.wargames.File;
 
 
-import no.ntnu.wargames.backend.designPattern.Facade;
 import no.ntnu.wargames.backend.file.FileHandler;
 import no.ntnu.wargames.backend.units.Army;
-import no.ntnu.wargames.backend.units.RangedUnit;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import no.ntnu.wargames.backend.units.CavalryUnit;
+import no.ntnu.wargames.backend.units.Unit;
+import org.junit.jupiter.api.*;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class FileHandlerTest {
+
+    private File emptyFile;
+
+
+    @BeforeEach
+    void initFile(){
+        emptyFile = new File("Test.cvs");
+
+    }
+
+    @AfterEach
+    void deleteFiles(){
+        emptyFile.delete();
+    }
+
+    @Test
+    @DisplayName("Test write army to file")
+    void testWriteArmy(){
+        //Arrange
+        Army army = new Army("Cool Name");
+        army.add(new CavalryUnit("cav",20));
+
+        //Act
+        FileHandler.saveArmyToFile(army,emptyFile);
+
+        ArrayList<String> lines = new ArrayList<>();
+        try(BufferedReader reader = Files.newBufferedReader(emptyFile.toPath())) {
+            String line;
+            while((line = reader.readLine())!= null){
+                lines.add(line);
+            }
+        } catch (IOException e) {
+            // File does not exist
+            fail();
+        }
+
+        //Assert
+        Unit unit = army.getRandomUnit();
+        String unitLine = unit.getUnitType()+","+unit.getName()+","+unit.getHealth();
+
+
+        assertEquals(army.getName()+",",lines.get(0));
+        assertEquals(unitLine,lines.get(1));
+
+
+    }
 
     @Test
     @DisplayName("Test getArmyFromFileCSV() with file in correct format.")
@@ -81,7 +129,7 @@ class FileHandlerTest {
     void testSaveArmyHasUnits(){
         try {
             Army army = new Army("EmptyArmy");
-            FileHandler.saveArmyToFile(army);
+            FileHandler.saveArmyToFile(army, emptyFile);
             fail();
         }catch (Exception ex){
             assertEquals("Army for save was empty.",ex.getMessage());

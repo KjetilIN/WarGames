@@ -54,21 +54,47 @@ public abstract class Unit {
 
     //Getters for basic information.
 
+    /**
+     * Get the name of the unit.
+     *
+     * @return returns the name of the unit
+     */
     public String getName(){
         return this.name;
     }
 
+    /**
+     * Get the health from the unit.
+     *
+     * @return returns the health of the unit (HP).
+     */
     public int getHealth() {
         return this.health;
     }
 
+    /**
+     * Get the attack value from the unit.
+     *
+     * @return returns the attack value.
+     */
     public int getAttack() {
         return this.attack;
     }
 
+    /**
+     * Get the armor of the unit.
+     *
+     * @return returns the armor of the unit
+     */
     public int getArmor() {
         return this.armor;
     }
+
+    /**
+     * Get the terrain type of the unit as string.
+     *
+     * @return returns the terrain type.
+     */
 
     public String getTerrain(){return String.valueOf(this.terrain);}
 

@@ -10,6 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import no.ntnu.wargames.backend.file.FileHandler;
@@ -88,7 +89,7 @@ public class SetUpPageController implements Initializable {
 
     @FXML
     public void onAddArmy1(){
-        File file = FileHandler.getFile();
+        File file = getFile();
         if(file == null){
             /* Prompt user with Error alert. No feedback needed.*/
             DialogWindow.openWarningDialog("No file was found!");
@@ -142,10 +143,14 @@ public class SetUpPageController implements Initializable {
     @FXML private ObservableList<Unit> observableListArmy2;
     @FXML private ImageView iconCheckArmy2;
 
-    //Add army from file
+    /**
+     * Add army 2 from file.
+     * Button method.
+     */
+
     @FXML
     public void onAddArmy2(){
-        File file = FileHandler.getFile();
+        File file = getFile();
         if(file == null){
             /* Prompt user with Error alert. No feedback needed.*/
             DialogWindow.openWarningDialog("No file was found!");
@@ -172,7 +177,11 @@ public class SetUpPageController implements Initializable {
         }
     }
 
-    //Add unit in army 2
+    /**
+     * Add unit in army 2.
+     * Button method.
+     */
+
     @FXML
     public void onAddUnitArmy2(){
         addUnitToTable(tableViewArmy2,observableListArmy2);
@@ -186,6 +195,35 @@ public class SetUpPageController implements Initializable {
     * The method takes parameter from the javafx components and file.
     *
     */
+
+    /**
+     * Opens a window to open the file.
+     * Prompts the user to select a cvs file.
+     * (Only "csv" files)
+     *
+     * @return returns a file object from the file-chooser window.
+     */
+    private File getFile(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("CSV Files","*.csv")
+        );
+        return fileChooser.showOpenDialog(null);
+    }
+
+    /**
+     * Asks the user to select a folder and file name.
+     *
+     * @return returns file object created
+     */
+    private  File selectFile(){
+        /* Open a window for choosing where the army is stored */
+        FileChooser chooser = new FileChooser();
+        chooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("CSV Files","*.csv")
+        );
+        return chooser.showSaveDialog(null); //Create a new file
+    }
 
 
     /**
@@ -317,7 +355,7 @@ public class SetUpPageController implements Initializable {
         switch (option) {
             case 0:
                 if (this.army1.hasUnits()) {
-                    paths.add(FileHandler.saveArmyToFile(this.army1));
+                    paths.add(FileHandler.saveArmyToFile(this.army1, selectFile()));
                     return true;
                 } else{
                     DialogWindow.openWarningDialog(
@@ -327,7 +365,7 @@ public class SetUpPageController implements Initializable {
                 }
             case 1:
                 if (this.army2.hasUnits()) {
-                    paths.add(FileHandler.saveArmyToFile(this.army2));
+                    paths.add(FileHandler.saveArmyToFile(this.army2,selectFile()));
                     return true;
                 } else{
                     DialogWindow.openWarningDialog(
@@ -337,8 +375,8 @@ public class SetUpPageController implements Initializable {
 
             case 2:
                 try{
-                    paths.add(FileHandler.saveArmyToFile(this.army1));
-                    paths.add(FileHandler.saveArmyToFile(this.army2));
+                    paths.add(FileHandler.saveArmyToFile(this.army1,selectFile()));
+                    paths.add(FileHandler.saveArmyToFile(this.army2,selectFile()));
                     return true;
                 }catch (IllegalArgumentException e){
                     DialogWindow.openExceptionDialog(e);

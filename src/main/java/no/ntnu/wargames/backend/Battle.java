@@ -82,7 +82,7 @@ public class Battle {
     /**
      * Simulates one attack.
      * Chooses a side that attack.
-     * Uses the {@link class#simulateAttack(Unit, Unit, Army, Army)} method to get information from the attack.
+     * Uses simulate attack method to get information from the attack.
      *
      * @return returns a string of information
      */

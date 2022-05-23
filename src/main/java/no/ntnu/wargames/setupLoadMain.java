@@ -46,6 +46,11 @@ public class setupLoadMain extends Application {
         });
     }
 
+    /**
+     * Main method that starts the application
+     *
+     * @param args the given args
+     */
     public static void main(String[] args) {
         launch(args);
     }

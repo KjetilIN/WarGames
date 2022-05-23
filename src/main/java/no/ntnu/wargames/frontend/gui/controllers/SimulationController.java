@@ -191,9 +191,21 @@ public class SimulationController implements Initializable {
 
     /*Methods for simulation delay*/
 
+    /**
+     * Get the delay of the simulation.
+     * The delay is in milliseconds.
+     *
+     * @return returns the delay as integer (in milliseconds).
+     */
     public int getDelay(){
         return this.delay;
     }
+
+    /**
+     * Set the delay between each attack.
+     *
+     * @param delay the delay given in milliseconds
+     */
     public void setDelay(int delay) {
         this.delay = delay;
     }
@@ -379,6 +391,10 @@ public class SimulationController implements Initializable {
 
     /* Button Events */
 
+    /**
+     * Method that is called when the user click "start simulation".
+     * Start the simulation
+     */
     @FXML
     public void onSimulate(){
         //Add temp winner
@@ -424,9 +440,16 @@ public class SimulationController implements Initializable {
 
     }
 
+    /**
+     * Methods that returns the user to the setup page.
+     * Stops any simulations that are going.
+     *
+     * @throws IOException throws exception if the page could not load.
+     */
     @FXML
     public void onBackToSetUp() throws IOException {
         //End any ongoing simulations
+
         timeline.stop();
 
         //Close current page
@@ -452,6 +475,12 @@ public class SimulationController implements Initializable {
 
     }
 
+    /**
+     * Method that resets all units in both army.
+     * Make the page be ready for a new simulation.
+     * This does not alter the original armies given.
+     */
+
     @FXML
     public void onRefresh(){
         //Stops a ongoing simulation
@@ -474,6 +503,10 @@ public class SimulationController implements Initializable {
 
     }
 
+    /**
+     * Method that opens a guide dialog.
+     * Button method.
+     */
     @FXML
     public void onGuide(){
         Alert guideInformation = new Alert(Alert.AlertType.INFORMATION);

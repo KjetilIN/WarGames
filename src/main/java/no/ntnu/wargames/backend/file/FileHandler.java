@@ -1,6 +1,5 @@
 package no.ntnu.wargames.backend.file;
 
-import javafx.stage.FileChooser;
 import no.ntnu.wargames.backend.designPattern.UnitFactory;
 import no.ntnu.wargames.backend.units.*;
 
@@ -44,7 +43,7 @@ public class FileHandler {
                 lines.add(line);
             }
         } catch (IOException e) {
-            /* File does not exist. */
+            // File does not exist
             throw new IllegalArgumentException("File not found");
         }
 
@@ -77,21 +76,14 @@ public class FileHandler {
      * Output file fits the input format.
      *
      * @param army the given army
+     * @param file file to save army to
      * @return returns the path of the file created (absolute path).
      * @throws IllegalArgumentException throws exception if army is empty or could not write to file.
      */
 
-    public static Path saveArmyToFile(Army army)throws IllegalArgumentException{
+    public static Path saveArmyToFile(Army army, File file)throws IllegalArgumentException{
         /*Army given must have units and not be null, else throw exception*/
         if(army == null || !army.hasUnits()){throw new IllegalArgumentException("Army for save was empty.");}
-
-        /* Open a window for choosing where the army is stored */
-        FileChooser chooser = new FileChooser();
-        chooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("CSV Files","*.csv")
-        );
-
-        File file = chooser.showSaveDialog(null); //Create a new file
 
         /*Write to file in correct format*/
         try (BufferedWriter writer = Files.newBufferedWriter(file.toPath())) {
@@ -104,19 +96,4 @@ public class FileHandler {
         return file.toPath().toAbsolutePath();
     }
 
-
-    /**
-     * Opens a window to open the file.
-     * Prompts the user to select a cvs file.
-     * (Only "csv" files)
-     *
-     * @return returns a file object from the file-chooser window.
-     */
-    public static File getFile(){
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("CSV Files","*.csv")
-        );
-        return fileChooser.showOpenDialog(null);
-    }
 }
