@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.chart.AreaChart?>
 <?import javafx.scene.chart.CategoryAxis?>
@@ -34,12 +35,26 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
-              <MenuItem fx:id="menuItemEditArmy" mnemonicParsing="false" onAction="#onBackToSetUp" text="Edit army(s)" />
+              <MenuItem fx:id="menuItemEditArmy" mnemonicParsing="false" onAction="#onBackToSetUp" text="Edit army(s)">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icon/armyIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></MenuItem>
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#onGuide" text="Guide" />
+              <MenuItem mnemonicParsing="false" onAction="#onGuide" text="Guide">
+                     <graphic>
+                        <ImageView fitHeight="140.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icon/logoIcon.PNG" />
+                           </image>
+                        </ImageView>
+                     </graphic></MenuItem>
             </items>
           </Menu>
         </menus>
@@ -244,10 +259,18 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Label layoutX="146.0" layoutY="426.0" text="- If both army's total health is going down, but the unit count is different -&gt; There are strong units in one army." />
-                        <Label layoutX="146.0" layoutY="443.0" text="- If an army's total health goes down rapidly, the other army is either strong or the former army is weak." />
-                        <Label layoutX="146.0" layoutY="460.0" text="- If the Total Unit Count Does not go down, nobody has been killed. See the &quot;Health&quot; graph instead for progress indication" />
-                        <Label layoutX="93.0" layoutY="485.0" prefHeight="17.0" prefWidth="734.0" text="- Generally should the Health and Unit Count graph correlate, but if they don't check the differences between the units in each army" />
+                        <Label fx:id="txtInfo1" layoutX="146.0" layoutY="426.0" text="- If both army's total health is going down, but the unit count is different -&gt; There are strong units in one army." />
+                        <Label fx:id="txtInfo2" layoutX="146.0" layoutY="443.0" text="- If an army's total health goes down rapidly, the other army is either strong or the former army is weak." />
+                        <Label fx:id="txtInfo3" layoutX="146.0" layoutY="460.0" text="- If the Total Unit Count Does not go down, nobody has been killed. See the &quot;Health&quot; graph instead for progress indication" />
+                        <Label fx:id="txtInfo4" layoutX="93.0" layoutY="485.0" prefHeight="17.0" prefWidth="734.0" text="- Generally should the Health and Unit Count graph correlate, but if they don't check the differences between the units in each army" />
+                        <ImageView fx:id="iconHideInfo" fitHeight="28.0" fitWidth="27.0" layoutX="543.0" layoutY="393.0" onMouseClicked="#onHideInfo" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icon/blind.png" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ImageView>
                      </children>
                   </AnchorPane>
               </content>

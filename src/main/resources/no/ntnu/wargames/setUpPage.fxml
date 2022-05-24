@@ -25,9 +25,23 @@
         <menus>
           <Menu mnemonicParsing="false" text="App">
             <items>
-                  <MenuItem mnemonicParsing="false" onAction="#onGuide" text="Guide" />
+                  <MenuItem mnemonicParsing="false" onAction="#onGuide" text="Guide">
+                     <graphic>
+                        <ImageView fitHeight="150.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icon/logoIcon.PNG" />
+                           </image>
+                        </ImageView>
+                     </graphic></MenuItem>
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" onAction="#onVersion" text="Version" />
+                  <MenuItem mnemonicParsing="false" onAction="#onVersion" text="Version">
+                     <graphic>
+                        <ImageView fitHeight="150.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icon/merge.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></MenuItem>
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Exit">
@@ -78,7 +92,7 @@
                      </font>
                   </Label>
                   <TextField fx:id="pathArmy1" editable="false" layoutX="179.0" layoutY="414.0" style="-fx-border-color: black;" />
-                  <TextField fx:id="pathArmy2" layoutX="508.0" layoutY="414.0" style="-fx-border-color: black;" />
+                  <TextField fx:id="pathArmy2" editable="false" layoutX="508.0" layoutY="414.0" style="-fx-border-color: black;" />
                   <Button layoutX="231.0" layoutY="447.0" mnemonicParsing="false" onAction="#onAddArmy1" prefHeight="25.0" prefWidth="119.0" text="Get Army From File">
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -206,7 +220,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <ImageView fitHeight="22.0" fitWidth="22.0" layoutX="740.0" layoutY="30.0" onMouseClicked="#onBack" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="22.0" fitWidth="22.0" layoutX="740.0" layoutY="30.0" onMouseClicked="#onBack" pickOnBounds="true" preserveRatio="true" rotate="180.0">
                      <image>
                         <Image url="@icon/exit.png" />
                      </image>

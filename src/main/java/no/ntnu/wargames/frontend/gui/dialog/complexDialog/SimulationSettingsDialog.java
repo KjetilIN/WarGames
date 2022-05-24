@@ -5,6 +5,8 @@ import javafx.scene.layout.GridPane;
 import no.ntnu.wargames.backend.designPattern.Facade;
 import no.ntnu.wargames.frontend.gui.dialog.WarGamesDialog;
 
+import java.util.List;
+
 /**
  * Dialog class for choosing settings for the simulation.
  * Used to return the delay time between each battle.
@@ -32,10 +34,7 @@ public class SimulationSettingsDialog extends WarGamesDialog<Integer> {
     public void createContent() {
         getDialogPane().setHeaderText("Set Terrain and Attack-Delay");
 
-        ChoiceBox<String> choiceBox = new ChoiceBox<>();
-        choiceBox.getItems().add("Hill");
-        choiceBox.getItems().add("Forest");
-        choiceBox.getItems().add("Plains");
+        ChoiceBox<String> choiceBox = getChoiceBox(List.of("Hill","Forest","Plains"));
 
         TextField txtDelay = new TextField();
         txtDelay.setPromptText("Enter time between each attack....");
@@ -44,12 +43,13 @@ public class SimulationSettingsDialog extends WarGamesDialog<Integer> {
         buttonShowDelayInfo.setText("Delay (?)");
 
         buttonShowDelayInfo.setOnAction(event -> {
-            String recommendedLabel = "Recommended delay: \n \n"
-                    + "4-10 Units:             >100 ms\n"
-                    + "10-100 Units:        100-150 ms\n"
-                    + "100-400 Units:      150-1000 ms\n"
-                    + "400-XXXX Units:           <1 s!\n \n"
-                    + "IF NOT RUNNABLE ADD MORE DELAY!";
+            String recommendedLabel = new StringBuilder()
+                    .append("Recommended delay: \n\n")
+                    .append("4-10 Units:             >100 ms\n")
+                    .append("10-150 Units:        100-150 ms\n")
+                    .append("150-400 Units:      150-1000 ms\n")
+                    .append("400-XXXX Units:           <1 s!\n\n")
+                    .append("IF NOT RUNNABLE ADD MORE DELAY!").toString();
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("Delay Information");

@@ -137,6 +137,16 @@ public class SimulationController implements Initializable {
     @FXML private AreaChart<String,Number> unitGraph;
     @FXML private AreaChart<String,Number> healthGraph;
 
+    /* Hide info Icon */
+    @FXML private ImageView iconHideInfo;
+    private Boolean isHidden;
+
+    /* Labels with info*/
+    @FXML private Label txtInfo1;
+    @FXML private Label txtInfo2;
+    @FXML private Label txtInfo3;
+    @FXML private Label txtInfo4;
+
 
     /* Attack Log Information tab label and fields */
 
@@ -330,6 +340,9 @@ public class SimulationController implements Initializable {
         buttonIconPause.setImage(PAUSE);
         buttonPausePlay.setDisable(true);
 
+        //Init Icon for hidden text
+        isHidden = false;
+
         /* Set Name of Army*/
         txtArmyName1.setText(Facade.getInstance().getArmyOne().getName()+"'s \n Army");
         txtArmyName2.setText(Facade.getInstance().getArmyTwo().getName()+"'s \n Army");
@@ -348,6 +361,8 @@ public class SimulationController implements Initializable {
         this.healthGraph.setTitle("Total HP");
         this.healthGraph.getYAxis().setLabel("Sum of HP in Army");
         this.healthGraph.getXAxis().setLabel("Attack(s)");
+        this.healthGraph.getXAxis().setTickLabelsVisible(false);
+        this.healthGraph.setCreateSymbols(false);
     }
 
     /* Button Events */
@@ -510,6 +525,39 @@ public class SimulationController implements Initializable {
         if(result.isPresent() && result.get() == ButtonType.OK){
             System.exit(0);
         }
+    }
+
+    /**
+     * Hides or shows info on Graph tab when pressed.
+     * Button method.
+     */
+    @FXML
+    public void onHideInfo(){
+        //Set icon correct
+        if(isHidden.equals(false)){
+            iconHideInfo.setImage(new Image(
+                    Objects.requireNonNull(getClass().getResourceAsStream(
+                            "/no/ntnu/wargames/icon/show.png"))));
+
+
+
+        }else{
+            iconHideInfo.setImage(new Image(
+                    Objects.requireNonNull(getClass().getResourceAsStream(
+                            "/no/ntnu/wargames/icon/blind.png"))));
+
+
+        }
+
+        //Set Text field to be the hidden or shown
+        txtInfo1.setVisible(isHidden);
+        txtInfo2.setVisible(isHidden);
+        txtInfo3.setVisible(isHidden);
+        txtInfo4.setVisible(isHidden);
+
+        //Change variable to be the opposite as before
+        isHidden = !isHidden;
+
     }
 
 

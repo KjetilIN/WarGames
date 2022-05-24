@@ -35,8 +35,9 @@ public class DialogWindow {
     public static String openEditNameDialog(){
         TextInputDialog d = new TextInputDialog();
         d.setTitle("ARMY NAME");
+        d.setHeaderText("Edit Army Name!");
         d.setContentText("Enter army name:");
-        d.initStyle(StageStyle.UNDECORATED);
+        d.initStyle(StageStyle.DECORATED);
 
         Optional<String> userResponse = d.showAndWait();
 
@@ -83,19 +84,6 @@ public class DialogWindow {
         return alert.showAndWait();
     }
 
-
-    /**
-     * Method that opens a Confirmation Dialog.
-     *
-     * @param header header text
-     * @param context alert context
-     */
-
-    public static void openInformationDialog(String header, String context){
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setHeaderText(header);
-        alert.setContentText(context);
-    }
 
     /**
      * Shows the winner in a dialog.
