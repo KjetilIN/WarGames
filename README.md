@@ -15,7 +15,7 @@ WarGames is an application created to simulate a war between two medieval armies
 
 The latest version of WarGames has the following minimal requirements:
 
-- Java 11 and higher (tested up to Java 17).
+- Java 17
 - Intelij Idea (Recommended)
 - Git (Requirement for cloning repo)
 - Maven 3.6 and higher.
