@@ -39,3 +39,6 @@ Start the build of the application by the first cd into the project folder. Make
 1. Before running the application, clean all target files by: ``` mvn clean ```
 2. Run by typen the final maven command: ``` mvn javafx:run ```
 
+## Main Report!
+
+Want to know more about the thought process, [read the main report!](https://github.com/KjetilIN/WarGames/files/8986957/IDATG2001.pdf)
